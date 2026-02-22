@@ -32,7 +32,7 @@
                         }
                     },
                     boxShadow: {
-                        'draw': '0 4px 15px rgba(0, 0, 0, 0.03)',       // 柔和的現代陰影
+                        'draw': '0 4px 15px rgba(0, 0, 0, 0.05)',       // 柔和的現代陰影
                         'draw-solid': '2px 2px 0px 0px #E9ECEF',        // 微弱的實色陰影增添童趣
                     }
                 }
@@ -64,7 +64,7 @@
             max-height: 250px;
             object-fit: contain;
             display: block;
-            cursor: pointer;
+            cursor: zoom-in;
             transition: opacity 0.2s;
         }
         .img-proportional:hover { opacity: 0.9; }
@@ -106,42 +106,10 @@
     <main class="flex-1 overflow-y-auto no-scrollbar main-content-padding relative z-10 w-full" id="main-content">
         
         <!-- ==================== TAB 1: PLAN (行程表) ==================== -->
-        <section id="tab-plan" class="p-4 sm:p-5 fade-in space-y-6 w-full">
+        <section id="tab-plan" class="p-3 sm:p-5 fade-in space-y-6 w-full">
             
-            <!-- 綜合預訂資訊卡片 (端正滿版) -->
-            <div class="bg-white rounded-2xl p-5 shadow-draw-solid relative mt-2 w-full border border-gray-100">
-                <div class="absolute -top-3 left-4 bg-draw-blue text-white text-[11px] px-4 py-1 font-black rounded-full shadow-sm">訂單傳送門 📌</div>
-                
-                <div class="mb-4 mt-2 border-b border-dashed border-gray-200 pb-3">
-                    <span class="text-[10px] font-black text-draw-yellow bg-yellow-50 px-2 py-0.5 rounded-md inline-block mb-1.5 border border-yellow-200">D1 住宿</span>
-                    <p class="text-sm font-black tracking-wide text-draw-ink">迪士尼玩具總動員飯店 🚀</p>
-                    <div class="flex justify-between items-end mt-1.5">
-                        <p class="text-[10px] font-bold text-draw-muted">訂單: 381255209 | 標準客房x2</p>
-                        <a href="https://maps.app.goo.gl/W6mGkV7jYRyRj9j16" target="_blank" class="text-[10px] text-draw-yellow font-black bg-yellow-50 px-2.5 py-1 rounded-md click-effect border border-yellow-200"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
-                    </div>
-                </div>
-                
-                <div class="mb-4 border-b border-dashed border-gray-200 pb-3">
-                    <span class="text-[10px] font-black text-draw-green bg-green-50 px-2 py-0.5 rounded-md inline-block mb-1.5 border border-green-200">D2-D5 住宿</span>
-                    <p class="text-sm font-black tracking-wide text-draw-ink">Airbnb 溫馨小窩 🏠</p>
-                    <div class="flex justify-between items-end mt-1.5">
-                        <p class="text-[10px] font-bold text-draw-muted leading-tight">3 Chome-7-5 Narihira, Sumida</p>
-                        <a href="https://maps.google.com/?q=3+Chome-7-5+Narihira,+Sumida-ku,+Tokyo" target="_blank" class="text-[10px] text-draw-green font-black bg-green-50 px-2.5 py-1 rounded-md click-effect border border-green-200"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
-                    </div>
-                </div>
-
-                <div>
-                    <span class="text-[10px] font-black text-draw-pink bg-pink-50 px-2 py-0.5 rounded-md inline-block mb-1.5 border border-pink-200">3/14 20:00 - 3/15 19:00</span>
-                    <p class="text-sm font-black tracking-wide text-draw-ink">TOYOTA 租車 (吾妻橋店) 🚗</p>
-                    <div class="flex justify-between items-end mt-1.5">
-                        <p class="text-[10px] font-bold text-draw-muted">預約: 98163450600 (郭語安)</p>
-                        <a href="https://maps.google.com/?q=トヨタレンタカー吾妻橋店" target="_blank" class="text-[10px] text-draw-pink font-black bg-pink-50 px-2.5 py-1 rounded-md click-effect border border-pink-200"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 每日切換標籤列 (滿版寬度) -->
-            <div class="sticky top-0 z-10 bg-draw-bg/95 backdrop-blur-md pt-3 pb-3 -mx-4 px-4 sm:-mx-5 sm:px-5 border-b border-gray-200 w-screen max-w-full">
+            <!-- 每日切換標籤列 (無邊框滿版) -->
+            <div class="sticky top-0 z-10 bg-draw-bg/95 backdrop-blur-md pt-3 pb-3 -mx-3 px-3 sm:-mx-5 sm:px-5 border-b border-gray-200 w-screen max-w-full">
                 <div class="flex overflow-x-auto no-scrollbar space-x-2 pb-1 pt-1 px-1">
                     <button onclick="switchPlanDay(1)" id="btn-d1" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-draw-yellow text-white shadow-sm">D1</button>
                     <button onclick="switchPlanDay(2)" id="btn-d2" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50 border border-gray-100">D2</button>
@@ -645,7 +613,7 @@
                             <p class="text-[11px] font-bold text-draw-muted mb-4 leading-relaxed mt-1">車站地下街採買伴手禮，午後漫步銀座感受高檔都會氛圍。</p>
 
                             <!-- 逛街重點品牌區塊 (銀座) -->
-                            <div class="bg-gray-50 p-3.5 rounded-xl space-y-3 text-[11px] font-black text-draw-ink w-full border border-dashed border-gray-300">
+                            <div class="bg-gray-50 p-4 rounded-xl space-y-3.5 text-[11px] font-black text-draw-ink w-full border border-dashed border-gray-300">
                                 <p class="text-[10px] text-draw-pink mb-1"><i class="fa-solid fa-map-pin mr-1"></i> 銀座鎖定目標：</p>
                                 <div class="flex justify-between items-center bg-white border border-gray-200 p-2.5 rounded-lg shadow-sm w-full">
                                     <span class="flex items-center"><i class="fa-solid fa-gem text-draw-pink w-5 text-center mr-1"></i> CHANEL <span class="text-[9px] text-draw-muted ml-1.5 hidden sm:inline">(銀座)</span></span>
@@ -785,7 +753,7 @@
                     </p>
                     <div class="bg-yellow-50 rounded-2xl p-4 mb-4 w-full border border-yellow-100">
                         <strong class="text-draw-ink text-sm block mb-2.5 font-black"><i class="fa-solid fa-bolt text-draw-yellow mr-1.5 text-sm"></i> 入園SOP：</strong>
-                        <ol class="list-decimal pl-4 text-[11px] space-y-2 font-bold text-draw-ink">
+                        <ol class="list-decimal pl-4 text-[11px] space-y-2.5 font-bold text-draw-ink">
                             <li>馬上開啟官方 APP。</li>
                             <li>抽取熱門設施的 Standby Pass。</li>
                             <li>刷卡買 DPA 節省 <span class="text-draw-pink bg-white px-1.5 py-0.5 rounded shadow-sm border border-pink-100">美女與野獸</span> 排隊時間。</li>
@@ -871,26 +839,26 @@
             <div class="bg-white rounded-3xl p-5 shadow-draw-solid mb-8 w-full border border-gray-100">
                 <h3 class="text-base font-black text-draw-ink mb-4 border-b border-dashed border-gray-200 pb-3"><i class="fa-solid fa-piggy-bank text-draw-yellow mr-2 text-xl"></i>記帳撲滿</h3>
                 <div class="space-y-4">
-                    <input type="text" id="expense-name" placeholder="買了什麼？ (例: 恐龍扭蛋)" class="w-full bg-gray-50 border border-gray-100 rounded-2xl p-4 text-xs font-bold focus:bg-white focus:border-draw-ink outline-none text-draw-ink transition-colors shadow-inner">
+                    <input type="text" id="expense-name" placeholder="買了什麼？ (例: 恐龍扭蛋)" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-xs font-bold focus:bg-white focus:border-draw-ink outline-none text-draw-ink transition-colors shadow-inner">
                     
                     <div class="relative w-full">
-                        <input type="text" id="expense-math" placeholder="日幣金額 (可輸入 500+200*3)" class="w-full bg-gray-50 border border-gray-100 rounded-2xl p-4 text-xs font-bold focus:bg-white focus:border-draw-ink outline-none text-draw-ink pr-12 transition-colors shadow-inner">
+                        <input type="text" id="expense-math" placeholder="日幣金額 (可輸入 500+200*3)" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-xs font-bold focus:bg-white focus:border-draw-ink outline-none text-draw-ink pr-12 transition-colors shadow-inner">
                         <span class="absolute right-5 top-4 text-draw-pink text-base font-black">¥</span>
                     </div>
                     
                     <!-- 拍照/上傳按鈕 -->
                     <div class="w-full">
                         <input type="file" id="expense-photo" accept="image/*" capture="environment" class="hidden" onchange="previewPhoto(event)">
-                        <label for="expense-photo" class="flex items-center justify-center w-full bg-[#E8F6FA] rounded-2xl p-4 cursor-pointer hover:bg-blue-50 transition-colors text-draw-blue text-xs font-black border border-blue-50">
-                            <i class="fa-solid fa-camera mr-2 text-lg"></i> 上傳收據或戰利品照
+                        <label for="expense-photo" class="flex items-center justify-center w-full border-[2px] border-dashed border-draw-blue bg-[#E8F6FA] rounded-xl p-3.5 cursor-pointer hover:bg-blue-50 transition-colors text-draw-blue text-xs font-black">
+                            <i class="fa-solid fa-camera mr-2 text-base"></i> 上傳收據或戰利品照
                         </label>
-                        <div id="photo-preview-container" class="hidden mt-4 relative inline-block">
-                            <img id="photo-preview" class="h-24 w-24 object-cover border-2 border-white rounded-2xl shadow-sm cursor-pointer" onclick="openLightbox(this.src)">
-                            <button onclick="removePhoto()" class="absolute -top-3 -right-3 bg-draw-pink text-white rounded-full w-8 h-8 flex items-center justify-center text-[10px] shadow-sm click-effect"><i class="fa-solid fa-times"></i></button>
+                        <div id="photo-preview-container" class="hidden mt-3 relative inline-block">
+                            <img id="photo-preview" class="h-20 w-20 object-cover border-[2px] border-draw-ink rounded-xl shadow-sm cursor-pointer" onclick="openLightbox(this.src)">
+                            <button onclick="removePhoto()" class="absolute -top-2 -right-2 bg-draw-pink text-white border-[2px] border-draw-ink rounded-full w-6 h-6 flex items-center justify-center text-[10px] shadow-sm click-effect"><i class="fa-solid fa-times"></i></button>
                         </div>
                     </div>
                     
-                    <button onclick="addExpense()" class="w-full bg-draw-yellow text-draw-ink font-black rounded-2xl p-4 text-base shadow-sm click-effect mt-2 tracking-wide">
+                    <button onclick="addExpense()" class="w-full bg-draw-yellow text-draw-ink font-black rounded-xl p-3.5 text-sm shadow-sm click-effect mt-2 tracking-wide">
                         存入撲滿！ 🪙
                     </button>
                 </div>
@@ -898,11 +866,11 @@
 
             <!-- 記帳列表 -->
             <div class="w-full">
-                <div class="flex justify-between items-end mb-4 border-b border-gray-200 pb-3 px-1">
+                <div class="flex justify-between items-end mb-4 border-b-[2.5px] border-draw-ink pb-2 px-1">
                     <h3 class="text-sm font-black text-draw-ink">花費紀錄</h3>
                     <div class="text-right">
                         <p class="text-[9px] font-bold text-draw-muted">總計 (TWD)</p>
-                        <p class="text-2xl font-black text-draw-pink" id="total-twd">NT$ 0</p>
+                        <p class="text-xl font-black text-draw-pink" id="total-twd">NT$ 0</p>
                     </div>
                 </div>
                 <div id="expense-list" class="space-y-4 pb-4 w-full">
@@ -972,6 +940,49 @@
                 </a>
             </div>
 
+            <!-- 住宿資訊 (NEW Accordion) -->
+            <details class="group bg-white rounded-3xl overflow-hidden shadow-draw-solid w-full border border-gray-100">
+                <summary class="flex justify-between items-center p-5 bg-green-50 cursor-pointer outline-none border-b border-green-100">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-hotel text-draw-green mr-3 text-xl"></i>
+                        <h2 class="font-black text-draw-ink text-sm tracking-wide">飯店住宿資訊</h2>
+                    </div>
+                    <span class="transition group-open:rotate-180 text-draw-green bg-white p-1.5 rounded-full shadow-sm"><i class="fa-solid fa-chevron-down text-xs"></i></span>
+                </summary>
+                <div class="p-5 w-full bg-white space-y-5">
+                    
+                    <!-- D1 迪士尼飯店 -->
+                    <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                        <div class="flex items-center justify-between mb-3 border-b border-dashed border-gray-300 pb-2">
+                            <span class="text-xs font-black text-white bg-draw-blue px-2 py-1 rounded-md shadow-sm">3/12 (1晚)</span>
+                            <span class="text-xs font-bold text-draw-ink">迪士尼玩具總動員飯店</span>
+                        </div>
+                        <ul class="text-[11px] font-bold text-draw-ink space-y-2 leading-relaxed">
+                            <li><span class="text-draw-muted">預約號碼：</span>381255209</li>
+                            <li><span class="text-draw-muted">房型：</span>Standard Room(Non-Smoking) x2</li>
+                            <li><span class="text-draw-muted">客房1：</span>2 Person(s) / 2 Bedshare (47,000 yen)</li>
+                            <li><span class="text-draw-muted">客房2：</span>2 Person(s) / 0 Bedshare (47,000 yen)</li>
+                        </ul>
+                        <div class="mt-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm text-[11px] font-bold text-draw-ink">
+                            <div class="flex justify-between"><span>總價：</span><span>94,000 yen</span></div>
+                            <div class="flex justify-between text-draw-pink mt-1"><span>已付訂金：</span><span>30,000 yen</span></div>
+                        </div>
+                    </div>
+
+                    <!-- D2-D5 Airbnb -->
+                    <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                        <div class="flex items-center justify-between mb-3 border-b border-dashed border-gray-300 pb-2">
+                            <span class="text-xs font-black text-white bg-draw-green px-2 py-1 rounded-md shadow-sm">3/13-17 (4晚)</span>
+                            <span class="text-xs font-bold text-draw-ink">Airbnb (業平)</span>
+                        </div>
+                        <ul class="text-[11px] font-bold text-draw-ink space-y-2 leading-relaxed">
+                            <li><span class="text-draw-muted">地址：</span>3 Chome-7-5 Narihira, Sumida-ku, Tokyo</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </details>
+
             <!-- 航班機票資訊 (NEW Accordion) -->
             <details class="group bg-white rounded-3xl overflow-hidden shadow-draw-solid w-full border border-gray-100">
                 <summary class="flex justify-between items-center p-5 bg-yellow-50 cursor-pointer outline-none border-b border-yellow-100">
@@ -1001,7 +1012,7 @@
                                 <div class="w-full border-t-2 border-dashed border-gray-300 relative">
                                     <i class="fa-solid fa-plane absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-300"></i>
                                 </div>
-                                <span class="text-[9px] text-draw-pink mt-1">無免費託運</span>
+                                <span class="text-[9px] text-draw-pink mt-1 font-bold">無免費託運</span>
                             </div>
                             <div class="text-center">
                                 <span class="text-lg font-black text-draw-blue">10:40</span>
@@ -1160,8 +1171,8 @@
         /* ================= Core ================= */
         const TABS = ['plan', 'guide', 'wallet', 'lists', 'info'];
         let currentPhotoBase64 = null;
-        let exchangeRate = parseFloat(localStorage.getItem('cartoon_trip_rate_v12')) || 0.215;
-        let expenses = JSON.parse(localStorage.getItem('cartoon_trip_expenses_v12')) || [];
+        let exchangeRate = parseFloat(localStorage.getItem('cartoon_trip_rate_v13')) || 0.215;
+        let expenses = JSON.parse(localStorage.getItem('cartoon_trip_expenses_v13')) || [];
 
         // 對應 Bottom Nav 的顏色設定
         const navColors = {
@@ -1190,7 +1201,7 @@
                 
                 let iconDiv = navBtn.querySelector('div');
                 iconDiv.classList.remove('bg-white', 'border', 'border-gray-100', 'shadow-sm');
-                iconDiv.classList.add('bg-transparent');
+                iconDiv.classList.add('bg-transparent', 'border-transparent');
                 
                 let icon = iconDiv.querySelector('i');
                 icon.className = icon.className.replace(/text-draw-\w+/, ''); 
@@ -1205,7 +1216,7 @@
             targetNavBtn.querySelector('span').classList.add('font-black');
             
             let targetIconDiv = targetNavBtn.querySelector('div');
-            targetIconDiv.classList.remove('bg-transparent');
+            targetIconDiv.classList.remove('bg-transparent', 'border-transparent');
             targetIconDiv.classList.add('bg-white', 'border', 'border-gray-100', 'shadow-sm');
             
             let targetIcon = targetIconDiv.querySelector('i');
@@ -1263,7 +1274,7 @@
             const newRate = prompt("請輸入匯率 (1日幣 = ?台幣)", exchangeRate);
             if (newRate && !isNaN(newRate)) {
                 exchangeRate = parseFloat(newRate);
-                localStorage.setItem('cartoon_trip_rate_v12', exchangeRate);
+                localStorage.setItem('cartoon_trip_rate_v13', exchangeRate);
                 document.getElementById('display-rate').innerText = exchangeRate;
                 renderExpenses();
                 showToast("匯率更新啦！");
@@ -1335,7 +1346,7 @@
             };
 
             expenses.unshift(newExp);
-            localStorage.setItem('cartoon_trip_expenses_v12', JSON.stringify(expenses));
+            localStorage.setItem('cartoon_trip_expenses_v13', JSON.stringify(expenses));
             
             document.getElementById('expense-name').value = "";
             document.getElementById('expense-math').value = "";
@@ -1347,7 +1358,7 @@
         function deleteExpense(id) {
             if(confirm("確定要刪除這筆紀錄嗎？")) {
                 expenses = expenses.filter(e => e.id !== id);
-                localStorage.setItem('cartoon_trip_expenses_v12', JSON.stringify(expenses));
+                localStorage.setItem('cartoon_trip_expenses_v13', JSON.stringify(expenses));
                 renderExpenses();
             }
         }
@@ -1366,7 +1377,7 @@
                 totalTWD += twd;
 
                 const photoHTML = exp.photo ? 
-                    `<img src="${exp.photo}" class="w-16 h-16 object-cover rounded-2xl border border-gray-100 cursor-pointer shadow-sm shrink-0" style="max-height: 64px;" onclick="openLightbox('${exp.photo}')">` : 
+                    `<img src="${exp.photo}" class="w-16 h-16 object-cover rounded-2xl border border-gray-100 cursor-pointer shadow-sm shrink-0 img-proportional" style="max-height: 64px;" onclick="openLightbox('${exp.photo}')">` : 
                     `<div class="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-300 border border-dashed border-gray-200 shrink-0"><i class="fa-solid fa-receipt text-2xl"></i></div>`;
 
                 const html = `
@@ -1406,7 +1417,7 @@
         ];
 
         function initLists() {
-            const savedData = JSON.parse(localStorage.getItem('cartoon_trip_checklist_v12')) || {};
+            const savedData = JSON.parse(localStorage.getItem('cartoon_trip_checklist_v13')) || {};
             const container = document.getElementById('checklist-container');
             container.innerHTML = "";
 
@@ -1425,9 +1436,9 @@
         }
 
         function toggleCheck(index, element) {
-            const savedData = JSON.parse(localStorage.getItem('cartoon_trip_checklist_v12')) || {};
+            const savedData = JSON.parse(localStorage.getItem('cartoon_trip_checklist_v13')) || {};
             savedData[index] = element.checked;
-            localStorage.setItem('cartoon_trip_checklist_v12', JSON.stringify(savedData));
+            localStorage.setItem('cartoon_trip_checklist_v13', JSON.stringify(savedData));
             
             const textSpan = document.getElementById(`check-text-${index}`);
             if(element.checked) {
@@ -1441,21 +1452,21 @@
 
         function resetChecklist() {
             if(confirm("確定要清除所有打勾狀態嗎？")) {
-                localStorage.removeItem('cartoon_trip_checklist_v12');
+                localStorage.removeItem('cartoon_trip_checklist_v13');
                 initLists();
             }
         }
 
         /* ================= MEMO ================= */
         function initMemo() {
-            const savedMemo = localStorage.getItem('cartoon_trip_memo_v12') || "";
+            const savedMemo = localStorage.getItem('cartoon_trip_memo_v13') || "";
             document.getElementById('memo-input').value = savedMemo;
             renderMemoDisplay(savedMemo);
         }
 
         function saveMemo() {
             const text = document.getElementById('memo-input').value;
-            localStorage.setItem('cartoon_trip_memo_v12', text);
+            localStorage.setItem('cartoon_trip_memo_v13', text);
             renderMemoDisplay(text);
             showToast("筆記已儲存 📝");
         }
