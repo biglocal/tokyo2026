@@ -44,7 +44,8 @@
         /* 隱藏滾動條但保持可滾動 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        body { -webkit-tap-highlight-color: transparent; background-image: radial-gradient(#E9ECEF 1px, transparent 1px); background-size: 20px 20px; }
+        /* 點陣背景，端正不歪斜 */
+        body { -webkit-tap-highlight-color: transparent; background-image: radial-gradient(#E9ECEF 1.5px, transparent 1.5px); background-size: 24px 24px; }
         
         /* 漸顯動畫 */
         .fade-in { animation: fadeIn 0.3s ease-in-out; }
@@ -61,64 +62,64 @@
         }
     </style>
 </head>
-<body class="bg-draw-bg text-draw-ink font-sans antialiased h-screen flex flex-col overflow-hidden relative">
+<body class="bg-draw-bg text-draw-ink font-sans antialiased h-screen flex flex-col overflow-hidden w-full m-0 p-0">
 
-    <!-- Header (塗鴉標題) -->
-    <header class="bg-draw-yellow border-b-4 border-draw-ink pt-12 pb-4 px-5 flex justify-between items-end shrink-0 z-20 relative overflow-hidden">
+    <!-- Header (塗鴉標題滿版) -->
+    <header class="bg-draw-yellow border-b-[4px] border-draw-ink pt-14 pb-5 px-6 flex justify-between items-end shrink-0 z-20 relative overflow-hidden w-full">
         <div class="relative z-10">
             <h1 class="text-3xl font-black tracking-wider text-draw-ink drop-shadow-md">東京大冒險 🇯🇵</h1>
-            <p class="text-[11px] font-bold text-white mt-1 tracking-widest bg-draw-pink inline-block px-3 py-1 rounded-full border-2 border-draw-ink shadow-draw-sm">TOKYO 2026</p>
+            <p class="text-[11px] font-bold text-white mt-1.5 tracking-widest bg-draw-pink inline-block px-3 py-1 rounded-full border-[3px] border-draw-ink shadow-draw-sm">TOKYO 2026</p>
         </div>
         <div class="text-right relative z-10">
-            <div class="bg-white border-2 border-draw-ink px-2 py-1.5 rounded-xl shadow-draw-sm flex items-center transform rotate-3">
-                <i class="fa-solid fa-calendar-day text-draw-blue mr-1.5 text-lg"></i>
+            <div class="bg-white border-[3px] border-draw-ink px-3 py-2 rounded-xl shadow-draw-sm flex items-center">
+                <i class="fa-solid fa-calendar-day text-draw-blue mr-2 text-lg"></i>
                 <span class="text-xs font-black tracking-wide">Mar 12</span>
             </div>
         </div>
-        <!-- 背景裝飾圓點 -->
-        <div class="absolute -right-4 -top-4 w-20 h-20 bg-white opacity-20 rounded-full"></div>
+        <!-- 裝飾背景圈圈 -->
+        <div class="absolute -right-6 -top-6 w-24 h-24 bg-white opacity-30 rounded-full"></div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto no-scrollbar pb-28 relative z-10" id="main-content">
+    <main class="flex-1 overflow-y-auto no-scrollbar pb-32 relative z-10 w-full" id="main-content">
         
         <!-- ==================== TAB 1: PLAN (行程表) ==================== -->
-        <section id="tab-plan" class="p-4 fade-in space-y-6">
+        <section id="tab-plan" class="p-5 fade-in space-y-6">
             
-            <!-- 綜合預訂資訊卡片 (便條紙風格) -->
-            <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw relative mt-2">
-                <div class="absolute -top-4 left-4 bg-draw-blue text-white text-[11px] px-4 py-1 font-black rounded-lg border-[3px] border-draw-ink shadow-draw-sm transform -rotate-2">訂單傳送門 📌</div>
+            <!-- 綜合預訂資訊卡片 (端正版) -->
+            <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-5 shadow-draw relative mt-3">
+                <div class="absolute -top-4 left-5 bg-draw-blue text-white text-[11px] px-4 py-1.5 font-black rounded-lg border-[3px] border-draw-ink shadow-draw-sm">訂單傳送門 📌</div>
                 
-                <div class="mb-3 mt-2 border-b-2 border-dashed border-gray-300 pb-3">
-                    <span class="text-[10px] font-black bg-draw-yellow text-draw-ink border-2 border-draw-ink px-2 py-0.5 rounded-md inline-block mb-1">D1 住宿</span>
+                <div class="mb-4 mt-2 border-b-2 border-dashed border-gray-300 pb-3">
+                    <span class="text-[10px] font-black bg-draw-yellow text-draw-ink border-2 border-draw-ink px-2 py-0.5 rounded-md inline-block mb-1.5">D1 住宿</span>
                     <p class="text-sm font-black tracking-wide text-draw-blue">迪士尼玩具總動員飯店 🚀</p>
-                    <div class="flex justify-between items-end mt-1">
+                    <div class="flex justify-between items-end mt-1.5">
                         <p class="text-[10px] font-bold text-draw-muted">訂單: 381255209 | 標準客房x2</p>
-                        <a href="https://maps.app.goo.gl/W6mGkV7jYRyRj9j16" target="_blank" class="text-[10px] text-draw-ink bg-draw-yellow border-2 border-draw-ink px-2 py-0.5 rounded-md font-black draw-btn"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
+                        <a href="https://maps.app.goo.gl/W6mGkV7jYRyRj9j16" target="_blank" class="text-[10px] text-draw-ink bg-draw-yellow border-2 border-draw-ink px-2.5 py-1 rounded-md font-black draw-btn"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
                     </div>
                 </div>
                 
-                <div class="mb-3 border-b-2 border-dashed border-gray-300 pb-3">
-                    <span class="text-[10px] font-black bg-draw-green text-draw-ink border-2 border-draw-ink px-2 py-0.5 rounded-md inline-block mb-1">D2-D5 住宿</span>
+                <div class="mb-4 border-b-2 border-dashed border-gray-300 pb-3">
+                    <span class="text-[10px] font-black bg-draw-green text-draw-ink border-2 border-draw-ink px-2 py-0.5 rounded-md inline-block mb-1.5">D2-D5 住宿</span>
                     <p class="text-sm font-black tracking-wide text-draw-green">Airbnb 溫馨小窩 🏠</p>
-                    <div class="flex justify-between items-end mt-1">
+                    <div class="flex justify-between items-end mt-1.5">
                         <p class="text-[10px] font-bold text-draw-muted w-3/4 leading-tight">3 Chome-7-5 Narihira, Sumida-ku</p>
-                        <a href="https://maps.google.com/?q=3+Chome-7-5+Narihira,+Sumida-ku,+Tokyo" target="_blank" class="text-[10px] text-draw-ink bg-draw-green border-2 border-draw-ink px-2 py-0.5 rounded-md font-black draw-btn"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
+                        <a href="https://maps.google.com/?q=3+Chome-7-5+Narihira,+Sumida-ku,+Tokyo" target="_blank" class="text-[10px] text-draw-ink bg-draw-green border-2 border-draw-ink px-2.5 py-1 rounded-md font-black draw-btn"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
                     </div>
                 </div>
 
                 <div>
-                    <span class="text-[10px] font-black bg-draw-pink text-white border-2 border-draw-ink px-2 py-0.5 rounded-md inline-block mb-1">3/14 20:00 - 3/15 19:00</span>
+                    <span class="text-[10px] font-black bg-draw-pink text-white border-2 border-draw-ink px-2 py-0.5 rounded-md inline-block mb-1.5">3/14 20:00 - 3/15 19:00</span>
                     <p class="text-sm font-black tracking-wide text-draw-pink">TOYOTA 租車 (吾妻橋店) 🚗</p>
-                    <div class="flex justify-between items-end mt-1">
+                    <div class="flex justify-between items-end mt-1.5">
                         <p class="text-[10px] font-bold text-draw-muted">預約: 98163450600 (郭語安)</p>
-                        <a href="https://maps.google.com/?q=トヨタレンタカー吾妻橋店" target="_blank" class="text-[10px] text-draw-ink bg-draw-pink border-2 border-draw-ink px-2 py-0.5 rounded-md font-black draw-btn"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
+                        <a href="https://maps.google.com/?q=トヨタレンタカー吾妻橋店" target="_blank" class="text-[10px] text-draw-ink bg-draw-pink border-2 border-draw-ink px-2.5 py-1 rounded-md font-black draw-btn"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>
                     </div>
                 </div>
             </div>
 
-            <!-- 每日切換標籤列 (大積木按鈕) -->
-            <div class="sticky top-0 z-10 bg-draw-bg/90 backdrop-blur-sm pt-2 pb-4 -mx-4 px-4 border-b-2 border-dashed border-gray-300">
+            <!-- 每日切換標籤列 (端正滿版大積木) -->
+            <div class="sticky top-0 z-10 bg-draw-bg/95 backdrop-blur-md pt-3 pb-4 -mx-5 px-5 border-b-[3px] border-dashed border-gray-300">
                 <div class="flex overflow-x-auto no-scrollbar space-x-3 pb-2 pt-1 px-1">
                     <button onclick="switchPlanDay(1)" id="btn-d1" class="plan-day-btn shrink-0 w-16 h-12 rounded-xl font-black text-sm border-[3px] border-draw-ink transition-all bg-draw-yellow text-draw-ink shadow-draw-pressed translate-y-[4px]">D1</button>
                     <button onclick="switchPlanDay(2)" id="btn-d2" class="plan-day-btn shrink-0 w-16 h-12 rounded-xl font-black text-sm border-[3px] border-draw-ink transition-all bg-white text-draw-ink shadow-draw hover:bg-gray-100">D2</button>
@@ -131,25 +132,25 @@
 
             <!-- ================= Day 1 ================= -->
             <div id="plan-d1" class="plan-day-content fade-in">
-                <div class="flex items-center mb-5 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw transform -rotate-2">
+                <div class="flex items-center mb-6 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-xl w-max shadow-draw">
                     <span class="text-sm font-black text-draw-blue"><i class="fa-solid fa-plane-arrival mr-2"></i>Day 1: 啟程與台場</span>
                 </div>
                 
                 <div class="relative border-l-[4px] border-draw-ink ml-5 space-y-8 pb-4">
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink rounded-full border-4 border-draw-bg"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink rounded-full border-[3px] border-draw-ink"></div>
                         <div class="bg-[#FFE5EC] border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw relative">
                             <div class="flex justify-between items-start">
                                 <h3 class="font-black text-draw-pink text-sm">機場專車接送 🚗</h3>
-                                <span class="font-black text-white bg-draw-pink border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm transform rotate-3">03:30</span>
+                                <span class="font-black text-white bg-draw-pink border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">03:30</span>
                             </div>
-                            <p class="text-xs font-bold text-draw-ink mt-2 bg-white inline-block px-2 py-1 rounded border border-draw-ink"><i class="fa-solid fa-passport text-draw-pink mr-1"></i>護照帶了沒？！</p>
+                            <p class="text-xs font-bold text-draw-ink mt-3 bg-white inline-block px-2.5 py-1 rounded-lg border-2 border-draw-ink"><i class="fa-solid fa-passport text-draw-pink mr-1.5"></i>護照帶了沒？！</p>
                         </div>
                     </div>
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow rounded-full border-4 border-draw-bg"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow rounded-full border-[3px] border-draw-ink"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <h3 class="font-black text-draw-ink text-sm mb-1">搭乘 TR898 航班 ✈️</h3>
                             <p class="text-xs font-bold text-draw-muted">桃園 T1 出發 ➔ <span class="text-draw-blue font-black underline decoration-[3px] decoration-draw-blue">06:40 抵達</span>成田</p>
@@ -157,18 +158,18 @@
                     </div>
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue rounded-full border-4 border-draw-bg"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue rounded-full border-[3px] border-draw-ink"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <h3 class="font-black text-draw-blue text-sm mb-2">台場商圈 & teamLab 🎨</h3>
                             <p class="text-xs font-bold text-draw-muted leading-relaxed mb-4">先寄放行李！逛台場吃午餐，準備沉浸在 teamLab 的光影世界裡。</p>
                             
-                            <div class="bg-[#E8F6FA] border-2 border-draw-ink p-3 rounded-xl border-dashed">
-                                <p class="font-black text-draw-blue mb-2 text-[11px]"><i class="fa-solid fa-ticket mr-1"></i> teamLab 票價參考</p>
-                                <ul class="font-bold text-draw-ink space-y-1 mb-3 text-[11px]">
-                                    <li><i class="fa-solid fa-star text-draw-yellow mr-1 text-[8px]"></i> 成人: 約 ¥3,800 - ¥4,200</li>
-                                    <li><i class="fa-solid fa-star text-draw-yellow mr-1 text-[8px]"></i> 學生/兒童: 約 ¥1,500 - ¥2,800</li>
+                            <div class="bg-[#E8F6FA] border-[3px] border-draw-ink p-4 rounded-xl border-dashed">
+                                <p class="font-black text-draw-blue mb-2.5 text-xs"><i class="fa-solid fa-ticket mr-1"></i> teamLab 票價參考</p>
+                                <ul class="font-bold text-draw-ink space-y-1.5 mb-4 text-[11px]">
+                                    <li><i class="fa-solid fa-star text-draw-yellow mr-1.5 text-[10px]"></i> 成人: 約 ¥3,800 - ¥4,200</li>
+                                    <li><i class="fa-solid fa-star text-draw-yellow mr-1.5 text-[10px]"></i> 學生/兒童: 約 ¥1,500 - ¥2,800</li>
                                 </ul>
-                                <a href="https://www.klook.com/zh-TW/activity/25300-teamlab-planets-toyosu-tokyo-ticket/" target="_blank" class="block text-center bg-draw-yellow text-draw-ink font-black rounded-xl py-2 border-[3px] border-draw-ink shadow-draw-sm draw-btn text-xs">
+                                <a href="https://www.klook.com/zh-TW/activity/25300-teamlab-planets-toyosu-tokyo-ticket/" target="_blank" class="block text-center bg-draw-yellow text-draw-ink font-black rounded-xl py-3 border-[3px] border-draw-ink shadow-draw-sm draw-btn text-xs tracking-wide">
                                     🛒 Klook 購票傳送門
                                 </a>
                             </div>
@@ -176,19 +177,19 @@
                     </div>
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-green rounded-full border-4 border-draw-bg"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-green rounded-full border-[3px] border-draw-ink"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-black text-draw-green text-sm">飯店 Check-in 🏨</h3>
-                                <span class="font-black text-draw-ink bg-draw-green text-white border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm">15:00</span>
+                                <span class="font-black text-draw-ink bg-draw-green text-white border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">15:00</span>
                             </div>
                             <p class="text-xs font-bold text-draw-muted leading-relaxed mb-4">入住超可愛玩具總動員飯店。視體力決定是否買傍晚票進樂園看夜間遊行與煙火 🎆</p>
                             
                             <div class="bg-draw-bg border-2 border-draw-ink p-3 rounded-xl">
-                                <p class="font-black text-draw-ink text-[11px] mb-1.5"><i class="fa-regular fa-star text-draw-pink text-sm mr-1"></i> 迪士尼星光票價</p>
-                                <ul class="text-[11px] font-bold text-draw-muted space-y-1">
-                                    <li class="flex justify-between"><span>假日 (15:00起)</span> <span class="text-draw-ink">¥6,500-¥8,700</span></li>
-                                    <li class="flex justify-between border-t border-dashed border-gray-300 pt-1"><span>平日 (17:00起)</span> <span class="text-draw-ink">¥4,500-¥6,200</span></li>
+                                <p class="font-black text-draw-ink text-xs mb-2"><i class="fa-regular fa-star text-draw-pink text-sm mr-1.5"></i> 迪士尼星光票價</p>
+                                <ul class="text-[11px] font-bold text-draw-muted space-y-1.5">
+                                    <li class="flex justify-between"><span>假日 (15:00起)</span> <span class="text-draw-ink font-black">¥6,500-¥8,700</span></li>
+                                    <li class="flex justify-between border-t border-dashed border-gray-300 pt-1.5"><span>平日 (17:00起)</span> <span class="text-draw-ink font-black">¥4,500-¥6,200</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -198,38 +199,38 @@
 
             <!-- ================= Day 2 ================= -->
             <div id="plan-d2" class="plan-day-content hidden fade-in">
-                <div class="flex items-center mb-5 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw transform rotate-2">
+                <div class="flex items-center mb-6 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-xl w-max shadow-draw">
                     <span class="text-sm font-black text-draw-pink"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Day 2: 迪士尼夢幻日</span>
                 </div>
                 <div class="relative border-l-[4px] border-draw-ink ml-5 space-y-8 pb-4">
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-red rounded-full border-4 border-draw-bg"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-red rounded-full border-[3px] border-draw-ink"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <div class="flex justify-between items-start">
                                 <h3 class="font-black text-draw-ink text-sm">抵達園區門口 🏰</h3>
-                                <span class="font-black text-draw-pink bg-[#FFE5EC] border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm">08:00 前</span>
+                                <span class="font-black text-draw-pink bg-[#FFE5EC] border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">08:00 前</span>
                             </div>
                             <p class="text-xs font-bold text-draw-muted mt-2">務必提早抵達，準備使用特權提早入園！</p>
                         </div>
                     </div>
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow rounded-full border-4 border-draw-bg"></div>
-                        <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
-                            <div class="flex justify-between items-start mb-2">
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow rounded-full border-[3px] border-draw-ink"></div>
+                        <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-5 shadow-draw">
+                            <div class="flex justify-between items-start mb-3">
                                 <h3 class="font-black text-draw-ink text-sm">Happy Entry 入園 🏃‍♂️</h3>
-                                <span class="font-black text-draw-ink bg-draw-yellow border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm transform -rotate-3">08:30-08:45</span>
+                                <span class="font-black text-draw-ink bg-draw-yellow border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">08:30-08:45</span>
                             </div>
                             <p class="text-xs font-bold text-draw-muted mb-4 leading-relaxed">Disney Land 全日遊。入園後請立即開啟官方 APP 抽取 Standby Pass 或購買 DPA。</p>
                             
                             <!-- 必玩設施 -->
-                            <div class="bg-[#FFF8E7] border-[3px] border-draw-ink p-4 rounded-2xl mb-5 transform rotate-1">
-                                <p class="text-xs font-black text-draw-ink mb-3"><i class="fa-solid fa-flag text-draw-pink mr-1 text-lg"></i> 鎖定必玩設施：</p>
+                            <div class="bg-[#FFF8E7] border-[3px] border-draw-ink p-4 rounded-xl mb-5">
+                                <p class="text-xs font-black text-draw-ink mb-3"><i class="fa-solid fa-flag text-draw-pink mr-1.5 text-lg"></i> 鎖定必玩設施：</p>
                                 <ul class="text-xs font-bold text-draw-ink space-y-3">
-                                    <li class="flex items-center bg-white border-2 border-draw-ink p-2 rounded-lg shadow-draw-sm">👑 美女與野獸 <span class="text-[9px] text-white bg-draw-pink px-1 rounded ml-auto border border-draw-ink">建議買DPA</span></li>
-                                    <li class="flex items-center bg-white border-2 border-draw-ink p-2 rounded-lg shadow-draw-sm">💦 飛濺山 <span class="text-[9px] text-draw-muted ml-auto">獨木舟</span></li>
-                                    <li class="flex items-center bg-white border-2 border-draw-ink p-2 rounded-lg shadow-draw-sm">🚂 巨雷山 <span class="text-[9px] text-draw-muted ml-auto">礦車</span></li>
+                                    <li class="flex items-center bg-white border-2 border-draw-ink p-2 rounded-lg shadow-draw-sm">👑 美女與野獸 <span class="text-[9px] text-white bg-draw-pink px-2 py-0.5 rounded-md ml-auto border-2 border-draw-ink">建議買DPA</span></li>
+                                    <li class="flex items-center bg-white border-2 border-draw-ink p-2 rounded-lg shadow-draw-sm">💦 飛濺山 <span class="text-[10px] text-draw-muted ml-auto font-black">獨木舟</span></li>
+                                    <li class="flex items-center bg-white border-2 border-draw-ink p-2 rounded-lg shadow-draw-sm">🚂 巨雷山 <span class="text-[10px] text-draw-muted ml-auto font-black">礦車</span></li>
                                 </ul>
                             </div>
 
@@ -244,7 +245,7 @@
 
             <!-- ================= Day 3 ================= -->
             <div id="plan-d3" class="plan-day-content hidden fade-in">
-                <div class="flex items-center mb-5 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw transform -rotate-1">
+                <div class="flex items-center mb-6 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-xl w-max shadow-draw">
                     <span class="text-sm font-black text-draw-ink"><i class="fa-solid fa-bag-shopping mr-2 text-draw-yellow"></i>Day 3: 時尚與街頭</span>
                 </div>
                 
@@ -252,66 +253,66 @@
                     
                     <!-- D3: 豪德寺 -->
                     <div class="relative pl-6 pb-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-4 border-draw-ink rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-black text-draw-ink text-sm">出發 ➔ 豪德寺 🐾</h3>
-                                <span class="font-black text-draw-ink bg-gray-100 border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm">08:30</span>
+                                <span class="font-black text-draw-ink bg-gray-100 border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">08:30</span>
                             </div>
                             <p class="text-xs font-bold text-draw-muted">尋找滿滿的招財貓發源地。</p>
                         </div>
                     </div>
 
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-blue flex items-center">
-                        <div class="bg-[#E8F6FA] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-blue flex items-center">
+                        <div class="bg-[#E8F6FA] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-train-subway mr-2 text-lg"></i> 約 45-50 分鐘
                         </div>
                     </div>
 
                     <!-- D3: 原宿/表參道 -->
                     <div class="relative pl-6 py-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow border-4 border-draw-bg rounded-full"></div>
-                        <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
-                            <h3 class="font-black text-draw-ink text-base mb-2 bg-draw-yellow inline-block px-2 transform -rotate-1">原宿 / 青山 / 表參道 🛍️</h3>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow border-[3px] border-draw-ink rounded-full"></div>
+                        <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-5 shadow-draw">
+                            <h3 class="font-black text-draw-ink text-base mb-2 bg-draw-yellow inline-block px-2">原宿 / 青山 / 表參道 🛍️</h3>
                             <p class="text-xs font-bold text-draw-muted mb-4 mt-2">東京潮流與精品匯聚之地。今日鎖定目標：</p>
                             
                             <!-- 重點品牌區塊 -->
-                            <div class="bg-draw-bg border-[3px] border-draw-ink p-3 rounded-2xl space-y-3 text-xs font-black text-draw-ink shadow-inner">
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-gem text-draw-pink w-5 text-center mr-1"></i> CHANEL <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(表參道)</span></span>
-                                    <a href="https://maps.google.com/?q=CHANEL+Omotesando" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                            <div class="bg-draw-bg border-[3px] border-draw-ink p-4 rounded-2xl space-y-3.5 text-xs font-black text-draw-ink shadow-inner">
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-gem text-draw-pink w-5 text-center mr-1"></i> CHANEL <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(表參道)</span></span>
+                                    <a href="https://maps.google.com/?q=CHANEL+Omotesando" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-crown text-draw-yellow w-5 text-center mr-1"></i> Vivienne W. <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(青山)</span></span>
-                                    <a href="https://maps.google.com/?q=Vivienne+Westwood+Aoyama" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-crown text-draw-yellow w-5 text-center mr-1"></i> Vivienne W. <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(青山)</span></span>
+                                    <a href="https://maps.google.com/?q=Vivienne+Westwood+Aoyama" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-heart text-draw-green w-5 text-center mr-1"></i> HUMAN MADE <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(原宿)</span></span>
-                                    <a href="https://maps.google.com/?q=HUMAN+MADE+OFFLINE+STORE" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-heart text-draw-green w-5 text-center mr-1"></i> HUMAN MADE <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(原宿)</span></span>
+                                    <a href="https://maps.google.com/?q=HUMAN+MADE+OFFLINE+STORE" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-clock text-draw-blue w-5 text-center mr-1"></i> Rolex <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(表參道)</span></span>
-                                    <a href="https://maps.google.com/?q=Rolex+Omotesando" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-clock text-draw-blue w-5 text-center mr-1"></i> Rolex <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(表參道)</span></span>
+                                    <a href="https://maps.google.com/?q=Rolex+Omotesando" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-bowl-food text-draw-ink w-5 text-center mr-1"></i> 一蘭拉麵 <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(原宿)</span></span>
-                                    <a href="https://maps.google.com/?q=一蘭+原宿" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-bowl-food text-draw-ink w-5 text-center mr-1"></i> 一蘭拉麵 <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(原宿)</span></span>
+                                    <a href="https://maps.google.com/?q=一蘭+原宿" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-green flex items-center">
-                        <div class="bg-[#E6F7EB] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center transform rotate-1">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-green flex items-center">
+                        <div class="bg-[#E6F7EB] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-person-walking mr-2 text-lg"></i> 步行或短程地鐵
                         </div>
                     </div>
 
                     <!-- D3: 唐橋桌球 -->
                     <div class="relative pl-6 py-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-4 border-draw-ink rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-black text-draw-ink text-sm">唐橋桌球 (代代木) 🏓</h3>
@@ -322,15 +323,15 @@
                     </div>
 
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-blue flex items-center">
-                        <div class="bg-[#E8F6FA] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-blue flex items-center">
+                        <div class="bg-[#E8F6FA] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-train-subway mr-2 text-lg"></i> 約 5 分鐘 (JR)
                         </div>
                     </div>
 
                     <!-- D3: 澀谷 -->
                     <div class="relative pl-6 py-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <h3 class="font-black text-draw-ink text-sm mb-2">澀谷 & SHIBUYA SKY 🌃</h3>
                             <p class="text-xs font-bold text-draw-muted">欣賞無敵百萬夜景 (需留意預約時段)。</p>
@@ -338,19 +339,19 @@
                     </div>
 
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-blue flex items-center">
-                        <div class="bg-[#E8F6FA] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center transform -rotate-1">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-blue flex items-center">
+                        <div class="bg-[#E8F6FA] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-train-subway mr-2 text-lg"></i> 約 35-45 分 (往吾妻橋)
                         </div>
                     </div>
 
                     <!-- D3: 取車 -->
                     <div class="relative pl-6 pt-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-green border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-green border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-draw-ink text-white border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-black text-white text-sm">前往取車 (TOYOTA) 🚙</h3>
-                                <span class="font-black text-draw-ink bg-draw-yellow border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm transform rotate-3">20:00</span>
+                                <span class="font-black text-draw-ink bg-draw-yellow border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">20:00</span>
                             </div>
                             <p class="text-xs font-bold text-gray-300 mt-2">TOYOTA 吾妻橋店。取車後直接開車返回 Airbnb 休息。</p>
                         </div>
@@ -360,49 +361,49 @@
 
             <!-- ================= Day 4 ================= -->
             <div id="plan-d4" class="plan-day-content hidden fade-in">
-                <div class="flex items-center mb-5 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw transform rotate-2">
+                <div class="flex items-center mb-6 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-xl w-max shadow-draw">
                     <span class="text-sm font-black text-draw-green"><i class="fa-solid fa-mountain mr-2"></i>Day 4: 河口湖自駕</span>
                 </div>
                 <div class="relative border-l-[4px] border-draw-ink ml-5 pb-4">
                     
                     <!-- D4: 出發 -->
                     <div class="relative pl-6 pb-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-[#FFE5EC] border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-black text-draw-ink text-sm">出發前往河口湖</h3>
-                                <span class="font-black text-draw-ink bg-white border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm">06:30</span>
+                                <span class="font-black text-draw-ink bg-white border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">06:30</span>
                             </div>
-                            <p class="text-xs font-bold text-draw-ink mt-2 bg-white inline-block px-2 py-1 rounded-lg border-2 border-draw-ink transform -rotate-1"><i class="fa-solid fa-clock text-draw-pink mr-1"></i>務必早起，避開車潮！</p>
+                            <p class="text-xs font-bold text-draw-ink mt-3 bg-white inline-block px-3 py-1.5 rounded-lg border-[3px] border-draw-ink"><i class="fa-solid fa-clock text-draw-pink mr-1.5"></i>務必早起，避開車潮！</p>
                         </div>
                     </div>
 
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-green flex items-center">
-                        <div class="bg-[#E6F7EB] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-green flex items-center">
+                        <div class="bg-[#E6F7EB] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-car mr-2 text-lg"></i> 約 1.5 - 2 小時
                         </div>
                     </div>
 
                     <!-- D4: 河口湖 -->
                     <div class="relative pl-6 py-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-4 border-draw-ink rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
-                            <h3 class="font-black text-draw-ink text-base mb-2 bg-draw-green text-white inline-block px-2 transform rotate-1">河口湖一日遊 🗻</h3>
+                            <h3 class="font-black text-draw-ink text-base mb-2 bg-draw-green text-white inline-block px-2">河口湖一日遊 🗻</h3>
                             <p class="text-xs font-bold text-draw-muted mt-2">河口湖周邊景點。留意左駕習慣與收費站。</p>
                         </div>
                     </div>
                     
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-green flex items-center">
-                        <div class="bg-[#E6F7EB] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-green flex items-center">
+                        <div class="bg-[#E6F7EB] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-car mr-2 text-lg"></i> 約 1.5 小時 (往南町田)
                         </div>
                     </div>
 
                     <!-- D4: 晚餐 -->
                     <div class="relative pl-6 py-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
                             <h3 class="font-black text-draw-ink text-sm mb-2">晚餐：AFURI 拉麵 🍜</h3>
                             <p class="text-xs font-bold text-draw-muted">南町田 Grandberry Park 店，享用清爽的柚子鹽拉麵。</p>
@@ -410,21 +411,21 @@
                     </div>
                     
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-green flex items-center">
-                        <div class="bg-[#E6F7EB] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center transform -rotate-1">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-green flex items-center">
+                        <div class="bg-[#E6F7EB] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-car mr-2 text-lg"></i> 約 1 小時 (回吾妻橋)
                         </div>
                     </div>
 
                     <!-- D4: 還車 -->
                     <div class="relative pl-6 pt-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-[#E8F6FA] border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-black text-draw-blue text-sm">還車 (TOYOTA)</h3>
-                                <span class="font-black text-white bg-draw-ink border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm">19:00 前</span>
+                                <span class="font-black text-white bg-draw-ink border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">19:00 前</span>
                             </div>
-                            <p class="text-xs font-bold text-draw-ink mt-2 bg-white inline-block px-2 py-1 rounded-lg border-2 border-draw-ink"><i class="fa-solid fa-gas-pump text-draw-pink mr-1"></i>還車前記得加滿油！</p>
+                            <p class="text-xs font-bold text-draw-ink mt-3 bg-white inline-block px-3 py-1.5 rounded-lg border-[3px] border-draw-ink"><i class="fa-solid fa-gas-pump text-draw-pink mr-1.5"></i>還車前記得加滿油！</p>
                         </div>
                     </div>
                 </div>
@@ -432,14 +433,14 @@
 
             <!-- ================= Day 5 ================= -->
             <div id="plan-d5" class="plan-day-content hidden fade-in">
-                <div class="flex items-center mb-5 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw transform -rotate-2">
+                <div class="flex items-center mb-6 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-xl w-max shadow-draw">
                     <span class="text-sm font-black text-draw-ink"><i class="fa-solid fa-star mr-2 text-draw-yellow"></i>Day 5: 經典與精品</span>
                 </div>
                 <div class="relative border-l-[4px] border-draw-ink ml-5 pb-4">
                     
                     <!-- D5: 淺草寺 -->
                     <div class="relative pl-6 pb-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
                             <h3 class="font-black text-draw-ink text-sm mb-2">淺草寺 🏮</h3>
                             <p class="text-xs font-bold text-draw-muted">雷門地標拍照，仲見世通吃吃喝喝。</p>
@@ -447,15 +448,15 @@
                     </div>
 
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-blue flex items-center">
-                        <div class="bg-[#E8F6FA] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-blue flex items-center">
+                        <div class="bg-[#E8F6FA] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-train-subway mr-2 text-lg"></i> 約 10-15 分鐘
                         </div>
                     </div>
 
                     <!-- D5: 秋葉原 -->
                     <div class="relative pl-6 py-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-4 border-draw-ink rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
                             <h3 class="font-black text-draw-ink text-sm mb-2">秋葉原 👾</h3>
                             <p class="text-xs font-bold text-draw-muted">動漫周邊、電器與扭蛋巡禮。</p>
@@ -463,41 +464,41 @@
                     </div>
 
                     <!-- 交通時間裝飾 -->
-                    <div class="pl-8 py-3 text-xs font-black text-draw-blue flex items-center">
-                        <div class="bg-[#E8F6FA] border-2 border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
+                    <div class="pl-8 py-3.5 text-xs font-black text-draw-blue flex items-center">
+                        <div class="bg-[#E8F6FA] border-[3px] border-draw-ink px-3 py-1.5 rounded-xl shadow-draw-sm flex items-center">
                             <i class="fa-solid fa-train-subway mr-2 text-lg"></i> 約 5 分鐘
                         </div>
                     </div>
 
                     <!-- D5: 東京車站/銀座 -->
                     <div class="relative pl-6 pt-2">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow border-4 border-draw-bg rounded-full"></div>
-                        <div class="bg-white border-[3px] border-draw-ink p-4 rounded-2xl shadow-draw">
-                            <h3 class="font-black text-draw-ink text-base mb-2 bg-draw-yellow inline-block px-2 transform rotate-1">東京車站 ➔ 銀座 🏢</h3>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-yellow border-[3px] border-draw-ink rounded-full"></div>
+                        <div class="bg-white border-[3px] border-draw-ink p-5 rounded-2xl shadow-draw">
+                            <h3 class="font-black text-draw-ink text-base mb-2 bg-draw-yellow inline-block px-2">東京車站 ➔ 銀座 🏢</h3>
                             <p class="text-xs font-bold text-draw-muted mb-4 leading-relaxed mt-2">車站地下街採買伴手禮，午後漫步銀座感受高檔都會氛圍。</p>
 
                             <!-- 逛街重點品牌區塊 (銀座) -->
-                            <div class="bg-draw-bg border-[3px] border-draw-ink p-3.5 rounded-2xl space-y-3 text-xs font-black text-draw-ink shadow-inner">
-                                <p class="text-sm text-draw-pink mb-2 border-b-2 border-draw-ink/20 pb-1.5"><i class="fa-solid fa-map-pin mr-1"></i> 銀座鎖定目標：</p>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-gem text-draw-pink w-5 text-center mr-1"></i> CHANEL <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(銀座)</span></span>
-                                    <a href="https://maps.google.com/?q=CHANEL+Ginza" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                            <div class="bg-draw-bg border-[3px] border-draw-ink p-4 rounded-2xl space-y-3.5 text-xs font-black text-draw-ink shadow-inner">
+                                <p class="text-sm text-draw-pink mb-2 border-b-2 border-draw-ink/20 pb-1.5"><i class="fa-solid fa-map-pin mr-1.5"></i> 銀座鎖定目標：</p>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-gem text-draw-pink w-5 text-center mr-1"></i> CHANEL <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(銀座)</span></span>
+                                    <a href="https://maps.google.com/?q=CHANEL+Ginza" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-crown text-draw-yellow w-5 text-center mr-1"></i> Vivienne W. <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(GINZA SIX)</span></span>
-                                    <a href="https://maps.google.com/?q=Vivienne+Westwood+GINZA+SIX" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-crown text-draw-yellow w-5 text-center mr-1"></i> Vivienne W. <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(GINZA SIX)</span></span>
+                                    <a href="https://maps.google.com/?q=Vivienne+Westwood+GINZA+SIX" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-heart text-draw-green w-5 text-center mr-1"></i> HUMAN MADE <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(DSM)</span></span>
-                                    <a href="https://maps.google.com/?q=Dover+Street+Market+Ginza" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-heart text-draw-green w-5 text-center mr-1"></i> HUMAN MADE <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(DSM)</span></span>
+                                    <a href="https://maps.google.com/?q=Dover+Street+Market+Ginza" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-clock text-draw-blue w-5 text-center mr-1"></i> Rolex <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(銀座)</span></span>
-                                    <a href="https://maps.google.com/?q=Rolex+Ginza" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-clock text-draw-blue w-5 text-center mr-1"></i> Rolex <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(銀座)</span></span>
+                                    <a href="https://maps.google.com/?q=Rolex+Ginza" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
-                                <div class="flex justify-between items-center bg-white border-2 border-draw-ink p-2 rounded-xl shadow-draw-sm">
-                                    <span class="flex items-center"><i class="fa-solid fa-bowl-food text-draw-ink w-5 text-center mr-1"></i> 一蘭拉麵 <span class="text-[9px] text-draw-muted ml-1 hidden sm:inline">(銀座)</span></span>
-                                    <a href="https://maps.google.com/?q=一蘭+銀座" target="_blank" class="bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg shadow-draw-sm draw-btn text-[10px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
+                                <div class="flex justify-between items-center bg-white border-[3px] border-draw-ink p-2.5 rounded-xl shadow-draw-sm">
+                                    <span class="flex items-center"><i class="fa-solid fa-bowl-food text-draw-ink w-5 text-center mr-1"></i> 一蘭拉麵 <span class="text-[10px] text-draw-muted ml-1.5 hidden sm:inline">(銀座)</span></span>
+                                    <a href="https://maps.google.com/?q=一蘭+銀座" target="_blank" class="bg-draw-yellow border-[3px] border-draw-ink px-2.5 py-1 rounded-lg shadow-draw-sm draw-btn text-[11px]"><i class="fa-solid fa-map-location-dot"></i> 地圖</a>
                                 </div>
                             </div>
                         </div>
@@ -507,38 +508,38 @@
 
             <!-- ================= Day 6 ================= -->
             <div id="plan-d6" class="plan-day-content hidden fade-in">
-                <div class="flex items-center mb-5 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw transform rotate-1">
+                <div class="flex items-center mb-6 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-xl w-max shadow-draw">
                     <span class="text-sm font-black text-draw-ink"><i class="fa-solid fa-house mr-2 text-draw-blue"></i>Day 6: 平安歸途</span>
                 </div>
                 <div class="relative border-l-[4px] border-draw-ink ml-5 space-y-8 pb-4">
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-4 border-draw-ink rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <div class="flex justify-between items-start">
                                 <h3 class="font-black text-draw-ink text-sm">起床 & 退房 🧳</h3>
-                                <span class="font-black text-draw-ink bg-gray-200 border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm">09:00</span>
+                                <span class="font-black text-draw-ink bg-gray-200 border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">09:00</span>
                             </div>
                             <p class="text-xs font-bold text-draw-muted mt-2">最後確認行李，搭乘機場接送專車前往成田機場。</p>
                         </div>
                     </div>
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-blue border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-[#E8F6FA] border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-black text-draw-ink text-sm">搭乘 JX801 航班 ✈️</h3>
-                                <span class="font-black text-white bg-draw-blue border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm transform rotate-2">13:45 起飛</span>
+                                <span class="font-black text-white bg-draw-blue border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">13:45 起飛</span>
                             </div>
                             <p class="text-xs font-bold text-draw-ink">成田機場 (NRT) T2 出發返回台灣。</p>
                         </div>
                     </div>
                     
                     <div class="relative pl-6">
-                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink border-4 border-draw-bg rounded-full"></div>
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-draw-pink border-[3px] border-draw-ink rounded-full"></div>
                         <div class="bg-[#FFE5EC] border-[3px] border-draw-ink rounded-2xl p-4 shadow-draw">
                             <div class="flex justify-between items-start">
                                 <h3 class="font-black text-draw-pink text-sm">抵台專車接送 🏡</h3>
-                                <span class="font-black text-draw-ink bg-white border-2 border-draw-ink px-2 py-0.5 rounded-lg text-xs shadow-draw-sm">16:50</span>
+                                <span class="font-black text-draw-ink bg-white border-2 border-draw-ink px-2.5 py-1 rounded-lg text-xs shadow-draw-sm">16:50</span>
                             </div>
                             <p class="text-xs font-bold text-draw-ink mt-2">平安抵達溫暖的家，旅途圓滿結束！</p>
                         </div>
@@ -549,14 +550,14 @@
         </section>
 
         <!-- ==================== TAB 2: GUIDE (深度導覽) ==================== -->
-        <section id="tab-guide" class="hidden p-4 space-y-7 fade-in">
+        <section id="tab-guide" class="hidden p-5 space-y-7 fade-in w-full">
             
-            <div class="flex items-center mb-4 bg-draw-yellow border-[3px] border-draw-ink px-5 py-2.5 rounded-2xl w-max shadow-draw transform -rotate-2 mt-2">
+            <div class="flex items-center mb-4 bg-draw-yellow border-[3px] border-draw-ink px-5 py-2.5 rounded-2xl w-max shadow-draw mt-2">
                 <span class="text-base font-black text-draw-ink"><i class="fa-solid fa-book-open mr-2"></i>生存指南手冊 🦖</span>
             </div>
 
             <!-- 原宿/表參道/銀座 逛街指南 -->
-            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw">
+            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw w-full">
                 <div class="bg-[#E8F6FA] p-4 border-b-[3px] border-draw-ink flex items-center">
                     <div class="w-10 h-10 bg-white border-[3px] border-draw-ink rounded-full flex items-center justify-center mr-3 shadow-draw-sm"><i class="fa-solid fa-bag-shopping text-draw-blue text-lg"></i></div>
                     <h2 class="font-black text-draw-ink text-base tracking-wide">品牌朝聖指南</h2>
@@ -566,16 +567,16 @@
                         建議將目標拆分為「原宿/表參道（潮牌與街區旗艦店）」與「銀座（奢華精品與百貨）」。
                     </p>
                     <ul class="text-xs font-bold text-draw-ink space-y-4">
-                        <li class="flex items-start bg-draw-bg p-3 border-2 border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-gem text-draw-pink mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-pink text-sm mb-1 block">CHANEL</strong>表參道店款式齊全、建築如藝術品；銀座店則擁有最高規格服務。</div></li>
-                        <li class="flex items-start bg-draw-bg p-3 border-2 border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-crown text-draw-yellow mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-yellow text-sm mb-1 block">Vivienne Westwood</strong>青山店為獨立旗艦店風格前衛；銀座隱身於 GINZA SIX 內。</div></li>
-                        <li class="flex items-start bg-draw-bg p-3 border-2 border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-heart text-draw-green mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-green text-sm mb-1 block">HUMAN MADE</strong>原宿店必朝聖；銀座推薦前往 Dover Street Market 挖寶。</div></li>
-                        <li class="flex items-start bg-draw-bg p-3 border-2 border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-clock text-draw-blue mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-blue text-sm mb-1 block">Rolex</strong>日本採不定期進貨，熱門款建議多跑幾間分店。</div></li>
+                        <li class="flex items-start bg-draw-bg p-3.5 border-[3px] border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-gem text-draw-pink mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-pink text-sm mb-1 block">CHANEL</strong>表參道店款式齊全、建築如藝術品；銀座店則擁有最高規格服務。</div></li>
+                        <li class="flex items-start bg-draw-bg p-3.5 border-[3px] border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-crown text-draw-yellow mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-yellow text-sm mb-1 block">Vivienne Westwood</strong>青山店為獨立旗艦店風格前衛；銀座隱身於 GINZA SIX 內。</div></li>
+                        <li class="flex items-start bg-draw-bg p-3.5 border-[3px] border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-heart text-draw-green mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-green text-sm mb-1 block">HUMAN MADE</strong>原宿店必朝聖；銀座推薦前往 Dover Street Market 挖寶。</div></li>
+                        <li class="flex items-start bg-draw-bg p-3.5 border-[3px] border-draw-ink rounded-xl shadow-draw-sm"><i class="fa-solid fa-clock text-draw-blue mt-0.5 mr-2.5 w-4 text-center text-sm"></i><div><strong class="text-draw-blue text-sm mb-1 block">Rolex</strong>日本採不定期進貨，熱門款建議多跑幾間分店。</div></li>
                     </ul>
                 </div>
             </article>
 
             <!-- 迪士尼指南 -->
-            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw">
+            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw w-full">
                 <div class="bg-[#FFE5EC] p-4 border-b-[3px] border-draw-ink flex items-center">
                     <div class="w-10 h-10 bg-white border-[3px] border-draw-ink rounded-full flex items-center justify-center mr-3 shadow-draw-sm"><i class="fa-solid fa-wand-magic-sparkles text-draw-pink text-lg"></i></div>
                     <div>
@@ -588,27 +589,27 @@
                         入住玩具總動員飯店的最大優勢為「提早15分鐘入園」，請務必善用黃金時間！
                     </p>
                     <div class="bg-draw-bg border-[3px] border-draw-ink rounded-2xl p-4 mb-5 shadow-draw-sm">
-                        <strong class="text-draw-ink text-sm block mb-3 font-black"><i class="fa-solid fa-bolt text-draw-yellow mr-1 text-lg"></i> 入園SOP：</strong>
-                        <ol class="list-decimal pl-5 text-xs space-y-2 font-bold text-draw-ink">
+                        <strong class="text-draw-ink text-sm block mb-3 font-black"><i class="fa-solid fa-bolt text-draw-yellow mr-1.5 text-lg"></i> 入園SOP：</strong>
+                        <ol class="list-decimal pl-5 text-xs space-y-2.5 font-bold text-draw-ink">
                             <li>馬上開啟官方 APP。</li>
                             <li>抽取熱門設施的 Standby Pass。</li>
-                            <li>刷卡買 DPA 節省 <span class="text-white bg-draw-pink px-1 rounded border border-draw-ink">美女與野獸</span> 排隊時間。</li>
+                            <li>刷卡買 DPA 節省 <span class="text-white bg-draw-pink px-1.5 py-0.5 rounded border border-draw-ink">美女與野獸</span> 排隊時間。</li>
                             <li>晚上提早找絕佳視角看遊行與煙火。</li>
                         </ol>
                     </div>
                     <div>
-                        <strong class="text-draw-ink text-sm block mb-3 font-black bg-draw-yellow inline-block px-2 transform rotate-1">必玩設施 MUST-RIDE</strong>
+                        <strong class="text-draw-ink text-sm block mb-3 font-black bg-draw-yellow inline-block px-2">必玩設施 MUST-RIDE</strong>
                         <ul class="text-xs font-bold text-draw-ink space-y-2.5 mt-2">
-                            <li class="flex items-center"><span class="w-2 h-2 bg-draw-pink border border-draw-ink rounded-full mr-2"></span> <strong class="text-draw-ink mr-2">美女與野獸</strong> <span class="text-[10px] text-draw-muted">(強烈建議DPA)</span></li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-draw-blue border border-draw-ink rounded-full mr-2"></span> <strong class="text-draw-ink mr-2">飛濺山</strong> <span class="text-[10px] text-draw-muted">(獨木舟)</span></li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-draw-ink border border-draw-ink rounded-full mr-2"></span> <strong class="text-draw-ink mr-2">巨雷山</strong> <span class="text-[10px] text-draw-muted">(礦車)</span></li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-draw-pink border border-draw-ink rounded-full mr-2.5"></span> <strong class="text-draw-ink mr-2">美女與野獸</strong> <span class="text-[10px] text-draw-muted">(強烈建議DPA)</span></li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-draw-blue border border-draw-ink rounded-full mr-2.5"></span> <strong class="text-draw-ink mr-2">飛濺山</strong> <span class="text-[10px] text-draw-muted">(獨木舟)</span></li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-draw-ink border border-draw-ink rounded-full mr-2.5"></span> <strong class="text-draw-ink mr-2">巨雷山</strong> <span class="text-[10px] text-draw-muted">(礦車)</span></li>
                         </ul>
                     </div>
                 </div>
             </article>
 
             <!-- 自駕指南 -->
-            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw">
+            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw w-full">
                 <div class="bg-[#E6F7EB] p-4 border-b-[3px] border-draw-ink flex items-center">
                     <div class="w-10 h-10 bg-white border-[3px] border-draw-ink rounded-full flex items-center justify-center mr-3 shadow-draw-sm"><i class="fa-solid fa-car text-draw-green text-lg"></i></div>
                     <h2 class="font-black text-draw-ink text-base tracking-wide">河口湖自駕須知</h2>
@@ -616,8 +617,8 @@
                 <div class="p-5">
                     <div class="bg-white border-[3px] border-draw-ink rounded-2xl p-4 mb-5 shadow-draw relative overflow-hidden">
                         <div class="absolute -right-2 -bottom-2 text-5xl opacity-20">🗻</div>
-                        <strong class="text-draw-ink text-sm block mb-3 font-black"><i class="fa-solid fa-camera text-draw-green mr-1"></i> 推薦景點：</strong>
-                        <ul class="list-disc pl-5 space-y-2 text-xs font-bold text-draw-muted relative z-10">
+                        <strong class="text-draw-ink text-sm block mb-3 font-black"><i class="fa-solid fa-camera text-draw-green mr-1.5"></i> 推薦景點：</strong>
+                        <ul class="list-disc pl-5 space-y-2.5 text-xs font-bold text-draw-muted relative z-10">
                             <li><strong class="text-draw-ink">大石公園：</strong> 欣賞河口湖與富士山全景。</li>
                             <li><strong class="text-draw-ink">新倉山淺間公園：</strong> 經典五重塔與富士山。</li>
                             <li><strong class="text-draw-ink">天上山纜車：</strong> 登高一覽河口湖全貌。</li>
@@ -625,19 +626,19 @@
                         </ul>
                     </div>
 
-                    <ul class="text-xs font-bold text-draw-ink space-y-3 mb-4">
-                        <li class="flex items-start"><i class="fa-solid fa-check mt-0.5 mr-2 text-draw-pink"></i><strong>必備：</strong>護照、台灣駕照正本、日文譯本。</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check mt-0.5 mr-2 text-draw-pink"></i><strong>ETC卡：</strong>建議租借，走藍色專用道，還車結算。</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check mt-0.5 mr-2 text-draw-pink"></i><strong>加油：</strong>還車前須加滿油 (Regular/紅槍)，保留收據。</li>
+                    <ul class="text-xs font-bold text-draw-ink space-y-3 mb-5">
+                        <li class="flex items-start"><i class="fa-solid fa-check mt-0.5 mr-2.5 text-draw-pink"></i><strong>必備：</strong>護照、台灣駕照正本、日文譯本。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-check mt-0.5 mr-2.5 text-draw-pink"></i><strong>ETC卡：</strong>建議租借，走藍色專用道，還車結算。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-check mt-0.5 mr-2.5 text-draw-pink"></i><strong>加油：</strong>還車前須加滿油 (Regular/紅槍)，保留收據。</li>
                     </ul>
                     <div class="bg-[#FFE5EC] border-[3px] border-draw-pink text-draw-ink p-3 rounded-xl text-[11px] font-black leading-relaxed shadow-sm">
-                        <i class="fa-solid fa-triangle-exclamation mr-1 text-draw-pink text-sm"></i> 日本為右駕靠左。若發生擦撞務必報警(110)拿事故證明，否則保險不理賠！
+                        <i class="fa-solid fa-triangle-exclamation mr-1.5 text-draw-pink text-sm"></i> 日本為右駕靠左。若發生擦撞務必報警(110)拿事故證明，否則保險不理賠！
                     </div>
                 </div>
             </article>
 
             <!-- teamLab 指南 -->
-            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw transform rotate-1">
+            <article class="bg-white border-[3px] border-draw-ink rounded-3xl overflow-hidden shadow-draw w-full">
                 <div class="bg-draw-yellow p-4 border-b-[3px] border-draw-ink flex items-center">
                     <div class="w-10 h-10 bg-white border-[3px] border-draw-ink rounded-full flex items-center justify-center mr-3 shadow-draw-sm"><i class="fa-solid fa-lightbulb text-draw-ink text-lg"></i></div>
                     <h2 class="font-black text-draw-ink text-base tracking-wide">teamLab Planets</h2>
@@ -647,7 +648,7 @@
                         主打「身臨其境」的五感體驗。館內部分區域需要涉水（水深約至成人小腿），強烈建議穿著容易捲起褲管的服裝。
                     </p>
                     <a href="https://lovetogo.tw/202501-tokyo/teamlab-planets/index.php" target="_blank" class="inline-block bg-draw-ink text-white text-sm font-black rounded-xl px-6 py-3.5 border-[3px] border-draw-ink shadow-draw draw-btn w-full">
-                        查看圖文導覽文章 <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                        查看圖文導覽文章 <i class="fa-solid fa-arrow-up-right-from-square ml-1.5"></i>
                     </a>
                 </div>
             </article>
@@ -655,29 +656,29 @@
         </section>
 
         <!-- ==================== TAB 3: WALLET (記帳) ==================== -->
-        <section id="tab-wallet" class="hidden p-5 fade-in">
+        <section id="tab-wallet" class="hidden p-5 fade-in w-full">
             
-            <div class="bg-draw-green border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mb-8 flex justify-between items-center transform -rotate-1">
+            <div class="bg-draw-green border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mb-8 flex justify-between items-center w-full">
                 <div>
-                    <h3 class="text-xs font-black text-draw-ink bg-white border-2 border-draw-ink px-2 py-0.5 rounded-lg inline-block mb-2 shadow-draw-sm">匯率計算機</h3>
+                    <h3 class="text-xs font-black text-draw-ink bg-white border-[3px] border-draw-ink px-2.5 py-1 rounded-lg inline-block mb-2.5 shadow-draw-sm">匯率計算機</h3>
                     <p class="text-3xl font-black text-white drop-shadow-md">1 JPY = <span id="display-rate" class="text-draw-yellow">0.215</span> <span class="text-sm">TWD</span></p>
                 </div>
                 <button onclick="changeRate()" class="bg-white border-[3px] border-draw-ink text-draw-ink text-sm font-black rounded-xl px-3 py-2.5 shadow-draw draw-btn"><i class="fa-solid fa-pen mr-1 text-draw-pink"></i>修改</button>
             </div>
 
             <!-- 新增記帳表單 -->
-            <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mb-8">
+            <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mb-8 w-full">
                 <h3 class="text-lg font-black text-draw-ink mb-4 border-b-[3px] border-dashed border-gray-300 pb-3"><i class="fa-solid fa-piggy-bank text-draw-yellow mr-2 text-2xl"></i>記帳撲滿</h3>
                 <div class="space-y-4">
                     <input type="text" id="expense-name" placeholder="買了什麼？ (例: 恐龍扭蛋)" class="w-full bg-draw-bg border-[3px] border-draw-ink rounded-xl p-4 text-sm font-bold focus:bg-white outline-none text-draw-ink transition-colors shadow-inner">
                     
-                    <div class="relative">
-                        <input type="text" id="expense-math" placeholder="日幣金額 (可輸入 500+200*3)" class="w-full bg-draw-bg border-[3px] border-draw-ink rounded-xl p-4 text-sm font-bold focus:bg-white outline-none text-draw-ink pr-10 transition-colors shadow-inner">
+                    <div class="relative w-full">
+                        <input type="text" id="expense-math" placeholder="日幣金額 (可輸入 500+200*3)" class="w-full bg-draw-bg border-[3px] border-draw-ink rounded-xl p-4 text-sm font-bold focus:bg-white outline-none text-draw-ink pr-12 transition-colors shadow-inner">
                         <span class="absolute right-5 top-4 text-draw-pink text-base font-black">¥</span>
                     </div>
                     
                     <!-- 拍照/上傳按鈕 -->
-                    <div>
+                    <div class="w-full">
                         <input type="file" id="expense-photo" accept="image/*" capture="environment" class="hidden" onchange="previewPhoto(event)">
                         <label for="expense-photo" class="flex items-center justify-center w-full border-[3px] border-dashed border-draw-blue bg-[#E8F6FA] rounded-xl p-4 cursor-pointer hover:bg-blue-100 transition-colors text-draw-blue text-sm font-black">
                             <i class="fa-solid fa-camera mr-2 text-xl"></i> 上傳收據或戰利品照
@@ -695,7 +696,7 @@
             </div>
 
             <!-- 記帳列表 -->
-            <div>
+            <div class="w-full">
                 <div class="flex justify-between items-end mb-4 border-b-[4px] border-draw-ink pb-2 px-1">
                     <h3 class="text-lg font-black text-draw-ink">花費紀錄</h3>
                     <div class="text-right">
@@ -710,20 +711,20 @@
         </section>
 
         <!-- ==================== TAB 4: LISTS (清單) ==================== -->
-        <section id="tab-lists" class="hidden p-5 space-y-8 fade-in">
+        <section id="tab-lists" class="hidden p-5 space-y-8 fade-in w-full">
             
             <!-- 願望景點許願池 -->
-            <div>
-                <div class="flex items-center mb-4 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw mt-2 transform rotate-1">
+            <div class="w-full">
+                <div class="flex items-center mb-4 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-2xl w-max shadow-draw mt-2">
                     <span class="text-base font-black text-draw-ink"><i class="fa-solid fa-star text-draw-yellow mr-2"></i>願望許願池 ✨</span>
                 </div>
-                <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mb-5">
+                <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mb-5 w-full">
                     <div class="space-y-4">
                         <input type="text" id="wish-name" placeholder="想去哪裡？ (例: 晴空塔)" class="w-full bg-draw-bg border-[3px] border-draw-ink rounded-xl p-4 text-sm font-bold focus:bg-white outline-none shadow-inner">
                         <input type="text" id="wish-note" placeholder="網址或備註..." class="w-full bg-draw-bg border-[3px] border-draw-ink rounded-xl p-4 text-sm font-bold focus:bg-white outline-none shadow-inner">
                         
                         <!-- 照片上傳 -->
-                        <div>
+                        <div class="w-full">
                             <input type="file" id="wish-photo" accept="image/*" class="hidden" onchange="previewWishPhoto(event)">
                             <label for="wish-photo" class="flex items-center justify-center w-full border-[3px] border-dashed border-draw-green bg-[#E6F7EB] rounded-xl p-4 cursor-pointer hover:bg-green-100 transition-colors text-draw-green text-sm font-black">
                                 <i class="fa-solid fa-image mr-2 text-xl"></i> 附上參考圖片
@@ -741,43 +742,43 @@
                 </div>
                 
                 <!-- 願望清單列表 -->
-                <div id="wish-list" class="space-y-4">
+                <div id="wish-list" class="space-y-4 w-full">
                     <!-- 動態產生 -->
                 </div>
             </div>
 
             <!-- Checklist -->
-            <div>
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl shadow-draw transform -rotate-1">
+            <div class="w-full">
+                <div class="flex justify-between items-center mb-4 w-full">
+                    <div class="flex items-center bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-2xl shadow-draw">
                         <span class="text-base font-black text-draw-ink"><i class="fa-solid fa-clipboard-check text-draw-green mr-2"></i>行前準備 🎒</span>
                     </div>
-                    <button onclick="resetChecklist()" class="text-xs font-black text-white bg-draw-ink border-[3px] border-draw-ink px-4 py-2 rounded-xl shadow-draw-sm draw-btn">重設</button>
+                    <button onclick="resetChecklist()" class="text-xs font-black text-white bg-draw-ink border-[3px] border-draw-ink px-4 py-2.5 rounded-xl shadow-draw-sm draw-btn">重設</button>
                 </div>
-                <div class="bg-white border-[3px] border-draw-ink rounded-3xl shadow-draw overflow-hidden" id="checklist-container">
+                <div class="bg-white border-[3px] border-draw-ink rounded-3xl shadow-draw overflow-hidden w-full" id="checklist-container">
                     <!-- 動態產生 -->
                 </div>
             </div>
 
             <!-- 備忘錄 -->
-            <div>
-                <div class="flex items-center mb-4 bg-white border-[3px] border-draw-ink px-4 py-2 rounded-2xl w-max shadow-draw transform rotate-1">
+            <div class="w-full">
+                <div class="flex items-center mb-4 bg-white border-[3px] border-draw-ink px-4 py-2.5 rounded-2xl w-max shadow-draw">
                     <span class="text-base font-black text-draw-ink"><i class="fa-solid fa-pen-clip text-draw-blue mr-2"></i>隨手筆記 📝</span>
                 </div>
-                <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw">
+                <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw w-full">
                     <textarea id="memo-input" rows="5" placeholder="記錄代購清單、MapCode..." class="w-full bg-draw-bg rounded-xl border-[3px] border-draw-ink p-4 font-bold focus:bg-white outline-none text-sm text-draw-ink leading-relaxed resize-none shadow-inner"></textarea>
                     <div class="flex justify-end pt-4 mt-1">
                         <button onclick="saveMemo()" class="text-sm font-black text-draw-ink bg-draw-yellow border-[3px] border-draw-ink px-6 py-3 rounded-xl shadow-draw draw-btn">儲存筆記</button>
                     </div>
                 </div>
-                <div id="memo-display" class="mt-5 bg-white border-[3px] border-dashed border-draw-ink rounded-3xl p-5 text-sm font-bold text-draw-ink leading-relaxed hidden whitespace-pre-wrap break-words shadow-draw"></div>
+                <div id="memo-display" class="mt-5 bg-white border-[3px] border-dashed border-draw-ink rounded-3xl p-5 text-sm font-bold text-draw-ink leading-relaxed hidden whitespace-pre-wrap break-words shadow-draw w-full"></div>
             </div>
         </section>
 
         <!-- ==================== TAB 5: INFO (資訊) ==================== -->
-        <section id="tab-info" class="hidden p-5 space-y-7 fade-in">
+        <section id="tab-info" class="hidden p-5 space-y-7 fade-in w-full">
             
-            <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mt-2">
+            <div class="bg-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw mt-2 w-full">
                 <h3 class="text-lg font-black text-draw-ink mb-4 border-b-[3px] border-dashed border-gray-300 pb-3"><i class="fa-solid fa-link mr-2 text-draw-blue"></i>實用小幫手</h3>
                 <div class="grid grid-cols-2 gap-4">
                     <a href="https://tenki.jp/forecast/3/16/4410/13108/" target="_blank" class="flex flex-col items-center justify-center p-5 bg-[#E8F6FA] border-[3px] border-draw-ink rounded-2xl shadow-draw draw-btn transition-all">
@@ -791,9 +792,9 @@
                 </div>
             </div>
 
-            <div class="bg-draw-ink text-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw transform -rotate-1">
+            <div class="bg-draw-ink text-white border-[3px] border-draw-ink rounded-3xl p-5 shadow-draw w-full">
                 <h3 class="text-lg font-black text-draw-yellow mb-4 border-b-2 border-gray-600 pb-3"><i class="fa-solid fa-phone mr-2"></i>求救專線 🚨</h3>
-                <ul class="space-y-4 font-bold text-sm tracking-wide">
+                <ul class="space-y-5 font-bold text-sm tracking-wide">
                     <li class="flex justify-between items-center">
                         <span class="text-gray-300">警察局 (報案/車禍)</span>
                         <a href="tel:110" class="text-draw-ink font-black bg-white border-[3px] border-draw-ink px-4 py-1.5 rounded-xl shadow-draw-sm draw-btn">110</a>
@@ -809,7 +810,7 @@
                 </ul>
             </div>
 
-            <div class="bg-[#FFE5EC] border-[3px] border-draw-pink rounded-3xl p-5 shadow-draw relative">
+            <div class="bg-[#FFE5EC] border-[3px] border-draw-pink rounded-3xl p-5 shadow-draw relative w-full">
                 <h3 class="text-lg font-black text-draw-pink mb-4"><i class="fa-solid fa-circle-exclamation mr-2"></i>千萬要注意！</h3>
                 <ul class="text-xs text-draw-ink font-bold space-y-4 leading-relaxed">
                     <li class="flex items-start"><i class="fa-solid fa-ban text-draw-pink mt-0.5 mr-2 text-base"></i><strong class="text-draw-pink text-sm bg-white px-1 border border-draw-pink rounded">嚴禁攜帶肉類製品</strong>（含肉乾、泡麵肉塊等）返回台灣，違者高額罰款。</li>
@@ -823,11 +824,11 @@
 
     </main>
 
-    <!-- Bottom Navigation (手繪貼紙風格) -->
-    <nav class="bg-white border-t-[4px] border-draw-ink absolute bottom-0 w-full z-30 pb-safe shadow-[0_-4px_0_rgba(33,37,41,0.05)]">
+    <!-- Bottom Navigation (無上方黑線) -->
+    <nav class="bg-draw-bg absolute bottom-0 w-full z-30 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)] border-t border-gray-200">
         <div class="flex justify-around items-center px-2 py-2">
             <button onclick="switchTab('plan')" id="nav-plan" class="nav-btn flex flex-col items-center w-14 transition-colors text-draw-ink">
-                <div class="bg-draw-bg border-[3px] border-draw-ink p-2.5 rounded-2xl mb-1 shadow-draw"><i class="fa-solid fa-map-location-dot text-2xl text-draw-pink"></i></div>
+                <div class="bg-white border-[3px] border-draw-ink p-2.5 rounded-2xl mb-1 shadow-draw"><i class="fa-solid fa-map-location-dot text-2xl text-draw-pink"></i></div>
                 <span class="text-[11px] font-black">行程</span>
             </button>
             <button onclick="switchTab('guide')" id="nav-guide" class="nav-btn flex flex-col items-center w-14 transition-colors text-draw-muted">
@@ -892,7 +893,7 @@
                 navBtn.querySelector('span').classList.add('font-bold');
                 
                 let iconDiv = navBtn.querySelector('div');
-                iconDiv.classList.remove('bg-draw-bg', 'border-draw-ink', 'shadow-draw');
+                iconDiv.classList.remove('bg-white', 'border-draw-ink', 'shadow-draw');
                 iconDiv.classList.add('bg-transparent', 'border-transparent');
                 
                 let icon = iconDiv.querySelector('i');
@@ -909,7 +910,7 @@
             
             let targetIconDiv = targetNavBtn.querySelector('div');
             targetIconDiv.classList.remove('bg-transparent', 'border-transparent');
-            targetIconDiv.classList.add('bg-draw-bg', 'border-draw-ink', 'shadow-draw');
+            targetIconDiv.classList.add('bg-white', 'border-draw-ink', 'shadow-draw');
             
             let targetIcon = targetIconDiv.querySelector('i');
             targetIcon.classList.add(navColors[tabId].iconColor);
@@ -1052,7 +1053,7 @@
             let totalTWD = 0;
 
             if(expenses.length === 0) {
-                container.innerHTML = '<p class="text-center text-sm font-bold text-draw-muted py-8 bg-white border-[3px] border-dashed border-gray-300 rounded-3xl">撲滿空空的，還沒有花錢喔！</p>';
+                container.innerHTML = '<p class="text-center text-sm font-bold text-draw-muted py-8 bg-white border-[3px] border-dashed border-gray-300 rounded-3xl w-full">撲滿空空的，還沒有花錢喔！</p>';
             }
 
             expenses.forEach(exp => {
@@ -1064,7 +1065,7 @@
                     `<div class="w-16 h-16 bg-draw-bg rounded-xl flex items-center justify-center text-draw-ink/30 border-[3px] border-dashed border-draw-ink/30"><i class="fa-solid fa-receipt text-2xl"></i></div>`;
 
                 const html = `
-                <div class="bg-white p-4 rounded-3xl border-[3px] border-draw-ink shadow-draw flex items-center gap-4 fade-in">
+                <div class="bg-white p-4 rounded-3xl border-[3px] border-draw-ink shadow-draw flex items-center gap-4 fade-in w-full">
                     ${photoHTML}
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-start">
@@ -1172,7 +1173,7 @@
                 return;
             }
 
-            wishes.forEach((wish, index) => {
+            wishes.forEach((wish) => {
                 let displayNote = "";
                 if(wish.note) {
                     const escapedNote = wish.note.replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1186,10 +1187,8 @@
                     `<img src="${wish.photo}" class="w-16 h-16 object-cover rounded-xl border-[3px] border-draw-ink cursor-pointer mr-3 shadow-draw-sm" onclick="window.open('${wish.photo}')">` : 
                     ``;
 
-                const rot = (index % 2 === 0) ? '-rotate-1' : 'rotate-1';
-
                 const html = `
-                <div class="bg-white p-4 rounded-3xl border-[3px] border-draw-ink shadow-draw flex items-start fade-in transform ${rot} hover:rotate-0 transition-transform">
+                <div class="bg-white p-4 rounded-3xl border-[3px] border-draw-ink shadow-draw flex items-start fade-in w-full">
                     ${photoHTML}
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-start">
@@ -1228,7 +1227,7 @@
                 const lineThrough = savedData[index] ? 'line-through text-draw-muted' : 'text-draw-ink';
                 
                 const html = `
-                <label class="flex items-center p-4 border-b-[3px] border-draw-ink/10 last:border-0 cursor-pointer hover:bg-gray-50 transition-colors">
+                <label class="flex items-center p-4 border-b-[3px] border-draw-ink/10 last:border-0 cursor-pointer hover:bg-gray-50 transition-colors w-full">
                     <input type="checkbox" onchange="toggleCheck(${index}, this)" ${isChecked} class="w-6 h-6 text-draw-green border-[3px] border-draw-ink rounded focus:ring-draw-green focus:ring-2 accent-draw-green">
                     <span id="check-text-${index}" class="ml-4 text-sm font-bold ${lineThrough} transition-all duration-200">${item}</span>
                 </label>
