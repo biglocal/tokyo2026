@@ -140,15 +140,15 @@
                 </div>
             </div>
 
-            <!-- 每日切換標籤列 (滿版寬度無外框) -->
-            <div class="sticky top-0 z-10 bg-draw-bg/95 backdrop-blur-md pt-3 pb-3 -mx-3 px-3 sm:-mx-5 sm:px-5 border-b border-gray-200 w-screen max-w-full">
+            <!-- 每日切換標籤列 (無邊框滿版) -->
+            <div class="sticky top-0 z-10 bg-draw-bg/95 backdrop-blur-md pt-3 pb-3 -mx-4 px-4 sm:-mx-5 sm:px-5 border-b border-gray-200 w-screen max-w-full">
                 <div class="flex overflow-x-auto no-scrollbar space-x-2 pb-1">
-                    <button onclick="switchPlanDay(1)" id="btn-d1" class="plan-day-btn shrink-0 w-16 h-10 rounded-xl font-black text-sm transition-colors bg-draw-yellow text-white shadow-sm">D1</button>
-                    <button onclick="switchPlanDay(2)" id="btn-d2" class="plan-day-btn shrink-0 w-16 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50 border border-gray-100">D2</button>
-                    <button onclick="switchPlanDay(3)" id="btn-d3" class="plan-day-btn shrink-0 w-16 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50 border border-gray-100">D3</button>
-                    <button onclick="switchPlanDay(4)" id="btn-d4" class="plan-day-btn shrink-0 w-16 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50 border border-gray-100">D4</button>
-                    <button onclick="switchPlanDay(5)" id="btn-d5" class="plan-day-btn shrink-0 w-16 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50 border border-gray-100">D5</button>
-                    <button onclick="switchPlanDay(6)" id="btn-d6" class="plan-day-btn shrink-0 w-16 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50 border border-gray-100">D6</button>
+                    <button onclick="switchPlanDay(1)" id="btn-d1" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-draw-yellow text-draw-ink shadow-sm">D1</button>
+                    <button onclick="switchPlanDay(2)" id="btn-d2" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50">D2</button>
+                    <button onclick="switchPlanDay(3)" id="btn-d3" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50">D3</button>
+                    <button onclick="switchPlanDay(4)" id="btn-d4" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50">D4</button>
+                    <button onclick="switchPlanDay(5)" id="btn-d5" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50">D5</button>
+                    <button onclick="switchPlanDay(6)" id="btn-d6" class="plan-day-btn shrink-0 w-14 h-10 rounded-xl font-black text-sm transition-colors bg-white text-draw-muted shadow-sm hover:bg-gray-50">D6</button>
                 </div>
             </div>
 
@@ -1094,8 +1094,10 @@
                 
                 let btn = document.getElementById(`btn-d${i}`);
                 if(btn) {
-                    btn.classList.remove('bg-draw-yellow', 'text-draw-ink', 'shadow-draw-pressed', 'translate-y-[4px]');
-                    btn.classList.add('bg-white', 'text-draw-muted', 'shadow-sm');
+                    // 移除所有啟動狀態，確保不會有任何衝突殘留
+                    btn.classList.remove('bg-draw-yellow', 'text-draw-ink', 'text-white', 'shadow-draw-pressed', 'translate-y-[4px]');
+                    // 加上未啟動狀態
+                    btn.classList.add('bg-white', 'text-draw-muted', 'hover:bg-gray-50');
                 }
             }
             
@@ -1104,8 +1106,10 @@
             
             let targetBtn = document.getElementById(`btn-d${dayNum}`);
             if(targetBtn) {
-                targetBtn.classList.remove('bg-white', 'text-draw-muted', 'shadow-sm');
-                targetBtn.classList.add('bg-draw-yellow', 'text-draw-ink', 'shadow-draw-pressed', 'translate-y-[4px]');
+                // 啟動時必須移除 hover:bg-gray-50 以防手機版 hover 卡住覆蓋背景色
+                targetBtn.classList.remove('bg-white', 'text-draw-muted', 'hover:bg-gray-50');
+                // 加上啟動狀態：黃底黑字
+                targetBtn.classList.add('bg-draw-yellow', 'text-draw-ink');
             }
         }
 
