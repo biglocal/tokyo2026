@@ -516,14 +516,15 @@
           let html = '';
           
           rows.forEach((row, i) => {
-            if(i === 0) return; // 略過標題列
             if(row.c && row.c[0]) {
               const title = row.c[0].v || '';
               let detailsHtml = '';
               
-              for(let j=1; j<row.c.length; j++) {
-                  if(row.c[j] && row.c[j].v) {
-                      const val = String(row.c[j].v);
+          for(let j=1; j<row.c.length; j++) {
+                  // 💡 優先使用 .f (格式化後的文字，保留換行)，若無則使用 .v (原始值)
+                  if(row.c[j] && (row.c[j].v || row.c[j].f)) {
+                      const val = String(row.c[j].f || row.c[j].v);
+                      
                       if(val.startsWith('http')) {
                           detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-cartoon-sm mt-2 text-xs font-black click-effect w-full text-center"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
                       } else {
