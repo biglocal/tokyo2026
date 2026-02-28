@@ -17,21 +17,14 @@
       theme: {
         extend: {
           fontFamily: { sans: ['"M PLUS Rounded 1c"', 'sans-serif'] },
-          colors: { 
-            draw: { bg: '#FDFCF8', ink: '#2B2D42', yellow: '#FFD166', pink: '#EF476F', blue: '#118AB2', green: '#06D6A0', muted: '#6C757D' } 
-          },
-          boxShadow: { 
-            'cartoon': '3px 3px 0px 0px #2B2D42', 
-            'cartoon-sm': '2px 2px 0px 0px #2B2D42',
-            'nav': '0 -4px 20px rgba(0, 0, 0, 0.05)'
-          }
+          colors: { draw: { bg: '#FDFCF8', ink: '#2B2D42', yellow: '#FFD166', pink: '#EF476F', blue: '#118AB2', green: '#06D6A0', muted: '#6C757D' } },
+          boxShadow: { 'cartoon': '3px 3px 0px 0px #2B2D42', 'cartoon-sm': '2px 2px 0px 0px #2B2D42' }
         }
       }
     }
   </script>
   <style>
     body { background-color: #FDFCF8; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
-    /* 質感點陣背景 */
     body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(#E2E2E2 1.5px, transparent 1.5px); background-size: 24px 24px; z-index: -1; pointer-events: none; }
     
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -48,16 +41,19 @@
     details > summary { list-style: none; }
     details > summary::-webkit-details-marker { display: none; }
     
-    /* 避免底部導覽列遮擋內容 */
-    .pb-safe { padding-bottom: calc(85px + env(safe-area-inset-bottom)); }
+    /* 避免底部導覽列遮擋內容 (預留高度) */
+    .pb-safe { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
+    
+    /* 無黑線底部導覽列漸層融合效果 */
+    .nav-gradient { background: linear-gradient(to top, #FDFCF8 85%, rgba(253,252,248,0.8) 95%, transparent); }
   </style>
 </head>
 <body class="text-draw-ink font-sans h-screen flex flex-col m-0 p-0 overflow-hidden">
 
   <header class="pt-12 pb-3 px-5 flex justify-between items-end shrink-0 z-20 relative">
     <div>
-      <h1 class="text-3xl font-black tracking-wide">Tokyo 2026 🇯🇵</h1>
-      <p class="text-[11px] font-bold text-draw-pink mt-1 bg-white border-2 border-draw-ink shadow-cartoon-sm inline-block px-3 py-1 rounded-full">東京大冒險</p>
+      <h1 class="text-3xl font-black tracking-wide">Tokyo 2026</h1>
+      <p class="text-[11px] font-bold text-draw-pink mt-1 bg-white border-2 border-draw-ink shadow-cartoon-sm inline-block px-3 py-1 rounded-full">東京大冒險 🇯🇵</p>
     </div>
     <div class="bg-draw-yellow text-draw-ink border-2 border-draw-ink shadow-cartoon-sm px-3 py-1.5 rounded-xl font-black flex items-center">
       <i class="fa-solid fa-calendar-day mr-2"></i><span class="text-xs">3/12 - 3/17</span>
@@ -69,9 +65,9 @@
     <section id="tab-plan" class="fade-in space-y-5">
       
       <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 relative mt-3 mb-5">
-        <div class="absolute -top-3 left-4 bg-draw-blue text-white text-[11px] font-black px-4 py-1 border-2 border-draw-ink rounded-lg shadow-sm">預訂快訊 📌</div>
-        <div id="sheet-content" class="space-y-3 mt-2 text-sm font-bold">
-          <div class="text-center text-draw-muted text-xs animate-pulse py-2">正在從 Google 試算表載入資料...</div>
+        <div class="absolute -top-3 left-4 bg-draw-blue text-white text-[11px] font-black px-4 py-1 border-2 border-draw-ink shadow-sm rounded-lg"><i class="fa-solid fa-bookmark mr-1"></i> 預訂快訊</div>
+        <div id="sheet-content" class="mt-2 space-y-3">
+          <div class="text-center text-draw-muted text-xs animate-pulse py-4 font-bold">正在施展魔法載入資料中... ✨</div>
         </div>
       </div>
 
@@ -96,19 +92,19 @@
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
               利木津巴士直達飯店門口
-              <button onclick="openImg('https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E6%99%9A%E4%B8%8A8.03.44.png?raw=true')" class="block mt-2 bg-draw-blue text-white px-3 py-1 rounded-lg border-2 border-draw-ink shadow-cartoon-sm click-effect"><i class="fa-solid fa-bus mr-1"></i> 巴士時刻表</button>
+              <button onclick="openImg('https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E6%99%9A%E4%B8%8A8.03.44.png?raw=true')" class="mt-2 bg-draw-blue text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-cartoon-sm click-effect block w-max"><i class="fa-solid fa-bus mr-1"></i> 巴士時刻表</button>
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
               <strong class="text-sm block mb-1">伊克斯皮兒莉 (Ikspiari) 午餐</strong>
-              非常大型的歐風商場，六個人在這裡找間寬敞的餐廳解決午餐最為舒適，選擇也非常多。
-              <div class="mt-2 inline-block bg-black text-white px-2 py-1 rounded border-2 border-draw-ink text-[10px]"><i class="fa-solid fa-bowl-food"></i> 附近有一蘭拉麵</div>
+              非常大型的歐風商場，六個人在這裡找間寬敞的餐廳解決午餐最為舒適。
+              <div class="mt-2 inline-block bg-black text-white px-2 py-1 rounded border-2 border-draw-ink text-[10px]"><i class="fa-solid fa-bowl-food mr-1"></i>附近有一蘭拉麵</div>
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-draw-green border-2 border-draw-ink rounded-full"></div>
               <span class="bg-draw-green text-white px-2 py-0.5 rounded border-2 border-draw-ink mr-2">15:00</span> Check-in 迪士尼飯店
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
-              視體力要不要購買傍晚票進迪士尼樂園，看夜間遊行與煙火 🎆
-              <div class="bg-gray-100 p-2 rounded-xl border-2 border-draw-ink mt-2 text-[10px]">
+              視體力購買傍晚票進迪士尼樂園，看夜間遊行與煙火 🎆
+              <div class="bg-gray-100 p-3 rounded-xl border-2 border-draw-ink mt-2 text-[10px] leading-relaxed">
                 <strong class="text-draw-pink block mb-1">迪士尼傍晚票價：</strong>
                 平日 17:00起：¥4,500 - ¥6,200<br>
                 假日 15:00起：¥6,500 - ¥8,700
@@ -121,23 +117,23 @@
       <div id="day-2" class="day-content hidden fade-in space-y-4">
         <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4">
           <h3 class="font-black text-draw-pink border-b-2 border-dashed border-gray-300 pb-2 mb-3"><i class="fa-solid fa-wand-magic-sparkles text-xl mr-2"></i> Disney Land 全日</h3>
-          <ul class="space-y-4 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
+          <ul class="space-y-5 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-draw-pink border-2 border-draw-ink rounded-full"></div>
               <span class="bg-draw-pink text-white px-2 py-0.5 rounded border-2 border-draw-ink mr-2">08:00 前</span> 抵達門口 (Happy Entry 08:30-08:45放人)
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
-              <button onclick="openImg('https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E4%B8%8B%E5%8D%883.23.20.png')" class="w-full bg-draw-yellow text-draw-ink px-3 py-2 rounded-xl border-2 border-draw-ink shadow-cartoon-sm click-effect mb-2"><i class="fa-solid fa-map mr-1"></i> 點擊看入園地圖</button>
+              <button onclick="openImg('https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E4%B8%8B%E5%8D%883.23.20.png')" class="w-full bg-draw-yellow text-draw-ink px-3 py-2.5 rounded-xl border-2 border-draw-ink shadow-cartoon-sm click-effect mb-1"><i class="fa-solid fa-map mr-1"></i> 點擊查看入園地圖</button>
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
               <strong class="text-draw-pink text-sm block mb-2">🎯 必玩重點設施：</strong>
               <div class="flex flex-wrap gap-2">
-                <span class="border-2 border-draw-ink px-2 py-1 rounded bg-white">🌹 美女與野獸</span>
-                <span class="border-2 border-draw-ink px-2 py-1 rounded bg-white">💦 飛濺山</span>
-                <span class="border-2 border-draw-ink px-2 py-1 rounded bg-white">🚂 巨雷山</span>
+                <span class="border-2 border-draw-ink px-2.5 py-1 rounded bg-white shadow-sm">🌹 美女與野獸</span>
+                <span class="border-2 border-draw-ink px-2.5 py-1 rounded bg-white shadow-sm">💦 飛濺山</span>
+                <span class="border-2 border-draw-ink px-2.5 py-1 rounded bg-white shadow-sm">🚂 巨雷山</span>
               </div>
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
-              <button onclick="openImg('https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E4%B8%8B%E5%8D%883.23.32.png')" class="w-full bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-cartoon-sm click-effect mb-2"><i class="fa-solid fa-route mr-1"></i> 點擊看遊行路線</button>
+              <button onclick="openImg('https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%2026-02-22%20%E4%B8%8B%E5%8D%883.23.32.png')" class="w-full bg-draw-blue text-white px-3 py-2.5 rounded-xl border-2 border-draw-ink shadow-cartoon-sm click-effect"><i class="fa-solid fa-route mr-1"></i> 查看遊行路線</button>
             </li>
           </ul>
         </div>
@@ -145,46 +141,46 @@
 
       <div id="day-3" class="day-content hidden fade-in space-y-4">
         <div class="bg-draw-yellow border-2 border-draw-ink shadow-cartoon rounded-2xl p-4 text-center">
-            <h3 class="font-black text-draw-ink text-sm mb-3"><i class="fa-solid fa-map-location-dot"></i> 原宿/表參道 散步地圖</h3>
-            <div class="bg-white rounded-xl border-2 border-draw-ink h-40 relative overflow-hidden text-[10px] font-black shadow-inner">
-                <div class="absolute top-1/2 w-full border-t-4 border-dashed border-gray-300"></div>
-                <div class="absolute left-1/3 h-full border-l-4 border-dashed border-gray-300"></div>
-                <span class="absolute top-[40%] right-2 text-gray-400">表參道</span>
-                <span class="absolute bottom-2 left-[36%] text-gray-400">明治通</span>
+            <h3 class="font-black text-draw-ink text-sm mb-3"><i class="fa-solid fa-map-location-dot mr-1"></i> 原宿 / 表參道 散步地圖</h3>
+            <div class="bg-white rounded-xl border-2 border-draw-ink h-48 relative overflow-hidden text-[10px] font-black shadow-inner">
+                <div class="absolute top-[45%] w-full border-t-4 border-dashed border-gray-300"></div>
+                <div class="absolute left-[35%] h-full border-l-4 border-dashed border-gray-300"></div>
+                <span class="absolute top-[36%] right-2 text-gray-400">表參道</span>
+                <span class="absolute bottom-2 left-[38%] text-gray-400">明治通/貓街</span>
                 
-                <div class="absolute top-2 left-2 flex flex-col items-center">
-                    <span class="bg-black text-white px-1.5 py-0.5 rounded border border-black shadow-sm">一蘭拉麵</span>
+                <div class="absolute top-2 left-2">
+                    <span class="bg-black text-white px-2 py-1 rounded border-2 border-draw-ink shadow-sm">一蘭拉麵</span>
                 </div>
-                <div class="absolute top-4 right-6 flex flex-col items-center">
-                    <span class="bg-green-500 text-white px-1.5 py-0.5 rounded border border-black shadow-sm">Human Made</span>
+                <div class="absolute top-4 right-4">
+                    <span class="bg-green-500 text-white px-2 py-1 rounded border-2 border-draw-ink shadow-sm">Human Made</span>
                 </div>
-                <div class="absolute bottom-4 left-2 flex flex-col items-center">
-                    <span class="bg-pink-500 text-white px-1.5 py-0.5 rounded border border-black shadow-sm">Chanel</span>
+                <div class="absolute bottom-4 left-2">
+                    <span class="bg-pink-500 text-white px-2 py-1 rounded border-2 border-draw-ink shadow-sm">Chanel</span>
                 </div>
-                <div class="absolute bottom-3 right-4 flex flex-col items-center">
-                    <span class="bg-yellow-400 text-black px-1.5 py-0.5 rounded border border-black shadow-sm">Vivienne W.</span>
+                <div class="absolute bottom-4 right-4">
+                    <span class="bg-yellow-400 text-black px-2 py-1 rounded border-2 border-draw-ink shadow-sm">Vivienne W.</span>
                 </div>
-                <div class="absolute top-[42%] left-1/2 flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2">
-                    <span class="bg-blue-500 text-white px-1.5 py-0.5 rounded border border-black shadow-sm">Rolex</span>
+                <div class="absolute top-[45%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 mt-3">
+                    <span class="bg-blue-500 text-white px-2 py-1 rounded border-2 border-draw-ink shadow-sm">Rolex</span>
                 </div>
             </div>
         </div>
 
         <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4">
-          <ul class="space-y-5 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
+          <ul class="space-y-6 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-draw-pink border-2 border-draw-ink rounded-full"></div>
               <span class="bg-draw-yellow px-2 py-0.5 rounded border-2 border-draw-ink mr-2">08:30 出發</span> 豪德寺 🐈
-              <img src="https://biglocal.github.io/tokyo2026/day3_cat.png" onclick="openImg(this.src)" class="img-prop mt-2 h-24 object-cover" onerror="this.style.display='none'">
-              <a href="https://tokyo.letsgojp.com/archives/762222/" target="_blank" class="inline-block mt-2 text-draw-blue underline"><i class="fa-solid fa-link"></i> 豪德寺攻略</a>
+              <img src="https://biglocal.github.io/tokyo2026/day3_cat.png" onclick="openImg(this.src)" class="img-prop mt-3 h-28 object-cover" onerror="this.style.display='none'">
+              <a href="https://tokyo.letsgojp.com/archives/762222/" target="_blank" class="inline-block mt-2 text-draw-blue bg-blue-50 px-2 py-1 rounded border border-blue-200"><i class="fa-solid fa-link"></i> 豪德寺攻略</a>
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
-              <strong class="text-sm block mb-1">原宿 ➔ 青山 / 表參道</strong>
-              <span class="text-[10px] text-draw-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-200"><i class="fa-solid fa-train"></i> 交通約 30 分鐘</span>
-              <p class="mt-2 text-draw-pink">美食：LUKE'S LOBSTER 表參道貓街店</p>
+              <strong class="text-sm block mb-1.5">原宿 ➔ 青山 / 表參道</strong>
+              <span class="text-[10px] text-white bg-draw-blue px-2 py-1 rounded border-2 border-draw-ink shadow-cartoon-sm inline-block"><i class="fa-solid fa-train"></i> 交通約 30 分鐘</span>
+              <p class="mt-2 text-draw-pink"><i class="fa-solid fa-utensils"></i> 美食：LUKE'S LOBSTER 表參道貓街店</p>
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
               <strong class="block text-sm">唐橋桌球 (代代木)</strong>
-              營業時間：10:00 - 19:00
+              <span class="text-draw-muted block mt-1">營業時間：10:00 - 19:00</span>
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
               <strong class="block text-sm">澀谷 & SHIBUYA SKY 夜景 🌃</strong>
@@ -197,58 +193,60 @@
       </div>
 
       <div id="day-4" class="day-content hidden fade-in space-y-4">
-        <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-2 h-56 overflow-hidden">
+        <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-2 h-64 overflow-hidden">
             <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d828690.697523924!2d138.6473187285141!3d35.63155823795329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x60188ed836ca149b%3A0xc3312e541b6ec26f!2z5pel5pys44CSMTMwLTAwMDIgVG9reW8sIFN1bWlkYSBDaXR5LCBOYXJpaGlyYSwgM-S4geebruKIkjfjiJI1!3m2!1d35.709322!2d139.8143242!4m5!1s0x60195e3474fc32e1%3A0xbd85f675bc0cbb57!2z5rKz5Y-j5rmW!3m2!1d35.5170954!2d138.7517855!5e0!3m2!1szh-TW!2stw!4v1700000000000" class="rounded-xl border-2 border-draw-ink pointer-events-none"></iframe>
         </div>
         <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4">
-          <ul class="space-y-4 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
+          <ul class="space-y-5 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-draw-green border-2 border-draw-ink rounded-full"></div>
-              <span class="bg-draw-green text-white px-2 py-0.5 rounded border-2 border-draw-ink mr-2">06:30</span> 前往河口湖 🗻
+              <span class="bg-draw-green text-white px-2 py-0.5 rounded border-2 border-draw-ink mr-2">06:30</span> 驅車前往河口湖 🗻
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
               <strong class="text-sm block mb-1">晚餐：AFURI 拉麵 🍜</strong>
               南町田 Grandberry Park店
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-draw-ink border-2 border-draw-ink rounded-full"></div>
-              結束後還車 🚗
+              結束後還車 (吾妻橋) 🚗
             </li>
           </ul>
         </div>
       </div>
 
       <div id="day-5" class="day-content hidden fade-in space-y-4">
-        <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4 flex justify-between items-center text-center font-black text-xs">
-            <div><i class="fa-solid fa-torii-gate text-draw-pink text-2xl mb-1"></i><br>淺草寺</div>
+        <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 flex justify-between items-center text-center font-black text-[11px]">
+            <div><i class="fa-solid fa-torii-gate text-draw-pink text-3xl mb-2"></i><br>淺草寺</div>
             <i class="fa-solid fa-arrow-right text-gray-300"></i>
-            <div><i class="fa-solid fa-gamepad text-draw-blue text-2xl mb-1"></i><br>秋葉原</div>
+            <div><i class="fa-solid fa-gamepad text-draw-blue text-3xl mb-2"></i><br>秋葉原</div>
             <i class="fa-solid fa-arrow-right text-gray-300"></i>
-            <div><i class="fa-solid fa-train text-draw-green text-2xl mb-1"></i><br>東京站</div>
+            <div><i class="fa-solid fa-train text-draw-green text-3xl mb-2"></i><br>東京站</div>
             <i class="fa-solid fa-arrow-right text-gray-300"></i>
-            <div><i class="fa-solid fa-gem text-draw-yellow text-2xl mb-1"></i><br>銀座</div>
+            <div><i class="fa-solid fa-gem text-draw-yellow text-3xl mb-2"></i><br>銀座</div>
         </div>
-        <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4 text-xs font-bold">
-            <p><i class="fa-solid fa-train-subway text-draw-blue mr-1"></i> 各點交通時間大約抓 15~20 分鐘。</p>
-            <div class="mt-3 bg-gray-50 p-3 rounded-xl border border-dashed border-gray-300">
-                <strong class="text-draw-pink block mb-1">周邊名店標記 (銀座)：</strong>
-                <span class="inline-block bg-pink-200 px-1.5 py-0.5 rounded border border-black mb-1 mr-1">Chanel</span>
-                <span class="inline-block bg-yellow-200 px-1.5 py-0.5 rounded border border-black mb-1 mr-1">Vivienne Westwood</span>
-                <span class="inline-block bg-green-200 px-1.5 py-0.5 rounded border border-black mb-1 mr-1">Human Made</span>
-                <span class="inline-block bg-blue-200 px-1.5 py-0.5 rounded border border-black mb-1 mr-1">Rolex</span>
+        <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4 text-xs font-bold leading-relaxed">
+            <p class="bg-blue-50 px-3 py-2 rounded-xl border border-blue-200 inline-block mb-3"><i class="fa-solid fa-train-subway text-draw-blue mr-1"></i> 各點交通時間大約抓 15~20 分鐘。</p>
+            <div class="bg-gray-50 p-4 rounded-xl border-2 border-dashed border-gray-300">
+                <strong class="text-draw-pink block mb-2 text-sm"><i class="fa-solid fa-map-pin"></i> 周邊名店標記 (銀座)：</strong>
+                <div class="flex flex-wrap gap-2">
+                    <span class="inline-block bg-pink-200 px-2 py-1 rounded border border-black shadow-sm">Chanel</span>
+                    <span class="inline-block bg-yellow-200 px-2 py-1 rounded border border-black shadow-sm">Vivienne Westwood</span>
+                    <span class="inline-block bg-green-200 px-2 py-1 rounded border border-black shadow-sm">Human Made</span>
+                    <span class="inline-block bg-blue-200 px-2 py-1 rounded border border-black shadow-sm">Rolex</span>
+                </div>
             </div>
         </div>
       </div>
 
       <div id="day-6" class="day-content hidden fade-in space-y-4">
         <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4">
-          <ul class="space-y-5 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
+          <ul class="space-y-6 text-xs font-bold relative border-l-2 border-draw-ink ml-2 pl-4">
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
-              <span class="bg-draw-yellow px-2 py-0.5 rounded border-2 border-draw-ink mr-2">09:00</span> 起床整理，機場接送至成田機場
+              <span class="bg-draw-yellow px-2 py-0.5 rounded border-2 border-draw-ink mr-2 text-black">09:00</span> 起床整理，機場接送至成田機場
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full"></div>
-              <span class="text-draw-pink">13:45 起飛</span> JX801 (NRT T2 ➔ TPE)
+              <span class="text-white bg-draw-pink px-2 py-0.5 rounded border-2 border-draw-ink shadow-cartoon-sm inline-block mb-1">13:45 起飛</span><br> JX801 (NRT T2 ➔ TPE)
             </li>
             <li class="relative"><div class="absolute -left-[23px] top-0.5 w-3 h-3 bg-draw-ink border-2 border-draw-ink rounded-full"></div>
-              抵達台灣，搭乘專車平安返家 🏡
+              <span class="bg-draw-ink text-white px-2 py-0.5 rounded mr-2">16:50</span> 抵達台灣，搭乘專車平安返家 🏡
             </li>
           </ul>
         </div>
@@ -256,13 +254,13 @@
     </section>
 
     <section id="tab-guide" class="hidden fade-in space-y-4">
-      <h2 class="font-black text-xl mb-2"><i class="fa-solid fa-book-open text-draw-yellow mr-2"></i> 深度導覽</h2>
+      <h2 class="font-black text-xl mb-3"><i class="fa-solid fa-book-open text-draw-yellow mr-2"></i> 深度導覽</h2>
       
-      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none">
-        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-pink-50 rounded-t-xl group-open:rounded-b-none">
-          <span>🛍️ 原宿 / 表參道 / 銀座 逛街清單</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none overflow-hidden">
+        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-pink-50 transition-colors">
+          <span>🛍️ 逛街戰術分析</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
         </summary>
-        <div class="p-4 text-xs font-bold space-y-3 bg-white rounded-b-xl leading-relaxed">
+        <div class="p-4 text-xs font-bold space-y-3 bg-white leading-relaxed">
           <p><span class="bg-pink-200 px-2 py-0.5 rounded border border-black text-black inline-block w-full mb-1">Chanel</span> 銀座旗艦店貨源較足，表參道店建築很美值得一看。</p>
           <p><span class="bg-yellow-200 px-2 py-0.5 rounded border border-black text-black inline-block w-full mb-1">Vivienne Westwood</span> 青山旗艦店款式獨特；銀座店隱身於 GINZA SIX 內。</p>
           <p><span class="bg-green-200 px-2 py-0.5 rounded border border-black text-black inline-block w-full mb-1">Human Made</span> 原宿店為潮流聖地，常須排隊；銀座可前往 Dover Street Market (DSM)。</p>
@@ -271,71 +269,71 @@
         </div>
       </details>
 
-      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none">
-        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-blue-50 rounded-t-xl group-open:rounded-b-none">
+      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none overflow-hidden">
+        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-blue-50 transition-colors">
           <span>🗻 河口湖 推薦景點</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
         </summary>
-        <div class="p-4 text-xs font-bold space-y-2 bg-white rounded-b-xl">
-          <li><strong class="text-draw-blue">新倉山淺間公園：</strong>經典的五重塔與富士山同框絕景，需爬一段階梯。</li>
-          <li><strong class="text-draw-blue">大石公園：</strong>位於湖畔，有平坦的步道與四季花卉。</li>
-          <li><strong class="text-draw-blue">下吉田商店街：</strong>知名網紅拍照路口，拍照時<strong class="text-red-500">務必注意來車，遵守交通規則</strong>。</li>
+        <div class="p-4 text-xs font-bold space-y-3 bg-white">
+          <li class="list-none flex items-start"><i class="fa-solid fa-location-dot text-draw-pink mt-1 mr-2"></i><div><strong class="text-draw-blue">新倉山淺間公園：</strong>經典的五重塔與富士山同框絕景，需爬一段階梯。</div></li>
+          <li class="list-none flex items-start"><i class="fa-solid fa-location-dot text-draw-pink mt-1 mr-2"></i><div><strong class="text-draw-blue">大石公園：</strong>位於湖畔，有平坦的步道與四季花卉。</div></li>
+          <li class="list-none flex items-start"><i class="fa-solid fa-location-dot text-draw-pink mt-1 mr-2"></i><div><strong class="text-draw-blue">下吉田商店街：</strong>知名網紅拍照路口，拍照時<strong class="text-red-500">務必注意來車，遵守交通規則</strong>。</div></li>
         </div>
       </details>
 
-      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none">
-        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-yellow-50 rounded-t-xl group-open:rounded-b-none">
+      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none overflow-hidden">
+        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-yellow-50 transition-colors">
           <span>✨ teamLab Planets 攻略</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
         </summary>
-        <div class="p-4 text-xs font-bold space-y-3 bg-white rounded-b-xl text-center">
-          <p class="text-left">主打「身臨其境」的五感體驗。館內部分區域需要涉水（水深約至小腿），強烈建議穿著短褲或容易捲起褲管的服裝。現場可免費借用手機防水袋。</p>
-          <a href="https://lovetogo.tw/202501-tokyo/teamlab-planets/index.php" target="_blank" class="inline-block bg-draw-blue text-white px-5 py-2.5 rounded-xl border-2 border-draw-ink shadow-cartoon-sm click-effect mt-2"><i class="fa-solid fa-link"></i> 查看詳細圖文導覽</a>
+        <div class="p-4 text-xs font-bold space-y-3 bg-white text-center">
+          <p class="text-left bg-gray-50 p-3 rounded-xl border border-gray-200">主打「身臨其境」的五感體驗。館內部分區域需要涉水（水深約至小腿），強烈建議穿著短褲或容易捲起褲管的服裝。現場可免費借用手機防水袋。</p>
+          <a href="https://lovetogo.tw/202501-tokyo/teamlab-planets/index.php" target="_blank" class="inline-block bg-draw-blue text-white px-5 py-3 rounded-xl border-2 border-draw-ink shadow-cartoon-sm click-effect mt-2 w-full"><i class="fa-solid fa-link"></i> 查看詳細圖文導覽</a>
         </div>
       </details>
 
       <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-3 mt-4">
         <p class="font-black text-sm mb-2 ml-1"><i class="fa-solid fa-map text-draw-green mr-1"></i> 迪士尼園區周邊地圖</p>
-        <div class="rounded-xl border-2 border-draw-ink overflow-hidden h-48">
+        <div class="rounded-xl border-2 border-draw-ink overflow-hidden h-56">
           <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=139.8732%2C35.6263%2C139.8892%2C35.6373&layer=mapnik"></iframe>
         </div>
       </div>
     </section>
 
     <section id="tab-wallet" class="hidden fade-in space-y-5">
-      <div class="bg-draw-green text-draw-ink border-2 border-draw-ink shadow-cartoon rounded-2xl p-4 flex justify-between items-center relative overflow-hidden">
+      <div class="bg-draw-green text-draw-ink border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 flex justify-between items-center relative overflow-hidden">
         <i class="fa-solid fa-yen-sign absolute -right-4 -bottom-4 text-6xl text-white opacity-30"></i>
         <div class="relative z-10">
-          <p class="text-[10px] font-black mb-1 bg-white px-2 py-0.5 rounded inline-block border-2 border-draw-ink">自訂匯率</p>
+          <p class="text-[10px] font-black mb-1 bg-white px-2 py-0.5 rounded inline-block border-2 border-draw-ink">設定匯率</p>
           <div class="flex items-center gap-2 mt-1">
             <span class="font-black text-sm text-white">1 JPY =</span>
-            <input type="number" id="rate-input" value="0.21" step="0.001" class="w-20 px-2 py-1 rounded border-2 border-draw-ink font-black text-sm outline-none text-center">
+            <input type="number" id="rate-input" value="0.21" step="0.001" class="w-20 px-2 py-1.5 rounded-lg border-2 border-draw-ink font-black text-sm outline-none text-center">
             <span class="font-black text-sm text-white">TWD</span>
           </div>
         </div>
         <div class="text-right relative z-10">
-          <p class="text-[10px] font-black">台幣總花費</p>
-          <p id="total-twd" class="text-xl font-black text-white drop-shadow-md">NT$ 0</p>
+          <p class="text-[10px] font-black bg-black text-white px-2 py-0.5 rounded inline-block mb-1">台幣總花費</p>
+          <p id="total-twd" class="text-2xl font-black text-white drop-shadow-md">NT$ 0</p>
         </div>
       </div>
 
-      <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 space-y-3">
-        <h3 class="font-black text-sm mb-1"><i class="fa-solid fa-coins text-draw-yellow mr-1"></i> 記一筆花費</h3>
+      <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 space-y-4">
+        <h3 class="font-black text-sm border-b-2 border-dashed border-gray-300 pb-2"><i class="fa-solid fa-coins text-draw-yellow mr-1 text-lg"></i> 記一筆花費</h3>
         
-        <input type="text" id="exp-name" placeholder="買了什麼？ (例: 扭蛋)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white transition-colors">
+        <input type="text" id="exp-name" placeholder="買了什麼？ (例: 恐龍扭蛋)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white transition-colors">
         
         <div class="relative">
           <input type="text" id="exp-jpy" placeholder="日幣金額 (支援算式如 500+200*3)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white transition-colors pr-10">
-          <span class="absolute right-4 top-3.5 font-black text-draw-pink">¥</span>
+          <span class="absolute right-4 top-3.5 font-black text-draw-pink text-base">¥</span>
         </div>
         
         <div class="flex gap-2 pt-1">
           <input type="file" id="exp-img" accept="image/*" capture="environment" class="hidden" onchange="previewImg(event)">
-          <label for="exp-img" class="flex-1 bg-draw-blue text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-cartoon-sm click-effect text-xs font-black cursor-pointer"><i class="fa-solid fa-camera mr-1"></i> 拍照/上傳</label>
-          <button onclick="addExpense()" class="flex-1 bg-draw-pink text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-cartoon-sm click-effect text-xs font-black"><i class="fa-solid fa-plus mr-1"></i> 存入撲滿</button>
+          <label for="exp-img" class="flex-1 bg-draw-blue text-white text-center rounded-xl p-3.5 border-2 border-draw-ink shadow-cartoon-sm click-effect text-xs font-black cursor-pointer"><i class="fa-solid fa-camera mr-1"></i> 拍照/上傳</label>
+          <button onclick="addExpense()" class="flex-1 bg-draw-pink text-white text-center rounded-xl p-3.5 border-2 border-draw-ink shadow-cartoon-sm click-effect text-xs font-black"><i class="fa-solid fa-plus mr-1"></i> 存入撲滿</button>
         </div>
         
         <div id="img-preview-box" class="hidden relative w-20 h-20 border-2 border-draw-ink rounded-xl overflow-hidden mt-2">
           <img id="img-preview" src="" class="w-full h-full object-cover">
-          <button onclick="removePreview()" class="absolute top-0 right-0 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-[10px]"><i class="fa-solid fa-times"></i></button>
+          <button onclick="removePreview()" class="absolute top-0 right-0 bg-red-500 text-white w-6 h-6 flex items-center justify-center text-xs"><i class="fa-solid fa-times"></i></button>
         </div>
       </div>
 
@@ -344,44 +342,44 @@
     </section>
 
     <section id="tab-lists" class="hidden fade-in space-y-5">
-      <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4">
-        <h3 class="font-black text-sm mb-3 border-b-2 border-dashed border-gray-300 pb-2"><i class="fa-solid fa-clipboard-check text-draw-green mr-1"></i> 行前準備 CheckList</h3>
-        <div id="checklist-box" class="space-y-1 text-sm font-bold">
+      <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5">
+        <h3 class="font-black text-sm mb-3 border-b-2 border-dashed border-gray-300 pb-2"><i class="fa-solid fa-clipboard-check text-draw-green mr-1 text-lg"></i> 行前準備 CheckList</h3>
+        <div id="checklist-box" class="space-y-1 text-sm font-bold mt-3">
           </div>
       </div>
 
-      <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4">
-        <h3 class="font-black text-sm mb-3 border-b-2 border-dashed border-gray-300 pb-2"><i class="fa-solid fa-pen text-draw-pink mr-1"></i> 個人備忘錄</h3>
-        <textarea id="memo-input" rows="4" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none mb-3 focus:bg-white transition-colors" placeholder="在此輸入文字，若是網址會自動轉換為點擊按鈕喔..."></textarea>
-        <button onclick="saveMemo()" class="w-full bg-draw-yellow text-draw-ink border-2 border-draw-ink shadow-cartoon-sm rounded-xl py-2.5 font-black text-sm click-effect"><i class="fa-solid fa-save mr-1"></i> 儲存備忘錄</button>
-        <div id="memo-display" class="mt-4 text-xs font-bold leading-relaxed hidden bg-gray-100 p-4 border-2 border-draw-ink rounded-xl break-words"></div>
+      <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5">
+        <h3 class="font-black text-sm mb-3 border-b-2 border-dashed border-gray-300 pb-2"><i class="fa-solid fa-pen text-draw-pink mr-1 text-lg"></i> 個人備忘錄</h3>
+        <textarea id="memo-input" rows="5" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-4 text-sm font-bold outline-none mb-3 focus:bg-white transition-colors" placeholder="在此輸入文字，若是貼上網址會自動轉換為點擊按鈕喔..."></textarea>
+        <button onclick="saveMemo()" class="w-full bg-draw-yellow text-draw-ink border-2 border-draw-ink shadow-cartoon-sm rounded-xl py-3 font-black text-sm click-effect"><i class="fa-solid fa-save mr-1"></i> 儲存備忘錄</button>
+        <div id="memo-display" class="mt-4 text-xs font-bold leading-relaxed hidden bg-gray-50 p-4 border-2 border-dashed border-gray-300 rounded-xl break-words"></div>
       </div>
     </section>
 
     <section id="tab-info" class="hidden fade-in space-y-5">
       
-      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none" open>
-        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-draw-blue text-white rounded-t-xl group-open:rounded-b-none">
+      <details class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl group outline-none overflow-hidden" open>
+        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-draw-blue text-white transition-colors">
           <span><i class="fa-solid fa-car mr-1"></i> 機場接送資訊 (FafaCars)</span><i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
         </summary>
-        <div class="p-4 text-[11px] font-bold space-y-4 bg-white rounded-b-xl">
+        <div class="p-4 text-[11px] font-bold space-y-4 bg-white">
           <div>
-            <span class="bg-draw-yellow px-2 py-0.5 rounded border-2 border-draw-ink mb-1.5 inline-block text-black">去程 03/12 (四) 03:30 出發</span>
+            <span class="bg-draw-yellow px-2 py-1 rounded border-2 border-draw-ink mb-2 inline-block text-black">去程 03/12 (四) 03:30 出發</span>
             <p>送機航班：TR898</p>
             <p>接送地址：新竹市中山路640巷198號</p>
-            <p class="text-draw-pink mt-1">車資：$2400 (含轉點+夜間加成)</p>
+            <p class="text-draw-pink mt-1 bg-pink-50 p-1 inline-block rounded">車資：$2400 (含轉點+夜間加成)</p>
           </div>
           <div class="border-t-2 border-dashed border-gray-300 pt-3">
-            <span class="bg-draw-pink text-white px-2 py-0.5 rounded border-2 border-draw-ink mb-1.5 inline-block">回程 03/17 (二) 16:50 抵達</span>
+            <span class="bg-draw-pink text-white px-2 py-1 rounded border-2 border-draw-ink mb-2 inline-block">回程 03/17 (二) 16:50 抵達</span>
             <p>接機航班：JX801</p>
             <p>下車地址：新竹市中山路640巷198號</p>
-            <p class="text-draw-pink mt-1">車資：$2100 (含轉點)</p>
+            <p class="text-draw-pink mt-1 bg-pink-50 p-1 inline-block rounded">車資：$2100 (含轉點)</p>
           </div>
-          <div class="bg-gray-50 p-3 rounded-xl border-2 border-draw-ink">
+          <div class="bg-gray-50 p-3 rounded-xl border-2 border-draw-ink mt-2">
             <p class="text-draw-blue mb-1"><i class="fa-solid fa-id-card"></i> 司機資料 (07)</p>
-            <p>司機：史育誠 / 電話：<a href="tel:0937660220" class="underline">0937660220</a></p>
+            <p>司機：史育誠 / 電話：<a href="tel:0937660220" class="underline text-blue-600">0937660220</a></p>
             <p>車型：Hyundai Staria 黑 (RBF-7952)</p>
-            <div class="mt-2 text-[10px] text-gray-500 border-t border-gray-200 pt-2">
+            <div class="mt-2 text-[10px] text-gray-500 border-t border-gray-200 pt-2 leading-relaxed">
                 乘客(6人)：郭語安、陳濬宇、張勻宥、郭顥、陳睿碩、陳季浤<br>行李：28吋×4、登機箱×3
             </div>
           </div>
@@ -401,15 +399,15 @@
 
       <div class="bg-draw-ink text-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 font-black text-xs">
         <h3 class="text-draw-yellow mb-3 border-b-2 border-gray-600 pb-2"><i class="fa-solid fa-phone mr-1"></i> 緊急求救專線 🚨</h3>
-        <div class="flex justify-between items-center mb-3"><span>警察局 (報案)</span> <a href="tel:110" class="bg-white text-draw-ink px-3 py-1 rounded-lg">110</a></div>
-        <div class="flex justify-between items-center mb-3"><span>消防・救護車</span> <a href="tel:119" class="bg-draw-pink text-white px-3 py-1 rounded-lg">119</a></div>
-        <div class="flex justify-between items-center"><span>台北駐日代表處</span> <a href="tel:0332807811" class="bg-white text-draw-ink px-3 py-1 rounded-lg">03-3280-7811</a></div>
+        <div class="flex justify-between items-center mb-3"><span>警察局 (報案)</span> <a href="tel:110" class="bg-white text-draw-ink px-4 py-1.5 rounded-lg border-2 border-white click-effect">110</a></div>
+        <div class="flex justify-between items-center mb-3"><span>消防・救護車</span> <a href="tel:119" class="bg-draw-pink text-white px-4 py-1.5 rounded-lg border-2 border-draw-pink click-effect">119</a></div>
+        <div class="flex justify-between items-center"><span>台北駐日代表處</span> <a href="tel:0332807811" class="bg-white text-draw-ink px-4 py-1.5 rounded-lg border-2 border-white click-effect">03-3280-7811</a></div>
       </div>
 
-      <div class="bg-pink-50 border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 font-bold text-xs text-draw-ink">
+      <div class="bg-pink-50 border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 font-bold text-xs text-draw-ink mb-4">
         <h3 class="font-black text-draw-pink mb-3 border-b-2 border-pink-200 pb-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 旅遊注意事項</h3>
-        <ul class="space-y-3">
-          <li class="flex items-start"><i class="fa-solid fa-ban text-draw-pink mt-0.5 mr-2"></i> <span class="bg-white border border-draw-ink px-1 rounded text-draw-pink mr-1 font-black">嚴禁</span>攜帶肉類製品(含肉乾、泡麵肉塊)回台。</li>
+        <ul class="space-y-3 leading-relaxed">
+          <li class="flex items-start"><i class="fa-solid fa-ban text-draw-pink mt-0.5 mr-2"></i> <span class="bg-white border border-draw-ink px-1 rounded text-draw-pink mr-1 font-black shadow-sm">嚴禁</span>攜帶肉類製品(含肉乾、泡麵肉塊)回台。</li>
           <li class="flex items-start"><i class="fa-solid fa-volume-xmark text-draw-blue mt-0.5 mr-2"></i> 日本電車內禁止通話，請將手機設為靜音。</li>
           <li class="flex items-start"><i class="fa-solid fa-bottle-droplet text-draw-green mt-0.5 mr-2"></i> 隨身行李液體，單一容器不可超過 100ml。</li>
         </ul>
@@ -419,38 +417,38 @@
 
   </main>
 
-  <nav class="bg-[#FDFCF8] fixed bottom-0 w-full z-40 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_20px_rgba(253,252,248,0.9)]">
-    <div class="flex justify-around items-center pt-3 pb-2 px-2">
-      <button onclick="switchTab('plan', this)" class="nav-btn text-draw-pink flex flex-col items-center w-14 transition-transform active:scale-90">
-        <div class="nav-icon-box bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-xl p-2 mb-1"><i class="fa-solid fa-map-location-dot text-lg"></i></div>
+  <nav class="nav-gradient fixed bottom-0 left-0 w-full z-40 pb-[env(safe-area-inset-bottom)] pt-4 pointer-events-none">
+    <div class="flex justify-around items-center py-2 px-2 bg-[#FDFCF8] pointer-events-auto rounded-t-3xl shadow-nav mx-2 border-2 border-draw-ink mb-2">
+      <button onclick="switchTab('plan', this)" class="nav-btn text-draw-pink flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-xl p-2 mb-1 z-10 -mt-5"><i class="fa-solid fa-map-location-dot text-lg"></i></div>
         <span class="text-[10px] font-black">行程</span>
       </button>
-      <button onclick="switchTab('guide', this)" class="nav-btn text-draw-muted flex flex-col items-center w-14 transition-transform active:scale-90">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1"><i class="fa-solid fa-book-open text-lg"></i></div>
+      <button onclick="switchTab('guide', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-book-open text-lg"></i></div>
         <span class="text-[10px] font-bold">導覽</span>
       </button>
-      <button onclick="switchTab('wallet', this)" class="nav-btn text-draw-muted flex flex-col items-center w-14 transition-transform active:scale-90">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1"><i class="fa-solid fa-wallet text-lg"></i></div>
+      <button onclick="switchTab('wallet', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-wallet text-lg"></i></div>
         <span class="text-[10px] font-bold">記帳</span>
       </button>
-      <button onclick="switchTab('lists', this)" class="nav-btn text-draw-muted flex flex-col items-center w-14 transition-transform active:scale-90">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1"><i class="fa-solid fa-clipboard-check text-lg"></i></div>
+      <button onclick="switchTab('lists', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-clipboard-check text-lg"></i></div>
         <span class="text-[10px] font-bold">清單</span>
       </button>
-      <button onclick="switchTab('info', this)" class="nav-btn text-draw-muted flex flex-col items-center w-14 transition-transform active:scale-90">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1"><i class="fa-solid fa-circle-info text-lg"></i></div>
+      <button onclick="switchTab('info', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-circle-info text-lg"></i></div>
         <span class="text-[10px] font-bold">資訊</span>
       </button>
     </div>
   </nav>
 
-  <div id="toast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-draw-ink text-white text-sm font-black px-6 py-3 rounded-2xl shadow-cartoon transition-opacity duration-300 opacity-0 pointer-events-none z-50 flex items-center">
-    <i class="fa-solid fa-check-circle text-draw-green mr-2 text-lg"></i> <span id="toast-msg">已儲存</span>
+  <div id="toast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-draw-ink text-white text-sm font-black px-6 py-4 rounded-2xl shadow-cartoon transition-opacity duration-300 opacity-0 pointer-events-none z-[60] flex items-center">
+    <i class="fa-solid fa-check-circle text-draw-green mr-2 text-xl"></i> <span id="toast-msg">已儲存</span>
   </div>
 
-  <div id="lightbox" class="hidden fixed inset-0 z-[60] bg-black/90 flex justify-center items-center p-4 transition-opacity" onclick="closeImg()">
-    <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded-2xl border-4 border-white">
-    <button class="absolute top-6 right-6 text-white text-3xl"><i class="fa-solid fa-times"></i></button>
+  <div id="lightbox" class="hidden fixed inset-0 z-[70] bg-black/90 flex justify-center items-center p-4 transition-opacity" onclick="closeImg()">
+    <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded-2xl border-4 border-white shadow-2xl">
+    <button class="absolute top-6 right-6 text-white text-3xl hover:text-draw-pink"><i class="fa-solid fa-times"></i></button>
   </div>
 
   <script>
@@ -459,29 +457,25 @@
     const COLORS = ['text-draw-pink', 'text-draw-yellow', 'text-draw-green', 'text-draw-blue', 'text-draw-ink'];
 
     function switchTab(tabId, el) {
-      // 隱藏所有內容
       TABS.forEach(t => document.getElementById(`tab-${t}`).classList.add('hidden'));
-      // 顯示目標內容
       document.getElementById(`tab-${tabId}`).classList.remove('hidden');
       
-      // 重置導覽列樣式
       document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.className = btn.className.replace(/text-draw-\w+/g, 'text-draw-muted');
         btn.querySelector('span').classList.replace('font-black', 'font-bold');
         let iconBox = btn.querySelector('.nav-icon-box');
-        iconBox.classList.remove('bg-white', 'border-draw-ink', 'shadow-cartoon-sm');
+        iconBox.classList.remove('bg-white', 'border-draw-ink', 'shadow-cartoon-sm', '-mt-5');
         iconBox.classList.add('border-transparent');
       });
 
-      // 設定當前選中樣式
       el.classList.remove('text-draw-muted');
       el.classList.add(COLORS[TABS.indexOf(tabId)]);
       el.querySelector('span').classList.replace('font-bold', 'font-black');
       let currentIconBox = el.querySelector('.nav-icon-box');
       currentIconBox.classList.remove('border-transparent');
-      currentIconBox.classList.add('bg-white', 'border-draw-ink', 'shadow-cartoon-sm');
+      currentIconBox.classList.add('bg-white', 'border-draw-ink', 'shadow-cartoon-sm', '-mt-5');
       
-      window.scrollTo(0, 0);
+      window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     function showDay(day) {
@@ -497,7 +491,7 @@
       target.classList.add(day===1 ? 'bg-draw-pink' : 'bg-draw-yellow', 'text-white');
     }
 
-    /* ========== Image Lightbox ========== */
+    /* ========== Image Lightbox & Toast ========== */
     function openImg(src) {
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.remove('hidden');
@@ -512,32 +506,28 @@
 
     /* ========== Google Sheet Fetch (fly_cat_hotels) ========== */
     function loadSheet() {
-      // 讀取指定 Google Sheet 中的 fly_cat_hotels 分頁
+      // 讀取指定 Google Sheet (fly_cat_hotels 分頁)
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
       fetch(url)
         .then(r => r.text())
         .then(txt => {
-          // 處理 Google GViz 回傳的特殊格式
           const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
           const rows = json.table.rows;
           let html = '';
           
           rows.forEach((row, i) => {
             if(i === 0) return; // 略過標題列
-            // 假設 A 欄是標題 (row.c[0])，B 欄及之後是內容/網址
             if(row.c && row.c[0]) {
               const title = row.c[0].v || '';
               let detailsHtml = '';
               
-              // 遍歷後面的欄位組合詳細內容
               for(let j=1; j<row.c.length; j++) {
                   if(row.c[j] && row.c[j].v) {
                       const val = String(row.c[j].v);
-                      // 若內容為網址，自動轉成點擊按鈕
                       if(val.startsWith('http')) {
-                          detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-3 py-1.5 rounded-lg border border-draw-ink shadow-sm mt-1 text-[10px] click-effect"><i class="fa-solid fa-link"></i> 開啟連結</a><br>`;
+                          detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-cartoon-sm mt-2 text-xs font-black click-effect w-full text-center"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
                       } else {
-                          detailsHtml += `<p class="mb-1">${val.replace(/\n/g, '<br>')}</p>`;
+                          detailsHtml += `<p class="mb-1.5">${val.replace(/\n/g, '<br>')}</p>`;
                       }
                   }
               }
@@ -545,11 +535,12 @@
               if(detailsHtml === '') detailsHtml = '<p class="text-draw-muted text-[10px]">無詳細說明</p>';
 
               html += `
-                <details class="bg-gray-50 border-2 border-draw-ink rounded-xl mb-2 group outline-none overflow-hidden">
-                  <summary class="font-bold p-3 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-xs">
-                    ${title} <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+                <details class="bg-gray-50 border-2 border-draw-ink rounded-xl mb-3 group outline-none overflow-hidden shadow-sm">
+                  <summary class="font-black p-3.5 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-sm transition-colors hover:bg-gray-100">
+                    <span><i class="fa-solid fa-star text-draw-yellow mr-1"></i> ${title}</span> 
+                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
                   </summary>
-                  <div class="p-3 text-[11px] bg-white leading-relaxed break-words text-draw-ink border-t-2 border-draw-ink">
+                  <div class="p-4 text-xs bg-white leading-relaxed break-words text-draw-ink border-t-2 border-draw-ink font-bold">
                     ${detailsHtml}
                   </div>
                 </details>`;
@@ -559,21 +550,22 @@
           document.getElementById('sheet-content').innerHTML = html || '<div class="text-center text-draw-muted text-xs">目前沒有預訂資料喔！</div>';
         })
         .catch(err => {
-          document.getElementById('sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-2 rounded-xl bg-pink-50">載入失敗，請確認試算表共用設定已設為「知道連結的人皆可查看」</div>';
+          document.getElementById('sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-3 rounded-xl bg-pink-50"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 載入失敗，請確認試算表共用設定已開啟</div>';
         });
     }
 
     /* ========== Wallet (記帳與匯率) ========== */
-    let rate = parseFloat(localStorage.getItem('trip2026_rate')) || 0.21;
-    let expenses = JSON.parse(localStorage.getItem('trip2026_exp')) || [];
+    let rate = parseFloat(localStorage.getItem('tk26_rate')) || 0.21;
+    let expenses = JSON.parse(localStorage.getItem('tk26_exp')) || [];
     let b64 = null;
 
-    function saveRate() {
-      rate = parseFloat(document.getElementById('rate-input').value) || 0.21;
-      localStorage.setItem('trip2026_rate', rate);
-      renderExp();
-      showToast("匯率已更新！");
-    }
+    // 監聽匯率輸入框變化
+    document.getElementById('rate-input').addEventListener('change', function() {
+        rate = parseFloat(this.value) || 0.21;
+        localStorage.setItem('tk26_rate', rate);
+        renderExp();
+        showToast("匯率已自動儲存！");
+    });
 
     function previewImg(e) {
       const file = e.target.files[0];
@@ -584,11 +576,10 @@
         img.onload = function() {
           const canvas = document.createElement('canvas');
           let w = img.width, h = img.height;
-          // 壓縮圖片寬度至 400px 以內
           if(w > 400) { h *= 400/w; w = 400; }
           canvas.width = w; canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          b64 = canvas.toDataURL('image/jpeg', 0.6); // 降低品質節省容量
+          b64 = canvas.toDataURL('image/jpeg', 0.6); 
           document.getElementById('img-preview').src = b64;
           document.getElementById('img-preview-box').classList.remove('hidden');
         };
@@ -610,7 +601,6 @@
       
       let jpy = 0;
       try { 
-        // 簡易過濾非算式字元後進行計算
         const safeMath = mathStr.replace(/[^0-9+\-*/().]/g, '');
         if(safeMath === "") throw new Error();
         jpy = Math.round(new Function('return ' + safeMath)()); 
@@ -624,7 +614,7 @@
         img: b64, 
         date: new Date().toLocaleDateString('zh-TW', {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'}) 
       });
-      localStorage.setItem('trip2026_exp', JSON.stringify(expenses));
+      localStorage.setItem('tk26_exp', JSON.stringify(expenses));
       
       document.getElementById('exp-name').value = '';
       document.getElementById('exp-jpy').value = '';
@@ -636,7 +626,7 @@
     function delExp(id) {
       if(confirm("確定要刪除這筆紀錄嗎？")) {
         expenses = expenses.filter(e => e.id !== id);
-        localStorage.setItem('trip2026_exp', JSON.stringify(expenses));
+        localStorage.setItem('tk26_exp', JSON.stringify(expenses));
         renderExp();
       }
     }
@@ -647,28 +637,28 @@
       let twdTotal = 0;
       
       if(expenses.length === 0) {
-        list.innerHTML = '<div class="text-center text-draw-muted text-xs py-6 border-2 border-dashed border-gray-300 rounded-xl">還沒有任何花費紀錄喔！</div>';
+        list.innerHTML = '<div class="text-center text-draw-muted text-xs py-8 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 font-bold"><i class="fa-solid fa-piggy-bank text-2xl mb-2 text-gray-300 block"></i>還沒有任何花費紀錄喔！</div>';
       } else {
         list.innerHTML = expenses.map(e => {
           const twd = Math.round(e.jpy * rate);
           twdTotal += twd;
           const imgTag = e.img 
             ? `<img src="${e.img}" onclick="openImg(this.src)" class="w-14 h-14 object-cover border-2 border-draw-ink rounded-lg cursor-zoom-in shrink-0">` 
-            : `<div class="w-14 h-14 bg-gray-100 border-2 border-draw-ink rounded-lg flex items-center justify-center text-gray-400 shrink-0"><i class="fa-solid fa-receipt"></i></div>`;
+            : `<div class="w-14 h-14 bg-gray-100 border-2 border-draw-ink rounded-lg flex items-center justify-center text-gray-400 shrink-0"><i class="fa-solid fa-receipt text-xl"></i></div>`;
           
           return `
-            <div class="bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-xl p-3 flex gap-3 items-center fade-in">
+            <div class="bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-xl p-3.5 flex gap-3 items-center fade-in">
               ${imgTag}
               <div class="flex-1 min-w-0">
                 <div class="flex justify-between items-start">
                   <span class="font-black text-sm text-draw-ink truncate pr-2">${e.name}</span> 
-                  <button onclick="delExp(${e.id})" class="text-draw-muted hover:text-draw-pink"><i class="fa-solid fa-trash text-xs"></i></button>
+                  <button onclick="delExp(${e.id})" class="text-gray-300 hover:text-draw-pink transition-colors"><i class="fa-solid fa-trash text-sm"></i></button>
                 </div>
-                <div class="flex justify-between items-end mt-1">
+                <div class="flex justify-between items-end mt-1.5">
                   <span class="text-[9px] text-gray-400 font-bold">${e.date}</span>
                   <div class="text-right leading-tight">
                     <span class="block text-[10px] font-black text-draw-muted">¥ ${e.jpy.toLocaleString()}</span> 
-                    <span class="block text-sm font-black text-draw-pink">NT$ ${twd.toLocaleString()}</span>
+                    <span class="block text-sm font-black text-draw-pink mt-0.5">NT$ ${twd.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
@@ -682,27 +672,27 @@
     const defaultChk = ["護照正本 (效期需滿6個月)", "日幣現金與信用卡 (JCB)", "網卡 / eSIM", "迪士尼門票 / 飯店訂單", "行動電源與充電線", "個人常備藥品", "輕便雨具", "好穿的運動鞋"];
     
     function initLists() {
-      const saved = JSON.parse(localStorage.getItem('trip2026_chk')) || {};
+      const saved = JSON.parse(localStorage.getItem('tk26_chk')) || {};
       const html = defaultChk.map((item, i) => {
         const chk = saved[i] ? 'checked' : '';
         const line = saved[i] ? 'line-through text-draw-muted' : 'text-draw-ink';
         return `
-          <label class="flex items-center gap-3 p-3 border-b-2 border-dashed border-gray-200 last:border-0 cursor-pointer">
+          <label class="flex items-center gap-3 p-3 border-b-2 border-dashed border-gray-200 last:border-0 cursor-pointer hover:bg-gray-50 transition-colors">
             <input type="checkbox" onchange="toggleChk(${i}, this)" ${chk} class="w-5 h-5 accent-draw-green border-2 border-draw-ink rounded">
             <span id="chk-txt-${i}" class="${line} transition-colors">${item}</span>
           </label>`;
       }).join('');
       document.getElementById('checklist-box').innerHTML = html;
       
-      const memo = localStorage.getItem('trip2026_memo') || '';
+      const memo = localStorage.getItem('tk26_memo') || '';
       document.getElementById('memo-input').value = memo;
       renderMemo(memo);
     }
 
     function toggleChk(i, el) {
-      const saved = JSON.parse(localStorage.getItem('trip2026_chk')) || {};
+      const saved = JSON.parse(localStorage.getItem('tk26_chk')) || {};
       saved[i] = el.checked;
-      localStorage.setItem('trip2026_chk', JSON.stringify(saved));
+      localStorage.setItem('tk26_chk', JSON.stringify(saved));
       const txt = document.getElementById(`chk-txt-${i}`);
       if(el.checked) {
           txt.classList.add('line-through', 'text-draw-muted');
@@ -715,9 +705,9 @@
 
     function saveMemo() {
       const memo = document.getElementById('memo-input').value;
-      localStorage.setItem('trip2026_memo', memo);
+      localStorage.setItem('tk26_memo', memo);
       renderMemo(memo);
-      showToast('備忘錄已儲存 📝');
+      showToast('筆記已儲存 📝');
     }
 
     function renderMemo(text) {
@@ -725,15 +715,14 @@
       if(!text.trim()) { div.classList.add('hidden'); return; }
       div.classList.remove('hidden');
       
-      // 防止 XSS 並轉換網址為按鈕
-      const safeText = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const safeText = text.replace(/</g, '<').replace(/>/g, '>');
       const urlRegex = /(https?:\/\/[^\s]+)/g;
       div.innerHTML = safeText.replace(urlRegex, function(url) {
-          return `<a href="${url}" target="_blank" class="inline-block bg-draw-blue text-white px-2 py-1 rounded-md border-2 border-draw-ink my-1 text-[10px] click-effect"><i class="fa-solid fa-link"></i> 前往連結</a>`;
+          return `<a href="${url}" target="_blank" class="inline-block bg-draw-blue text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-cartoon-sm my-1 text-[10px] click-effect font-black"><i class="fa-solid fa-link mr-1"></i> 前往連結</a>`;
       }).replace(/\n/g, '<br>');
     }
 
-    // 初始化執行
+    /* Init */
     window.onload = () => {
       loadSheet();
       renderExp();
