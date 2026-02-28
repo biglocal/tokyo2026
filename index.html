@@ -240,7 +240,7 @@
             <div class="absolute -left-[11px] top-1.5 w-5 h-5 bg-draw-yellow rounded-full border-[3px] border-white shadow-sm"></div>
             <div class="bg-white rounded-3xl p-5 shadow-draw-solid border border-gray-100">
               <h3 class="font-black text-draw-ink text-sm mb-2">晚餐：AFURI 拉麵 🍜</h3>
-              <div class="flex justify-between items-end mt-1"><p class="text-[11px] font-bold text-draw-muted leading-relaxed pr-2">南町田 Grandberry Park 店，享用清爽的柚子鹽拉麵。</p><a href="https://maps.google.com/?q=AFURI+南町田+Grandberry+Park" target="_blank" class="text-[10px] text-yellow-700 bg-yellow-50 px-3 py-1.5 rounded-lg font-black click-effect border border-yellow-200 shadow-sm">地圖</a></div>
+              <div class="flex justify-between items-end mt-1"><p class="text-[11px] font-bold text-draw-muted leading-relaxed pr-2">南町田 Grandberry Park 店，享用清爽的柚子鹽拉麵。</p></div>
             </div>
           </div>
           <div class="pl-8 py-3 text-[10px] font-black text-draw-green flex items-center"><div class="bg-green-50 px-3 py-1.5 rounded-lg flex items-center text-draw-green border border-green-200 shadow-sm"><i class="fa-solid fa-car mr-2 text-base"></i> 約 1 小時</div></div>
@@ -513,26 +513,25 @@
       initLists();
       initWallet();
       initMemo();
-      loadGoogleSheet(); // 載入試算表資料
+      loadGoogleSheet();
     };
 
-    /* Google 試算表讀取功能 */
+    /* Google 試算表讀取功能：已經加上 &sheet=place 參數！ */
     function loadGoogleSheet() {
       const sheetId = '16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc';
-      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=place`;
       
       fetch(url)
         .then(res => res.text())
         .then(text => {
-          // 解析 Google visualization API 回傳的特殊 JSON 格式
           const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
           const data = JSON.parse(jsonString);
           const rows = data.table.rows;
           
           let html = '';
           rows.forEach((row, index) => {
-            if (index === 0 && row.c[0] && row.c[0].v === "地點名稱") return; // 略過標題行
-            if (row.c[0] && row.c[1]) {
+            if (index === 0 && row.c[0] && row.c[0].v === "地點名稱") return; 
+            if (row.c && row.c[0] && row.c[1]) {
               const name = row.c[0].v;
               const link = row.c[1].v;
               html += `
@@ -543,11 +542,11 @@
             }
           });
           
-          if(html === "") html = '<p class="text-xs text-draw-muted">試算表中目前沒有資料喔！</p>';
+          if(html === "") html = '<p class="text-xs text-draw-muted">這個分頁目前沒有資料喔！</p>';
           document.getElementById('sheet-locations').innerHTML = html;
         })
         .catch(err => {
-          document.getElementById('sheet-locations').innerHTML = '<p class="text-xs font-bold text-red-500 bg-red-50 p-3 rounded-xl border border-red-200">無法載入地點，請確認您的試算表共用設定已開啟為「知道連結的人皆可查看」。</p>';
+          document.getElementById('sheet-locations').innerHTML = '<p class="text-xs font-bold text-red-500 bg-red-50 p-3 rounded-xl border border-red-200">無法載入地點，請確認分頁名稱為 place，且共用設定已開啟。</p>';
         });
     }
 
@@ -715,7 +714,7 @@
       const displayDiv = document.getElementById('memo-display');
       if(text.trim() === "") { displayDiv.classList.add('hidden'); return; }
       displayDiv.classList.remove('hidden');
-      const escapedText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const escapedText = text.replace(/</g, "<").replace(/>/g, ">");
       displayDiv.innerHTML = escapedText.replace(/(https?:\/\/[^\s]+)/g, `<a href="$1" target="_blank" class="text-draw-blue underline decoration-[2px] hover:text-draw-pink font-black"><i class="fa-solid fa-arrow-up-right-from-square mr-1 text-[10px]"></i>連結</a>`);
     }
   </script>
