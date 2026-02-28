@@ -435,6 +435,7 @@
     }
 
     /* ========== 2. Google Sheet Fetch (PLAN Tab - daily) ========== */
+/* ========== 2. Google Sheet Fetch (PLAN Tab - daily) ========== */
     function loadDailySheet() {
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=daily`;
       fetch(url)
@@ -443,14 +444,13 @@
           const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
           const rows = json.table.rows;
           
-          // 準備裝每一天的 HTML
           let dayHtml = {1:'', 2:'', 3:'', 4:'', 5:'', 6:''};
-          let currentDay = 1; // 記錄當前讀取的是第幾天 (解決跨欄/空白欄問題)
+          let currentDay = 1; 
           
           rows.forEach((row, i) => {
-            if(i === 0 || !row.c) return; // 略過標題列或完全空行
+            if(!row.c) return; 
             
-            // 1. 如果 A 欄 (天數) 有值，就更新 currentDay
+            // 抓取 A 欄 (Day1, Day2...)
             if(row.c[0] && row.c[0].v) {
               let dayVal = String(row.c[0].v).replace(/\D/g, ''); 
               let parsedDay = parseInt(dayVal);
@@ -459,51 +459,60 @@
               }
             }
             
-            // 2. 抓取其他欄位內容
-            let time = row.c[1] && row.c[1].v ? String(row.c[1].v) : '';
-            let title = row.c[2] && row.c[2].v ? String(row.c[2].v) : '';
-            let desc = row.c[3] && (row.c[3].f || row.c[3].v) ? String(row.c[3].f || row.c[3].v).replace(/\n/g, '<br>') : '';
-            let link = row.c[4] && row.c[4].v ? String(row.c[4].v) : '';
-            let img = row.c[5] && row.c[5].v ? String(row.c[5].v) : '';
+            // 抓取 B 欄 (所有行程都塞在這一格)
+            // 優先抓取 .f (包含換行符號的格式化文字)
+            let contentCell = row.c[1];
+            if(!contentCell || (!contentCell.f && !contentCell.v)) return;
+            let fullText = String(contentCell.f || contentCell.v);
 
-            // 如果標題和說明都是空的，代表這是一行廢資料，直接跳過
-            if(!title && !desc) return;
-            if(!title) title = "行程點"; 
-
-            // 3. 偵測名店關鍵字，加上 Badge
-            let combinedText = title + desc;
+            // 偵測名店關鍵字 (自動產生 Badge)
             let badges = '';
-            if(/chanel/i.test(combinedText)) badges += '<span class="bg-pink-200 px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-1">Chanel</span>';
-            if(/vivienne/i.test(combinedText)) badges += '<span class="bg-yellow-200 px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-1">Vivienne W.</span>';
-            if(/human made/i.test(combinedText)) badges += '<span class="bg-green-200 px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-1">Human Made</span>';
-            if(/rolex/i.test(combinedText)) badges += '<span class="bg-blue-200 text-white px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-1">Rolex</span>';
-            if(/一蘭/i.test(combinedText)) badges += '<span class="bg-gray-800 text-white px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-1">一蘭拉麵</span>';
+            if(/chanel/i.test(fullText)) badges += '<span class="bg-pink-200 px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-2">Chanel</span>';
+            if(/vivienne/i.test(fullText)) badges += '<span class="bg-yellow-200 px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-2">Vivienne W.</span>';
+            if(/human made/i.test(fullText)) badges += '<span class="bg-green-200 px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-2">Human Made</span>';
+            if(/rolex/i.test(fullText)) badges += '<span class="bg-blue-200 text-white px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-2">Rolex</span>';
+            if(/一蘭/i.test(fullText)) badges += '<span class="bg-gray-800 text-white px-1.5 py-0.5 rounded border border-black mr-1 text-[9px] shadow-sm inline-block mb-2">一蘭拉麵</span>';
 
-            // 4. 組裝 HTML 手繪卡片
+            // 將 B 欄的文字以「換行」切開，一行一行處理
+            let lines = fullText.split('\n');
+            let formattedContent = '';
+            
+            lines.forEach((line, index) => {
+                let text = line.trim();
+                if(text === '') return;
+
+                // 判斷是否為網址
+                if(text.startsWith('http')) {
+                    // 判斷是否為圖片網址 (.png, .jpg, .jpeg)
+                    if(text.toLowerCase().includes('.png') || text.toLowerCase().includes('.jpg') || text.toLowerCase().includes('.jpeg')) {
+                        formattedContent += `<img src="${text}" onclick="openImg(this.src)" class="img-prop mt-3 mb-2 h-36 object-cover" onerror="this.style.display='none'">`;
+                    } else {
+                        // 一般網址轉成按鈕
+                        formattedContent += `<a href="${text}" target="_blank" class="inline-block mt-2 mb-2 text-[10px] bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-cartoon-sm click-effect"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
+                    }
+                } else {
+                    // 第一行文字自動變成「標題」放大加粗，其他行為「一般內文」
+                    if(index === 0) {
+                        formattedContent += `<strong class="text-sm text-draw-ink leading-relaxed block border-b-2 border-dashed border-gray-200 pb-1 mb-2">${text}</strong>`;
+                    } else {
+                        formattedContent += `<p class="mt-1 text-xs text-draw-muted font-bold leading-relaxed">${text}</p>`;
+                    }
+                }
+            });
+
+            // 組裝 HTML 手繪卡片
             let html = `<li class="relative mb-6 last:mb-0">
-               <div class="absolute -left-[23px] top-1 w-3 h-3 bg-white border-2 border-draw-ink rounded-full z-10"></div>
-               <div class="bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-xl p-3">`;
+               <div class="absolute -left-[23px] top-1.5 w-3 h-3 bg-white border-2 border-draw-ink rounded-full z-10"></div>
+               <div class="bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-2xl p-4">`;
             
-            if(time) {
-                html += `<span class="bg-draw-yellow px-2 py-0.5 rounded border-2 border-draw-ink text-black text-xs font-black mr-2">${time}</span>`;
-            }
-            html += `<strong class="text-sm text-draw-ink leading-relaxed">${title}</strong>`;
-            
-            if(badges) html += `<div class="mt-2.5">${badges}</div>`;
-            if(desc) html += `<p class="mt-2 text-xs text-draw-muted font-bold leading-relaxed">${desc}</p>`;
-            if(img) html += `<img src="${img}" onclick="openImg(this.src)" class="img-prop mt-3 h-32 object-cover" onerror="this.style.display='none'">`;
-            
-            if(link) {
-                let icon = link.includes('map') ? 'fa-map-location-dot' : 'fa-link';
-                html += `<a href="${link}" target="_blank" class="inline-block mt-3 text-[10px] bg-draw-blue text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-cartoon-sm click-effect"><i class="fa-solid ${icon} mr-1"></i> 開啟連結</a>`;
-            }
-            
+            if(badges) html += `<div>${badges}</div>`;
+            html += formattedContent;
             html += `</div></li>`;
             
             dayHtml[currentDay] += html;
           });
           
-          // 5. 將組裝好的 HTML 塞入各天的容器中
+          // 將組裝好的 HTML 塞入各天的容器中
           for(let d=1; d<=6; d++) {
              let container = document.getElementById(`day-${d}-timeline`);
              if(container && dayHtml[d] !== '') {
