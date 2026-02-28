@@ -50,10 +50,10 @@
       
     <section id="tab-plan" class="fade-in space-y-5">
       
-      <div id="dynamic-sheet-data" class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-4 relative hidden">
-        <div class="absolute -top-3 left-4 bg-draw-blue text-white text-[10px] font-black px-3 py-1 border-2 border-draw-ink rounded-lg">預訂快訊</div>
+      <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 relative mt-3 mb-5">
+        <div class="absolute -top-3 left-4 bg-draw-blue text-white text-[11px] font-black px-4 py-1 border-2 border-draw-ink rounded-lg shadow-sm">預訂快訊 📌</div>
         <div id="sheet-content" class="space-y-3 mt-2 text-sm font-bold">
-          <div class="text-center text-draw-muted text-xs animate-pulse">正在載入機票與住宿資料...</div>
+          <div class="text-center text-draw-muted text-xs animate-pulse py-2">正在載入機票與住宿資料...</div>
         </div>
       </div>
 
@@ -251,7 +251,7 @@
 
       <div class="bg-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-2 mt-4">
         <p class="font-black text-sm mb-2 ml-2"><i class="fa-solid fa-map"></i> 迪士尼周邊地圖</p>
-        <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=139.8732%2C35.6263%2C139.8892%2C35.6373&amp;layer=mapnik" class="border-2 border-draw-ink rounded-xl"></iframe>
+        <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=139.8732%2C35.6263%2C139.8892%2C35.6373&layer=mapnik" class="border-2 border-draw-ink rounded-xl"></iframe>
       </div>
     </section>
 
@@ -416,9 +416,9 @@
     }
     function closeImg() { document.getElementById('lightbox').classList.add('hidden'); }
 
-    /* ========== Google Sheet Fetch ========== */
+    /* ========== Google Sheet Fetch (Booking Info) ========== */
     function loadSheet() {
-      // 讀取 fly_cat_hotels 分頁
+      // 指定讀取 fly_cat_hotels 分頁
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
       fetch(url).then(r => r.text()).then(txt => {
         const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
@@ -427,17 +427,20 @@
         rows.forEach((row, i) => {
           if(i===0) return; // skip header
           if(row.c && row.c[0] && row.c[1]) {
-            html += `<div class="bg-gray-50 border border-draw-ink p-2 rounded flex justify-between items-center">
-                       <span>${row.c[0].v}</span>
-                       <a href="${row.c[1].v}" target="_blank" class="bg-draw-yellow px-2 py-1 rounded border border-draw-ink click-effect">查看</a>
+            html += `<div class="flex items-center justify-between border-b-2 border-dashed border-gray-200 pb-3 last:border-0 last:pb-0">
+                       <span class="text-draw-ink text-sm font-black pr-2">${row.c[0].v}</span>
+                       <a href="${row.c[1].v}" target="_blank" class="bg-draw-yellow text-draw-ink px-3 py-1 rounded-lg border-2 border-draw-ink shadow-cartoon-sm click-effect text-xs whitespace-nowrap"><i class="fa-solid fa-link mr-1"></i>查看</a>
                      </div>`;
           }
         });
         if(html) {
           document.getElementById('sheet-content').innerHTML = html;
-          document.getElementById('dynamic-sheet-data').classList.remove('hidden');
+        } else {
+          document.getElementById('sheet-content').innerHTML = '<div class="text-center text-draw-muted text-xs">目前沒有預訂資料喔！</div>';
         }
-      }).catch(e => console.log('Sheet Load Error', e));
+      }).catch(e => {
+          document.getElementById('sheet-content').innerHTML = '<div class="text-center text-red-500 text-xs">讀取失敗，請確認試算表共用設定</div>';
+      });
     }
 
     /* ========== Wallet ========== */
@@ -550,7 +553,7 @@
       const div = document.getElementById('memo-display');
       if(!text) return div.classList.add('hidden');
       div.classList.remove('hidden');
-      const safe = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const safe = text.replace(/</g, '<').replace(/>/g, '>');
       div.innerHTML = safe.replace(/(https?:\/\/[^\s]+)/g, `<a href="$1" target="_blank" class="inline-block bg-draw-blue text-white px-2 py-1 rounded-md border border-draw-ink my-1"><i class="fa-solid fa-link"></i> 連結</a>`).replace(/\n/g, '<br>');
     }
 
