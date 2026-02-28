@@ -371,4 +371,367 @@
             <p class="text-draw-pink mt-1 bg-pink-50 p-1 inline-block rounded border border-pink-200">車資：$2400 (含轉點+夜間加成)</p>
           </div>
           <div class="border-t-2 border-dashed border-gray-300 pt-3">
-            <span class="bg-draw-pink text-white px-2 py-1 rounded border-
+            <span class="bg-draw-pink text-white px-2 py-1 rounded border-2 border-draw-ink mb-2 inline-block">回程 03/17 (二) 16:50 抵達</span>
+            <p>接機航班：JX801</p>
+            <p>下車地址：新竹市中山路640巷198號</p>
+            <p class="text-draw-pink mt-1 bg-pink-50 p-1 inline-block rounded border border-pink-200">車資：$2100 (含轉點)</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded-xl border-2 border-draw-ink mt-2">
+            <p class="text-draw-blue mb-1"><i class="fa-solid fa-id-card"></i> 司機資料 (07)</p>
+            <p>司機：史育誠 / 電話：<a href="tel:0937660220" class="underline text-blue-600">0937660220</a></p>
+            <p>車型：Hyundai Staria 黑 (RBF-7952)</p>
+            <div class="mt-2 text-[10px] text-gray-500 border-t border-gray-200 pt-2 leading-relaxed">
+                乘客(6人)：郭語安、陳濬宇、張勻宥、郭顥、陳睿碩、陳季浤<br>行李：28吋×4、登機箱×3
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div class="grid grid-cols-2 gap-4">
+        <a href="https://www.jma.go.jp/jma/index.html" target="_blank" class="bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-2xl p-4 text-center click-effect font-black text-xs flex flex-col items-center justify-center">
+            <div class="bg-blue-50 w-12 h-12 rounded-full flex items-center justify-center border-2 border-draw-ink mb-2"><i class="fa-solid fa-cloud-sun text-draw-blue text-xl"></i></div>
+            日本氣象廳
+        </a>
+        <a href="https://www.e-japannavi.com/trans/tokyo_images/mtrmap.pdf" target="_blank" class="bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-2xl p-4 text-center click-effect font-black text-xs flex flex-col items-center justify-center">
+            <div class="bg-green-50 w-12 h-12 rounded-full flex items-center justify-center border-2 border-draw-ink mb-2"><i class="fa-solid fa-train-subway text-draw-green text-xl"></i></div>
+            地鐵地圖 PDF
+        </a>
+      </div>
+
+      <div class="bg-draw-ink text-white border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 font-black text-xs">
+        <h3 class="text-draw-yellow mb-3 border-b-2 border-gray-600 pb-2"><i class="fa-solid fa-phone mr-1"></i> 緊急求救專線 🚨</h3>
+        <div class="flex justify-between items-center mb-3"><span>警察局 (報案)</span> <a href="tel:110" class="bg-white text-draw-ink px-4 py-1.5 rounded-lg border-2 border-white click-effect">110</a></div>
+        <div class="flex justify-between items-center mb-3"><span>消防・救護車</span> <a href="tel:119" class="bg-draw-pink text-white px-4 py-1.5 rounded-lg border-2 border-draw-pink click-effect">119</a></div>
+        <div class="flex justify-between items-center"><span>台北駐日代表處</span> <a href="tel:0332807811" class="bg-white text-draw-ink px-4 py-1.5 rounded-lg border-2 border-white click-effect">03-3280-7811</a></div>
+      </div>
+
+      <div class="bg-pink-50 border-2 border-draw-ink shadow-cartoon rounded-2xl p-5 font-bold text-xs text-draw-ink mb-4">
+        <h3 class="font-black text-draw-pink mb-3 border-b-2 border-pink-200 pb-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 旅遊注意事項</h3>
+        <ul class="space-y-3 leading-relaxed">
+          <li class="flex items-start"><i class="fa-solid fa-ban text-draw-pink mt-0.5 mr-2"></i> <span class="bg-white border-2 border-draw-ink px-1 rounded text-draw-pink mr-1 font-black shadow-sm">嚴禁</span>攜帶肉類製品(含肉乾、泡麵肉塊)回台。</li>
+          <li class="flex items-start"><i class="fa-solid fa-volume-xmark text-draw-blue mt-0.5 mr-2"></i> 日本電車內禁止通話，請將手機設為靜音。</li>
+          <li class="flex items-start"><i class="fa-solid fa-bottle-droplet text-draw-green mt-0.5 mr-2"></i> 隨身行李液體，單一容器不可超過 100ml。</li>
+        </ul>
+      </div>
+
+    </section>
+
+  </main>
+
+  <nav class="nav-gradient fixed bottom-0 left-0 w-full z-40 pb-[env(safe-area-inset-bottom)] pt-4 pointer-events-none">
+    <div class="flex justify-around items-center py-2 px-2 bg-[#FDFCF8] pointer-events-auto rounded-t-3xl shadow-nav mx-2 border-2 border-draw-ink mb-2">
+      <button onclick="switchTab('plan', this)" class="nav-btn text-draw-pink flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-xl p-2 mb-1 z-10 -mt-5"><i class="fa-solid fa-map-location-dot text-lg"></i></div>
+        <span class="text-[10px] font-black">行程</span>
+      </button>
+      <button onclick="switchTab('guide', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-book-open text-lg"></i></div>
+        <span class="text-[10px] font-bold">導覽</span>
+      </button>
+      <button onclick="switchTab('wallet', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-wallet text-lg"></i></div>
+        <span class="text-[10px] font-bold">記帳</span>
+      </button>
+      <button onclick="switchTab('lists', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-clipboard-check text-lg"></i></div>
+        <span class="text-[10px] font-bold">清單</span>
+      </button>
+      <button onclick="switchTab('info', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
+        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-circle-info text-lg"></i></div>
+        <span class="text-[10px] font-bold">資訊</span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="toast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-draw-ink text-white text-sm font-black px-6 py-4 rounded-2xl shadow-cartoon transition-opacity duration-300 opacity-0 pointer-events-none z-[60] flex items-center">
+    <i class="fa-solid fa-check-circle text-draw-green mr-2 text-xl"></i> <span id="toast-msg">已儲存</span>
+  </div>
+
+  <div id="lightbox" class="hidden fixed inset-0 z-[70] bg-black/90 flex justify-center items-center p-4 transition-opacity" onclick="closeImg()">
+    <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded-2xl border-4 border-white shadow-2xl">
+    <button class="absolute top-6 right-6 text-white text-3xl hover:text-draw-pink"><i class="fa-solid fa-times"></i></button>
+  </div>
+
+  <script>
+    /* ========== Navigation & Tabs Logic ========== */
+    const TABS = ['plan', 'guide', 'wallet', 'lists', 'info'];
+    const COLORS = ['text-draw-pink', 'text-draw-yellow', 'text-draw-green', 'text-draw-blue', 'text-draw-ink'];
+
+    function switchTab(tabId, el) {
+      TABS.forEach(t => document.getElementById(`tab-${t}`).classList.add('hidden'));
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.className = btn.className.replace(/text-draw-\w+/g, 'text-draw-muted');
+        btn.querySelector('span').classList.replace('font-black', 'font-bold');
+        let iconBox = btn.querySelector('.nav-icon-box');
+        iconBox.classList.remove('bg-white', 'border-draw-ink', 'shadow-cartoon-sm', '-mt-5');
+        iconBox.classList.add('border-transparent');
+      });
+
+      el.classList.remove('text-draw-muted');
+      el.classList.add(COLORS[TABS.indexOf(tabId)]);
+      el.querySelector('span').classList.replace('font-bold', 'font-black');
+      let currentIconBox = el.querySelector('.nav-icon-box');
+      currentIconBox.classList.remove('border-transparent');
+      currentIconBox.classList.add('bg-white', 'border-draw-ink', 'shadow-cartoon-sm', '-mt-5');
+      
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function showDay(day) {
+      for(let i=1; i<=6; i++) {
+        document.getElementById(`day-${i}`).classList.add('hidden');
+        let btn = document.getElementById(`btn-d${i}`);
+        btn.classList.remove('bg-draw-pink', 'bg-draw-yellow', 'text-white');
+        btn.classList.add('bg-white', 'text-draw-ink');
+      }
+      document.getElementById(`day-${day}`).classList.remove('hidden');
+      let target = document.getElementById(`btn-d${day}`);
+      target.classList.remove('bg-white', 'text-draw-ink');
+      target.classList.add(day===1 ? 'bg-draw-pink' : 'bg-draw-yellow', 'text-white');
+    }
+
+    /* ========== Image Lightbox & Toast ========== */
+    function openImg(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.remove('hidden');
+    }
+    function closeImg() { document.getElementById('lightbox').classList.add('hidden'); }
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('opacity-0');
+      setTimeout(() => toast.classList.add('opacity-0'), 1500);
+    }
+
+    /* ========== Google Sheet Fetch (INFO Tab) ========== */
+    function loadSheet() {
+      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
+      fetch(url)
+        .then(r => r.text())
+        .then(txt => {
+          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+          const rows = json.table.rows;
+          let html = '';
+          
+          rows.forEach((row, i) => {
+            // 不跳過第一行，保證所有資料都能印出
+            if(row.c && row.c[0] && row.c[0].v) {
+              const title = String(row.c[0].v).trim();
+              
+              // 若第一行是標題，可以利用特定字串防呆跳過 (若需要)
+              if(title === "標題" || title === "項目名稱") return;
+
+              let detailsHtml = '';
+              
+              for(let j=1; j<row.c.length; j++) {
+                  if(row.c[j] && (row.c[j].v || row.c[j].f)) {
+                      const val = String(row.c[j].f || row.c[j].v); // .f 保留了 Google表單內的換行
+                      if(val.startsWith('http')) {
+                          detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-4 py-2 rounded-xl border-2 border-draw-ink shadow-cartoon-sm mt-2 text-xs font-black click-effect w-full text-center"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
+                      } else {
+                          detailsHtml += `<p class="mb-2 last:mb-0">${val.replace(/\n/g, '<br>')}</p>`;
+                      }
+                  }
+              }
+
+              if(detailsHtml === '') detailsHtml = '<p class="text-draw-muted text-[10px]">無詳細說明</p>';
+
+              html += `
+                <details class="bg-white border-2 border-draw-ink rounded-2xl mb-3 group outline-none overflow-hidden shadow-cartoon-sm">
+                  <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-sm transition-colors hover:bg-yellow-50">
+                    <span><i class="fa-solid fa-star text-draw-yellow mr-1.5 text-lg"></i> ${title}</span> 
+                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
+                  </summary>
+                  <div class="p-4 text-xs bg-gray-50 leading-relaxed break-words text-draw-ink border-t-2 border-draw-ink font-bold">
+                    ${detailsHtml}
+                  </div>
+                </details>`;
+            }
+          });
+          
+          document.getElementById('info-sheet-content').innerHTML = html || '<div class="text-center text-draw-muted text-xs">目前沒有預訂資料喔！</div>';
+        })
+        .catch(err => {
+          document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-3 rounded-xl bg-pink-50"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 載入失敗，請確認試算表共用設定已開啟</div>';
+        });
+    }
+
+    /* ========== Wallet (記帳與匯率) ========== */
+    let rate = parseFloat(localStorage.getItem('tk26_rate_new')) || 0.21;
+    let expenses = JSON.parse(localStorage.getItem('tk26_exp_new')) || [];
+    let b64 = null;
+
+    document.getElementById('rate-input').addEventListener('change', function() {
+        rate = parseFloat(this.value) || 0.21;
+        localStorage.setItem('tk26_rate_new', rate);
+        renderExp();
+        showToast("匯率已自動儲存！");
+    });
+
+    function previewImg(e) {
+      const file = e.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let w = img.width, h = img.height;
+          if(w > 400) { h *= 400/w; w = 400; }
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          b64 = canvas.toDataURL('image/jpeg', 0.6); 
+          document.getElementById('img-preview').src = b64;
+          document.getElementById('img-preview-box').classList.remove('hidden');
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removePreview() {
+      b64 = null;
+      document.getElementById('exp-img').value = '';
+      document.getElementById('img-preview-box').classList.add('hidden');
+    }
+
+    function addExpense() {
+      const name = document.getElementById('exp-name').value.trim();
+      const mathStr = document.getElementById('exp-jpy').value.trim();
+      if(!name || !mathStr) return alert("請輸入名稱和金額喔！");
+      
+      let jpy = 0;
+      try { 
+        const safeMath = mathStr.replace(/[^0-9+\-*/().]/g, '');
+        if(safeMath === "") throw new Error();
+        jpy = Math.round(new Function('return ' + safeMath)()); 
+      } 
+      catch(e) { return alert("金額算式格式錯誤~"); }
+      
+      expenses.unshift({ 
+        id: Date.now(), 
+        name, 
+        jpy, 
+        img: b64, 
+        date: new Date().toLocaleDateString('zh-TW', {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'}) 
+      });
+      localStorage.setItem('tk26_exp_new', JSON.stringify(expenses));
+      
+      document.getElementById('exp-name').value = '';
+      document.getElementById('exp-jpy').value = '';
+      removePreview();
+      renderExp();
+      showToast("金幣存入撲滿！💰");
+    }
+
+    function delExp(id) {
+      if(confirm("確定要刪除這筆紀錄嗎？")) {
+        expenses = expenses.filter(e => e.id !== id);
+        localStorage.setItem('tk26_exp_new', JSON.stringify(expenses));
+        renderExp();
+      }
+    }
+
+    function renderExp() {
+      document.getElementById('rate-input').value = rate;
+      const list = document.getElementById('expense-list');
+      let twdTotal = 0;
+      
+      if(expenses.length === 0) {
+        list.innerHTML = '<div class="text-center text-draw-muted text-xs py-8 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 font-bold"><i class="fa-solid fa-piggy-bank text-2xl mb-2 text-gray-300 block"></i>還沒有任何花費紀錄喔！</div>';
+      } else {
+        list.innerHTML = expenses.map(e => {
+          const twd = Math.round(e.jpy * rate);
+          twdTotal += twd;
+          const imgTag = e.img 
+            ? `<img src="${e.img}" onclick="openImg(this.src)" class="w-14 h-14 object-cover border-2 border-draw-ink rounded-lg cursor-zoom-in shrink-0">` 
+            : `<div class="w-14 h-14 bg-gray-100 border-2 border-draw-ink rounded-lg flex items-center justify-center text-gray-400 shrink-0"><i class="fa-solid fa-receipt text-xl"></i></div>`;
+          
+          return `
+            <div class="bg-white border-2 border-draw-ink shadow-cartoon-sm rounded-xl p-3.5 flex gap-3 items-center fade-in">
+              ${imgTag}
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-start">
+                  <span class="font-black text-sm text-draw-ink truncate pr-2">${e.name}</span> 
+                  <button onclick="delExp(${e.id})" class="text-gray-300 hover:text-draw-pink transition-colors"><i class="fa-solid fa-trash text-sm"></i></button>
+                </div>
+                <div class="flex justify-between items-end mt-1.5">
+                  <span class="text-[9px] text-gray-400 font-bold">${e.date}</span>
+                  <div class="text-right leading-tight">
+                    <span class="block text-[10px] font-black text-draw-muted">¥ ${e.jpy.toLocaleString()}</span> 
+                    <span class="block text-sm font-black text-draw-pink mt-0.5">NT$ ${twd.toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+      }
+      document.getElementById('total-twd').innerText = `NT$ ${twdTotal.toLocaleString()}`;
+    }
+
+    /* ========== LISTS & MEMO ========== */
+    const defaultChk = ["護照正本 (效期需滿6個月)", "日幣現金與信用卡 (JCB)", "網卡 / eSIM", "迪士尼門票 / 飯店訂單", "行動電源與充電線", "個人常備藥品", "輕便雨具", "好穿的運動鞋"];
+    
+    function initLists() {
+      const saved = JSON.parse(localStorage.getItem('tk26_chk_new')) || {};
+      const html = defaultChk.map((item, i) => {
+        const chk = saved[i] ? 'checked' : '';
+        const line = saved[i] ? 'line-through text-draw-muted' : 'text-draw-ink';
+        return `
+          <label class="flex items-center gap-3 p-3 border-b-2 border-dashed border-gray-200 last:border-0 cursor-pointer hover:bg-gray-50 transition-colors">
+            <input type="checkbox" onchange="toggleChk(${i}, this)" ${chk} class="w-5 h-5 accent-draw-green border-2 border-draw-ink rounded">
+            <span id="chk-txt-${i}" class="${line} transition-colors">${item}</span>
+          </label>`;
+      }).join('');
+      document.getElementById('checklist-box').innerHTML = html;
+      
+      const memo = localStorage.getItem('tk26_memo_new') || '';
+      document.getElementById('memo-input').value = memo;
+      renderMemo(memo);
+    }
+
+    function toggleChk(i, el) {
+      const saved = JSON.parse(localStorage.getItem('tk26_chk_new')) || {};
+      saved[i] = el.checked;
+      localStorage.setItem('tk26_chk_new', JSON.stringify(saved));
+      const txt = document.getElementById(`chk-txt-${i}`);
+      if(el.checked) {
+          txt.classList.add('line-through', 'text-draw-muted');
+          txt.classList.remove('text-draw-ink');
+      } else {
+          txt.classList.remove('line-through', 'text-draw-muted');
+          txt.classList.add('text-draw-ink');
+      }
+    }
+
+    function saveMemo() {
+      const memo = document.getElementById('memo-input').value;
+      localStorage.setItem('tk26_memo_new', memo);
+      renderMemo(memo);
+      showToast('筆記已儲存 📝');
+    }
+
+    function renderMemo(text) {
+      const div = document.getElementById('memo-display');
+      if(!text.trim()) { div.classList.add('hidden'); return; }
+      div.classList.remove('hidden');
+      
+      // 防止 XSS 並轉換網址為按鈕
+      const safeText = text.replace(/</g, '<').replace(/>/g, '>');
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      div.innerHTML = safeText.replace(urlRegex, function(url) {
+          return `<a href="${url}" target="_blank" class="inline-block bg-draw-blue text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-cartoon-sm my-1 text-[10px] click-effect font-black"><i class="fa-solid fa-link mr-1"></i> 前往連結</a>`;
+      }).replace(/\n/g, '<br>');
+    }
+
+    // 初始化執行
+    window.onload = () => {
+      loadSheet(); // 載入位於 INFO 裡的 Google Sheet
+      renderExp();
+      initLists();
+    };
+  </script>
+</body>
+</html>
