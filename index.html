@@ -23,7 +23,7 @@
           boxShadow: { 
             'solid': '3px 3px 0px 0px #2B2D42', 
             'solid-sm': '2px 2px 0px 0px #2B2D42',
-            'floating': '0 12px 35px rgba(43, 45, 66, 0.18)'
+            'floating': '0 12px 35px rgba(43, 45, 66, 0.15)'
           }
         }
       }
@@ -44,7 +44,7 @@
     .click-effect { transition: transform 0.1s, box-shadow 0.1s; }
     .click-effect:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #2B2D42 !important; }
     
-    /* 🔥 圖片完美防裁切畫框 */
+    /* 🔥 圖片完美防裁切畫框：外層黑框 + 內層留白 padding，圖片等比縮放不變形 */
     .img-frame {
         background-color: #ffffff;
         border: 2px solid #2B2D42;
@@ -56,8 +56,8 @@
     }
     .img-frame img {
         width: 100%;
-        max-height: 220px;
-        object-fit: contain; 
+        max-height: 240px;
+        object-fit: contain; /* 保證圖片比例完美，絕不裁切 */
         border-radius: 8px;
         cursor: zoom-in;
         display: block;
@@ -103,43 +103,48 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-plane-departure text-draw-blue mr-1"></i> 出發與航班</h3>
                     <p class="text-xs font-bold text-draw-muted mb-2"><span class="bg-draw-yellow text-draw-ink px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">03:30</span> 機場專車接送</p>
-                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-pink text-white px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">06:40</span> 搭乘 TR898 起飛 (TPE ➔ NRT)</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 桃園機場 T1 Map</a>
+                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-pink text-white px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">06:40</span> 搭乘 TR898 起飛</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=桃園國際機場" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 桃園機場 Map</a>
                 </div>
             </li>
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-white border-2 border-draw-ink rounded-full z-10"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
-                    <h3 class="font-black text-draw-ink text-sm mb-1">🚌 利木津巴士 直達飯店</h3>
-                    <p class="text-[10px] font-bold text-draw-muted mb-1">成田機場直達迪士尼飯店。</p>
+                    <h3 class="font-black text-draw-ink text-sm mb-2">🚌 利木津巴士 直達飯店</h3>
+                    <p class="text-xs font-bold text-draw-muted mb-1">抵達後搭乘巴士直達飯店門口。</p>
                     <div class="img-frame">
                         <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E6%99%9A%E4%B8%8A8.03.44.png?raw=true" onclick="openImg(this.src)" alt="巴士時刻表">
                     </div>
+                    <p class="text-[10px] text-center font-bold text-draw-muted">👆 點擊時刻表可放大</p>
                 </div>
             </li>
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-white border-2 border-draw-ink rounded-full z-10"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-utensils text-draw-green mr-1"></i> 伊克斯皮兒莉 (Ikspiari) 午餐</h3>
-                    <div class="mb-2">
-                        <span class="bg-gray-800 text-white px-2 py-1 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm">🍜 附近有一蘭拉麵</span>
+                    <div class="mb-2 flex items-center">
+                        <span class="bg-gray-800 text-white px-2 py-1 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm mr-2">一蘭拉麵</span>
+                        <span class="text-[10px] font-bold text-draw-muted">舞濱站步行約10分 (750m)</span>
                     </div>
-                    <p class="text-xs font-bold text-draw-muted leading-relaxed mb-3">大型歐風商場，六個人在這裡找間寬敞的餐廳解決午餐最為舒適。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 伊克斯皮兒莉 Map</a>
+                    <p class="text-xs font-bold text-draw-muted leading-relaxed mb-3">大型歐風商場，六個人在這裡找間寬敞的餐廳解決午餐最為舒適，選擇也非常多。</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Ikspiari" target="_blank" class="flex-1 text-center bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 商場 Map</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=一蘭拉麵+舞濱" target="_blank" class="flex-1 text-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-red-500 mr-1.5"></i> 一蘭 Map</a>
+                    </div>
                 </div>
             </li>
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-green border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
-                    <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-hotel text-draw-yellow mr-1"></i> Check-in 迪士尼飯店</h3>
-                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-green text-white px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">15:00</span> 入住玩具總動員飯店</p>
+                    <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-hotel text-draw-yellow mr-1"></i> 迪士尼飯店 & 夜間樂園</h3>
+                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-green text-white px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">15:00</span> Check in 迪士尼飯店</p>
                     <p class="text-xs font-bold text-draw-ink leading-relaxed">視體力決定是否購買傍晚票進迪士尼樂園，看夜間遊行與煙火 🎆</p>
                     <div class="mt-3 mb-3 bg-pink-50 p-3 rounded-xl border-2 border-dashed border-draw-pink text-[10px] font-bold text-draw-ink leading-relaxed">
-                        <strong class="text-draw-pink"><i class="fa-solid fa-ticket mr-1"></i>迪士尼傍晚票價參考：</strong><br>
+                        <strong class="text-draw-pink"><i class="fa-solid fa-ticket mr-1"></i>傍晚票價標註：</strong><br>
                         平日 17:00 起：¥4,500 - ¥6,200<br>
                         假日 15:00 起：¥6,500 - ¥8,700
                     </div>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 飯店 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=東京迪士尼玩具總動員飯店" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 飯店 Map</a>
                 </div>
             </li>
         </ul>
@@ -151,8 +156,8 @@
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-pink border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-pink text-sm mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Disney Land 夢幻全日</h3>
-                    <p class="text-[11px] font-bold text-draw-muted mb-3">Happy Entry 通常 <span class="bg-draw-pink text-white px-1 rounded font-black">08:30-08:45</span> 放人，<strong class="text-draw-ink bg-yellow-100 px-1 rounded">請務必 8 點前到</strong>。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-draw-pink text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect mb-2"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 迪士尼樂園 Map</a>
+                    <p class="text-[11px] font-bold text-draw-muted mb-3">Happy Entry 通常 <span class="bg-draw-pink text-white px-1 rounded font-black border-2 border-draw-ink">08:30-08:45</span> 放人，<strong class="text-draw-ink bg-yellow-100 px-1 rounded">請務必 8 點前到</strong>。</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=東京迪士尼樂園" target="_blank" class="inline-flex items-center bg-draw-pink text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect mb-3"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 迪士尼樂園 Map</a>
                     
                     <div class="img-frame">
                         <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E4%B8%8B%E5%8D%883.23.20.png" onclick="openImg(this.src)" alt="入園地圖">
@@ -173,10 +178,11 @@
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-blue border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
-                    <h3 class="font-black text-draw-blue text-sm mb-1">🎉 遊行路線圖</h3>
-                    <div class="img-frame">
+                    <h3 class="font-black text-draw-blue text-sm mb-2">🎉 遊行路線圖 & 美食攻略</h3>
+                    <div class="img-frame mb-3">
                         <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E4%B8%8B%E5%8D%883.23.32.png" onclick="openImg(this.src)" alt="遊行路線">
                     </div>
+                    <a href="https://vivianexplore.tw/the-best-food-at-tokyo-disney-resort/" target="_blank" class="w-full inline-block text-center bg-draw-yellow text-draw-ink px-4 py-2.5 rounded-xl border-2 border-draw-ink shadow-solid-sm click-effect text-xs font-black"><i class="fa-solid fa-burger mr-1"></i> 查看迪士尼美食攻略</a>
                 </div>
             </li>
         </ul>
@@ -190,6 +196,7 @@
                 <div class="absolute left-[35%] h-full border-l-4 border-dashed border-[#d1d5db]"></div>
                 <span class="absolute top-[36%] right-2 text-gray-400">表參道</span>
                 <span class="absolute bottom-2 left-[38%] text-gray-400">明治通/貓街</span>
+                
                 <div class="absolute top-2 left-2"><span class="bg-gray-800 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">一蘭拉麵</span></div>
                 <div class="absolute top-4 right-4"><span class="bg-green-400 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">Human Made</span></div>
                 <div class="absolute bottom-4 left-2"><span class="bg-pink-400 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">Chanel</span></div>
@@ -204,11 +211,12 @@
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-pink border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🐾 豪德寺 (招福貓)</h3>
-                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-yellow text-draw-ink px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">08:30</span> 出發</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect mb-2"><i class="fa-solid fa-map-location-dot text-draw-pink mr-1.5"></i> 豪德寺 Map</a>
+                    <p class="text-xs font-bold text-draw-muted mb-2"><span class="bg-draw-yellow text-draw-ink px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">08:30</span> 出發</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=豪德寺" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect mb-2"><i class="fa-solid fa-map-location-dot text-draw-pink mr-1.5"></i> 豪德寺 Map</a>
                     <div class="img-frame">
-                        <img src="https://biglocal.github.io/tokyo2026/day3_cat.png" onclick="openImg(this.src)" alt="豪德寺" onerror="this.style.display='none'">
+                        <img src="https://biglocal.github.io/tokyo2026/day3_cat.png" onclick="openImg(this.src)" alt="豪德寺">
                     </div>
+                    <a href="https://tokyo.letsgojp.com/archives/762222/" target="_blank" class="inline-block mt-1 text-[10px] bg-draw-blue text-white px-4 py-2 rounded-xl border-2 border-draw-ink shadow-solid-sm click-effect font-black"><i class="fa-solid fa-link mr-1"></i> 查看豪德寺圖文攻略</a>
                 </div>
             </li>
             <li class="relative">
@@ -217,17 +225,17 @@
                     <h3 class="font-black text-draw-ink text-sm mb-2">🛍️ 原宿 ➔ 青山 / 表參道</h3>
                     <p class="text-[10px] font-bold text-draw-blue bg-blue-50 px-2 py-1 rounded-lg border border-blue-200 inline-block mb-3"><i class="fa-solid fa-train mr-1"></i> 交通大約抓 30 分鐘</p>
                     
-                    <p class="text-[10px] text-draw-muted font-bold mb-2">點擊按鈕直接開啟 Google Map 導航：</p>
+                    <p class="text-[10px] text-draw-muted font-bold mb-2">點擊按鈕直接開啟專屬 Google Map：</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-pink-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-pink-500 mr-1"></i>Chanel</a>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-yellow-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-yellow-600 mr-1"></i>Vivienne W.</a>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-green-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-green-600 mr-1"></i>Human Made</a>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-blue-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-blue-500 mr-1"></i>Rolex</a>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-gray-200 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-gray-700 mr-1"></i>一蘭拉麵</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Chanel+表參道" target="_blank" class="bg-pink-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-pink-500 mr-1"></i>Chanel</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Vivienne+Westwood+青山" target="_blank" class="bg-yellow-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-yellow-600 mr-1"></i>Vivienne W.</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Human+Made+原宿" target="_blank" class="bg-green-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-green-600 mr-1"></i>Human Made</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Rolex+表參道" target="_blank" class="bg-blue-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-blue-500 mr-1"></i>Rolex</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=一蘭拉麵+原宿" target="_blank" class="bg-gray-200 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-gray-700 mr-1"></i>一蘭拉麵</a>
                     </div>
                     <div class="bg-pink-50 p-3 rounded-xl border-2 border-draw-ink">
                         <p class="text-xs font-bold text-draw-pink mb-2"><i class="fa-solid fa-utensils mr-1"></i> 美食：LUKE'S LOBSTER 貓街店</p>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-white text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-red-500 mr-1.5"></i> 龍蝦堡 Map</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=LUKES+LOBSTER+表參道" target="_blank" class="inline-flex items-center bg-white text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-red-500 mr-1.5"></i> 龍蝦堡 Map</a>
                     </div>
                 </div>
             </li>
@@ -236,7 +244,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🏓 唐橋桌球 (代代木)</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3">營業時間：10:00 - 19:00</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-green mr-1.5"></i> 桌球店 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=唐橋桌球+代代木" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-green mr-1.5"></i> 桌球店 Map</a>
                 </div>
             </li>
             <li class="relative">
@@ -244,23 +252,27 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🌃 澀谷 & 涉谷夜景</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3">預約前往 SHIBUYA SKY 欣賞百萬夜景。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 澀谷天空 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 澀谷天空 Map</a>
                 </div>
             </li>
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-ink border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🚗 取車與休息</h3>
-                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-ink text-white px-2 py-0.5 rounded-lg mr-1 font-black">20:00</span> 吾妻橋店取車，隨後回民宿。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> TOYOTA 取車 Map</a>
+                    <p class="text-xs font-bold text-draw-muted mb-3">回民宿前要去 Toyota 吾妻橋店取車。</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=トヨタレンタカー+吾妻橋" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> TOYOTA 取車 Map</a>
                 </div>
             </li>
         </ul>
       </div>
 
       <div id="day-4" class="day-content hidden fade-in space-y-4">
-        <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-2 h-64 overflow-hidden mx-1">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d103756.12345!2d138.7!3d35.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60195e!2sKawaguchiko!5e0!3m2!1sen!2stw!4v17000000" width="100%" height="100%" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
+        <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-4 text-center mx-1">
+            <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-map"></i> 路線預覽</h3>
+            <p class="text-xs text-draw-muted font-bold mb-3">Airbnb ➔ 河口湖 ➔ 南町田 ➔ 還車</p>
+            <div class="rounded-xl border-2 border-draw-ink overflow-hidden h-40">
+                <iframe width="100%" height="100%" frameborder="0" src="https://www.openstreetmap.org/export/embed.html?bbox=138.74%2C35.48%2C139.81%2C35.73&layer=mapnik" class="pointer-events-none"></iframe>
+            </div>
         </div>
 
         <ul class="space-y-6 relative border-l-2 border-draw-ink ml-3 pl-5 py-2 mt-5">
@@ -269,7 +281,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🗻 驅車前往河口湖</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-yellow text-draw-ink px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">06:30</span> 早起出發，記得帶好國際駕照！</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 河口湖 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=河口湖" target="_blank" class="inline-flex items-center bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 河口湖 Map</a>
                 </div>
             </li>
             <li class="relative">
@@ -277,7 +289,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🍜 晚餐：AFURI 拉麵</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3">南町田 Grandberry Park店，來碗清爽的柚子鹽拉麵。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-white text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-yellow mr-1.5"></i> AFURI Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=AFURI+南町田" target="_blank" class="inline-flex items-center bg-white text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-yellow mr-1.5"></i> AFURI Map</a>
                 </div>
             </li>
             <li class="relative">
@@ -285,7 +297,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🚗 還車</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3">加滿油後於吾妻橋店還車，結束今日自駕。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> TOYOTA 還車 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=トヨタレンタカー+吾妻橋" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> TOYOTA 還車 Map</a>
                 </div>
             </li>
         </ul>
@@ -307,21 +319,21 @@
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-white border-2 border-draw-ink rounded-full z-10"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-3">🏮 淺草寺</h3>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-pink mr-1.5"></i> 淺草寺 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=淺草寺" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-pink mr-1.5"></i> 淺草寺 Map</a>
                 </div>
             </li>
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-white border-2 border-draw-ink rounded-full z-10"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-3">👾 秋葉原</h3>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 秋葉原 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=秋葉原" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 秋葉原 Map</a>
                 </div>
             </li>
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-white border-2 border-draw-ink rounded-full z-10"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-3">🚉 東京車站</h3>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-green mr-1.5"></i> 東京車站 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=東京車站" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-green mr-1.5"></i> 東京車站 Map</a>
                 </div>
             </li>
             <li class="relative">
@@ -331,12 +343,13 @@
                     <p class="text-[10px] font-bold text-draw-blue bg-blue-50 px-2 py-1 rounded-lg border border-blue-200 inline-block mb-3"><i class="fa-solid fa-train"></i> 各點交通大約抓 15 分鐘</p>
                     
                     <p class="text-[10px] text-draw-muted font-bold mb-2">點擊按鈕直接開啟 Google Map：</p>
-                    <div class="flex flex-wrap gap-2 mb-2">
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-pink-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-pink-500 mr-1"></i>Chanel</a>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-yellow-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-yellow-600 mr-1"></i>Vivienne W.</a>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-green-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-green-600 mr-1"></i>Human Made (DSM)</a>
-                        <a href="https://maps.app.goo.gl/xxx" target="_blank" class="bg-blue-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-blue-500 mr-1"></i>Rolex</a>
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Chanel+銀座" target="_blank" class="bg-pink-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-pink-500 mr-1"></i>Chanel</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Vivienne+Westwood+銀座" target="_blank" class="bg-yellow-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-yellow-600 mr-1"></i>Vivienne W.</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Dover+Street+Market+Ginza" target="_blank" class="bg-green-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-green-600 mr-1"></i>Human Made (DSM)</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Rolex+銀座" target="_blank" class="bg-blue-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-blue-500 mr-1"></i>Rolex</a>
                     </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=銀座" target="_blank" class="inline-flex items-center bg-draw-yellow text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 銀座 Map</a>
                 </div>
             </li>
         </ul>
@@ -349,7 +362,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🧳 準備返家</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-yellow text-draw-ink px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">09:00</span> 起床整理，機場接送前往成田。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 成田機場 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=成田機場" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 成田機場 Map</a>
                 </div>
             </li>
             <li class="relative">
@@ -364,7 +377,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🏡 抵達台灣</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-ink text-white px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">16:50</span> 抵達機場，搭乘專車平安回家。</p>
-                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-green mr-1.5"></i> 桃園機場 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=桃園國際機場" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-green mr-1.5"></i> 桃園機場 Map</a>
                 </div>
             </li>
         </ul>
@@ -629,7 +642,7 @@
       setTimeout(() => toast.classList.add('opacity-0'), 1500);
     }
 
-    /* ========== 1. Google Sheet Fetch (INFO Tab) ========== */
+    /* ========== 1. Google Sheet Fetch (INFO Tab - fly_cat_hotels) ========== */
     function loadInfoSheet() {
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
       fetch(url)
@@ -675,6 +688,9 @@
           document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-3 rounded-xl bg-pink-50"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 預訂快訊載入失敗</div>';
         });
     }
+
+    /* ========== 2. 直接編譯為靜態 HTML 行程 (極致流暢，地圖導航全配齊) ========== */
+    // 我已將指令直接編譯成 D1~D6 的優美靜態標籤，不需再透過 JS 載入。
 
     /* ========== Wallet (記帳與匯率) ========== */
     let rate = parseFloat(localStorage.getItem('tk26_rate_st')) || 0.21;
