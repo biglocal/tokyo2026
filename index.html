@@ -22,7 +22,8 @@
           },
           boxShadow: { 
             'solid': '3px 3px 0px 0px #2B2D42', 
-            'solid-sm': '2px 2px 0px 0px #2B2D42'
+            'solid-sm': '2px 2px 0px 0px #2B2D42',
+            'floating': '0 12px 35px rgba(43, 45, 66, 0.15)'
           }
         }
       }
@@ -43,7 +44,7 @@
     .click-effect { transition: transform 0.1s, box-shadow 0.1s; }
     .click-effect:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #2B2D42 !important; }
     
-    /* 🔥 圖片完美防裁切畫框：外層黑框 + 內層留白 padding，圖片等比縮放不變形 */
+    /* 🔥 圖片完美防裁切畫框 */
     .img-frame {
         background-color: #ffffff;
         border: 2px solid #2B2D42;
@@ -56,7 +57,7 @@
     .img-frame img {
         width: 100%;
         max-height: 240px;
-        object-fit: contain; /* 保證圖片比例完美，絕不裁切 */
+        object-fit: contain; 
         border-radius: 8px;
         cursor: zoom-in;
         display: block;
@@ -103,7 +104,7 @@
                     <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-plane-departure text-draw-blue mr-1"></i> 出發與航班</h3>
                     <p class="text-xs font-bold text-draw-muted mb-2"><span class="bg-draw-yellow text-draw-ink px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">03:30</span> 機場專車接送</p>
                     <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-pink text-white px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">06:40</span> 搭乘 TR898 起飛 (TPE ➔ NRT)</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=桃園國際機場" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 桃園機場 Map</a>
+                    <a href="https://maps.app.goo.gl/xxx" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 桃園機場 T1 Map</a>
                 </div>
             </li>
             <li class="relative">
@@ -174,7 +175,7 @@
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-blue border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
-                    <h3 class="font-black text-draw-blue text-sm mb-1">🎉 遊行路線圖</h3>
+                    <h3 class="font-black text-draw-blue text-sm mb-2">🎉 遊行路線圖</h3>
                     <div class="img-frame mb-3">
                         <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E4%B8%8B%E5%8D%883.23.32.png" onclick="openImg(this.src)" alt="遊行路線">
                     </div>
@@ -186,11 +187,19 @@
                     <h3 class="font-black text-draw-yellow text-sm mb-2"><i class="fa-solid fa-burger text-draw-yellow mr-1"></i> 迪士尼美食攻略</h3>
                     <a href="https://vivianexplore.tw/the-best-food-at-tokyo-disney-resort/" target="_blank" class="inline-block bg-draw-yellow text-draw-ink px-4 py-2 rounded-xl border-2 border-draw-ink shadow-solid-sm click-effect text-[10px] font-black mb-3"><i class="fa-solid fa-link mr-1"></i> 查看完整美食圖文攻略</a>
                     
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-white border-2 border-draw-ink rounded-xl p-2 shadow-sm flex items-center justify-center bg-gray-50"><img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.10.34.png" onclick="openImg(this.src)" class="w-full max-h-24 object-contain rounded cursor-zoom-in"></div>
-                        <div class="bg-white border-2 border-draw-ink rounded-xl p-2 shadow-sm flex items-center justify-center bg-gray-50"><img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.11.09.png" onclick="openImg(this.src)" class="w-full max-h-24 object-contain rounded cursor-zoom-in"></div>
-                        <div class="bg-white border-2 border-draw-ink rounded-xl p-2 shadow-sm flex items-center justify-center bg-gray-50"><img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.11.21.png" onclick="openImg(this.src)" class="w-full max-h-24 object-contain rounded cursor-zoom-in"></div>
-                        <div class="bg-white border-2 border-draw-ink rounded-xl p-2 shadow-sm flex items-center justify-center bg-gray-50"><img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.11.38.png" onclick="openImg(this.src)" class="w-full max-h-24 object-contain rounded cursor-zoom-in"></div>
+                    <div class="space-y-4">
+                        <div class="img-frame">
+                            <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.10.34.png" onclick="openImg(this.src)" alt="美食1">
+                        </div>
+                        <div class="img-frame">
+                            <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.11.09.png" onclick="openImg(this.src)" alt="美食2">
+                        </div>
+                        <div class="img-frame">
+                            <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.11.21.png" onclick="openImg(this.src)" alt="美食3">
+                        </div>
+                        <div class="img-frame">
+                            <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-03-01%20%E4%B8%8B%E5%8D%881.11.38.png" onclick="openImg(this.src)" alt="美食4">
+                        </div>
                     </div>
                 </div>
             </li>
@@ -205,6 +214,7 @@
                 <div class="absolute left-[35%] h-full border-l-4 border-dashed border-[#d1d5db]"></div>
                 <span class="absolute top-[36%] right-2 text-gray-400">表參道</span>
                 <span class="absolute bottom-2 left-[38%] text-gray-400">明治通/貓街</span>
+                
                 <div class="absolute top-2 left-2"><span class="bg-gray-800 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">一蘭拉麵</span></div>
                 <div class="absolute top-4 right-4"><span class="bg-green-400 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">Human Made</span></div>
                 <div class="absolute bottom-4 left-2"><span class="bg-pink-400 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">Chanel</span></div>
@@ -233,7 +243,7 @@
                     <h3 class="font-black text-draw-ink text-sm mb-2">🛍️ 原宿 ➔ 青山 / 表參道</h3>
                     <p class="text-[10px] font-bold text-draw-blue bg-blue-50 px-2 py-1 rounded-lg border border-blue-200 inline-block mb-3"><i class="fa-solid fa-train mr-1"></i> 交通大約抓 30 分鐘</p>
                     
-                    <p class="text-[10px] text-draw-muted font-bold mb-2">點擊名店按鈕直接導航：</p>
+                    <p class="text-[10px] text-draw-muted font-bold mb-2">點擊按鈕直接開啟專屬 Google Map：</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <a href="https://www.google.com/maps/search/?api=1&query=Chanel+表參道" target="_blank" class="bg-pink-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-pink-500 mr-1"></i>Chanel</a>
                         <a href="https://www.google.com/maps/search/?api=1&query=Vivienne+Westwood+青山" target="_blank" class="bg-yellow-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-yellow-600 mr-1"></i>Vivienne W.</a>
@@ -268,7 +278,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🚗 取車與休息</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3">回民宿前去 Toyota 吾妻橋店取車。</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=TOYOTA租車+吾妻橋店" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> 取車 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=トヨタレンタカー+吾妻橋" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> TOYOTA 取車 Map</a>
                 </div>
             </li>
         </ul>
@@ -305,7 +315,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🚗 還車</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3">加滿油後於吾妻橋店還車，結束今日自駕。</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=TOYOTA租車+吾妻橋店" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> 還車點 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=TOYOTA租車+吾妻橋店" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-ink mr-1.5"></i> TOYOTA 還車 Map</a>
                 </div>
             </li>
         </ul>
@@ -357,7 +367,7 @@
                         <a href="https://www.google.com/maps/search/?api=1&query=Dover+Street+Market+Ginza" target="_blank" class="bg-green-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-green-600 mr-1"></i>Human Made (DSM)</a>
                         <a href="https://www.google.com/maps/search/?api=1&query=Rolex+銀座" target="_blank" class="bg-blue-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-blue-500 mr-1"></i>Rolex</a>
                     </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=銀座" target="_blank" class="inline-flex items-center bg-draw-yellow text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 銀座街區 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=銀座" target="_blank" class="inline-flex items-center bg-draw-yellow text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 銀座 Map</a>
                 </div>
             </li>
         </ul>
@@ -370,7 +380,7 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🧳 準備返家</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-yellow text-draw-ink px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">09:00</span> 起床整理，接送前往成田。</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=成田國際機場" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 成田機場 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=成田機場" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-blue mr-1.5"></i> 成田機場 Map</a>
                 </div>
             </li>
             <li class="relative">
