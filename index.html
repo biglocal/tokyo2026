@@ -153,7 +153,6 @@
                     <h3 class="font-black text-draw-pink text-sm mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Disney Land 夢幻全日</h3>
                     <p class="text-[11px] font-bold text-draw-muted mb-3">Happy Entry 通常 <span class="bg-draw-pink text-white px-1 rounded font-black border-2 border-draw-ink">08:30-08:45</span> 放人，<strong class="text-draw-ink bg-yellow-100 px-1 rounded">請務必 8 點前到</strong>。</p>
                     <a href="https://www.google.com/maps/search/?api=1&query=東京迪士尼樂園" target="_blank" class="inline-flex items-center bg-draw-pink text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect mb-3"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 迪士尼樂園 Map</a>
-                    
                     <div class="img-frame">
                         <img src="https://biglocal.github.io/tokyo2026/%E6%88%AA%E5%9C%96%202026-02-22%20%E4%B8%8B%E5%8D%883.23.20.png" onclick="openImg(this.src)" alt="入園地圖">
                     </div>
@@ -204,6 +203,7 @@
                 <div class="absolute left-[35%] h-full border-l-4 border-dashed border-[#d1d5db]"></div>
                 <span class="absolute top-[36%] right-2 text-gray-400">表參道</span>
                 <span class="absolute bottom-2 left-[38%] text-gray-400">明治通/貓街</span>
+                
                 <div class="absolute top-2 left-2"><span class="bg-gray-800 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">一蘭拉麵</span></div>
                 <div class="absolute top-4 right-4"><span class="bg-green-400 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">Human Made</span></div>
                 <div class="absolute bottom-4 left-2"><span class="bg-pink-400 text-white px-2 py-1 rounded-lg border-2 border-draw-ink shadow-sm">Chanel</span></div>
@@ -611,7 +611,7 @@
       setTimeout(() => toast.classList.add('opacity-0'), 1500);
     }
 
-    /* ========== GUIDE Tab - 動態抓取 place sheet (依據 B 欄分類) ========== */
+    /* ========== GUIDE Tab - 動態抓取 place sheet (新增分類與 D 欄天數解析) ========== */
     function loadPlaceSheet() {
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
       fetch(url)
@@ -628,12 +628,13 @@
             const title = String(row.c[0].v).trim();
             
             // 跳過標題行 (若有的話)
-            if(i === 0 && (title === "標題" || title === "名稱" || title === "A")) return;
+            if(i === 0 && (title === "標題" || title === "名稱" || title === "A" || title.toLowerCase().includes("name"))) return;
 
             let category = '其他';
             let mapLink = '';
+            let dayBadge = '';
 
-            // 解析 B 欄 (分類) 與 C 欄 (連結)，依據您截圖的格式
+            // 解析 B 欄 (分類)
             if(row.c[1] && row.c[1].v) {
                 let catText = String(row.c[1].v).trim();
                 if(catText.includes('景點')) category = '景點';
@@ -642,6 +643,7 @@
                 else category = catText; // 若有自訂分類
             }
 
+            // 解析 C 欄 (地圖連結)
             if(row.c[2] && row.c[2].v) {
                 mapLink = String(row.c[2].v).trim();
             } else if (row.c[1] && row.c[1].v && String(row.c[1].v).includes('http')) {
@@ -650,12 +652,23 @@
                 category = '其他';
             }
 
+            // 解析 D 欄 (行程天數)
+            if(row.c[3] && row.c[3].v) {
+                let dayNum = String(row.c[3].v).trim();
+                if (dayNum) {
+                    dayBadge = `<span class="bg-draw-yellow text-draw-ink px-1.5 py-0.5 rounded border border-draw-ink text-[10px] font-black shadow-sm ml-2 shrink-0">D${dayNum}</span>`;
+                }
+            }
+
             // 組合單筆地點 HTML
             let itemHtml = '';
             if(mapLink) {
                 itemHtml = `
                 <div class="flex justify-between items-center bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm fade-in mb-3">
-                    <span class="font-black text-xs text-draw-ink w-[60%] truncate pr-2">${title}</span>
+                    <div class="flex items-center flex-1 min-w-0 pr-2">
+                        <span class="font-black text-xs text-draw-ink truncate">${title}</span>
+                        ${dayBadge}
+                    </div>
                     <a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center">
                         <i class="fa-solid fa-map-location-dot mr-1.5"></i> 開啟地圖
                     </a>
@@ -663,7 +676,10 @@
             } else {
                 itemHtml = `
                 <div class="flex justify-between items-center bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm fade-in mb-3">
-                    <span class="font-black text-xs text-draw-ink">${title}</span>
+                    <div class="flex items-center flex-1 min-w-0">
+                        <span class="font-black text-xs text-draw-ink truncate">${title}</span>
+                        ${dayBadge}
+                    </div>
                 </div>`;
             }
 
@@ -922,7 +938,7 @@
 
     window.onload = () => {
       loadInfoSheet();
-      loadPlaceSheet(); // 載入 GUIDE 頁面的動態地點清單
+      loadPlaceSheet(); // 載入 GUIDE 頁面的動態地點清單 (包含分類與天數)
       renderExp();
       initLists();
     };
