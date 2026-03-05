@@ -69,7 +69,7 @@
     /* 為底部導覽列預留充足的捲動空間 */
     .pb-safe { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
 
-    /* 雲端公帳標籤顏色樣式 */
+    /* 雲端記帳分類顏色與試算表同步 */
     .cat-住宿 { background-color: #ffadad !important; color: #7a0000 !important; }
     .cat-門票 { background-color: #9bf6ff !important; color: #004e5a !important; }
     .cat-交通 { background-color: #caffbf !important; color: #005a00 !important; }
@@ -426,13 +426,13 @@
 
       <details class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl group outline-none overflow-hidden" open>
         <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-green-50 transition-colors">
-          <span>🗺️ 總覽：所有地點地圖</span>
+          <span>📍 每日景點與地圖導航</span>
           <div class="flex gap-2 items-center">
             <button onclick="event.stopPropagation(); loadPlaceSheet()" class="text-[10px] font-black bg-white border-2 border-draw-ink px-2 py-0.5 rounded click-effect"><i class="fa-solid fa-rotate text-draw-green"></i> 更新</button>
-            <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180"></i>
+            <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
           </div>
         </summary>
-        <div id="guide-place-list" class="p-4 bg-[#FAFAFA] space-y-4 border-t-2 border-draw-ink">
+        <div id="guide-place-list" class="p-4 bg-[#FAFAFA] border-t-2 border-draw-ink">
             <div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4">
                 <i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...
             </div>
@@ -451,46 +451,51 @@
       <div class="bg-draw-green text-draw-ink border-2 border-draw-ink shadow-solid rounded-2xl p-5 flex justify-between items-center relative overflow-hidden">
         <i class="fa-solid fa-sack-dollar absolute -right-2 -bottom-6 text-7xl text-white opacity-30"></i>
         <div class="relative z-10">
-          <p class="text-[10px] font-black mb-1 bg-white px-2 py-0.5 rounded border-2 border-draw-ink shadow-solid-sm">雲端公帳人均</p>
-          <p id="group-total-twd" class="text-2xl font-black text-white drop-shadow-md">NT$ 0</p>
+          <p class="text-[10px] font-black mb-1 bg-white px-2 py-0.5 rounded inline-block border-2 border-draw-ink">雲端公帳人均</p>
+          <div class="mt-1">
+            <p id="group-total-twd" class="text-2xl font-black text-white drop-shadow-md">NT$ 0</p>
+          </div>
         </div>
         <div class="text-right relative z-10">
-          <p class="text-[10px] font-black bg-black text-white px-2 py-0.5 rounded mb-1 border-2 border-black">個人私帳總額</p>
+          <p class="text-[10px] font-black bg-black text-white px-2 py-0.5 rounded inline-block mb-1 border-2 border-black shadow-sm">個人私帳總額</p>
           <p id="total-twd" class="text-xl font-black text-white drop-shadow-md">NT$ 0</p>
         </div>
       </div>
 
       <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-4">
         <div class="flex justify-between items-center mb-4 border-b-2 border-dashed border-gray-300 pb-2">
-            <h3 class="font-black text-sm"><i class="fa-solid fa-cloud-arrow-down text-draw-blue mr-1"></i> 團體公帳明細</h3>
+            <h3 class="font-black text-sm text-draw-ink"><i class="fa-solid fa-cloud-arrow-down text-draw-blue mr-1 text-lg"></i> 雲端公帳明細</h3>
             <div class="flex gap-2">
                 <button onclick="fetchGroupExpenses()" class="text-[10px] font-black bg-gray-50 border-2 border-draw-ink px-2 py-1 rounded-lg click-effect"><i class="fa-solid fa-rotate"></i> 更新</button>
                 <a href="https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/edit" target="_blank" class="text-[10px] font-black bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg click-effect">編輯表單</a>
             </div>
         </div>
-        <div id="group-expense-body" class="space-y-3 max-h-60 overflow-y-auto no-scrollbar text-center py-4 text-xs font-bold text-gray-300">讀取中...</div>
+        
+        <div id="group-expense-body" class="space-y-3 max-h-[300px] overflow-y-auto no-scrollbar">
+            <div class="text-center text-draw-muted text-[10px] py-6 animate-pulse font-bold">正在連線 Google Sheet...</div>
+        </div>
       </div>
 
       <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-5 space-y-4">
         <div class="flex items-center justify-between mb-2">
-            <h3 class="font-black text-sm"><i class="fa-solid fa-coins text-draw-yellow mr-1"></i> 個人私帳撲滿</h3>
+            <h3 class="font-black text-sm"><i class="fa-solid fa-coins text-draw-yellow mr-1 text-lg"></i> 個人私帳撲滿</h3>
             <div class="flex items-center gap-1 text-[10px] font-black">
-                匯率: <input type="number" id="rate-input" value="0.21" step="0.001" class="w-16 border-2 border-draw-ink rounded-lg text-center outline-none bg-gray-50">
+                匯率: <input type="number" id="rate-input" value="0.21" step="0.001" class="w-16 px-1 py-0.5 border-2 border-draw-ink rounded-md text-center bg-gray-50 outline-none">
             </div>
         </div>
-        <input type="text" id="exp-name" placeholder="消費名稱 (例: 壽司)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none">
+        <input type="text" id="exp-name" placeholder="買了什麼？ (例: 恐龍扭蛋)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3.5 text-sm font-bold outline-none focus:bg-white transition-colors">
         <div class="relative">
-          <input type="text" id="exp-jpy" placeholder="日幣金額 (如: 1200+500)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none pr-10">
-          <span class="absolute right-4 top-3.5 font-black text-draw-pink text-sm">¥</span>
+          <input type="text" id="exp-jpy" placeholder="日幣金額 (支援算式如 500+200*3)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3.5 text-sm font-bold outline-none focus:bg-white transition-colors pr-10">
+          <span class="absolute right-4 top-4 font-black text-draw-pink text-base">¥</span>
         </div>
-        <div class="flex gap-2">
-            <input type="file" id="exp-img" accept="image/*" capture="environment" class="hidden" onchange="previewImg(event)">
-            <label for="exp-img" class="flex-1 bg-draw-blue text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-solid-sm click-effect text-[10px] font-black cursor-pointer flex flex-col justify-center items-center"><i class="fa-solid fa-camera mb-1 text-base"></i>拍照</label>
-            <button onclick="addExpense()" class="flex-1 bg-draw-pink text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-solid-sm click-effect text-[10px] font-black flex flex-col justify-center items-center"><i class="fa-solid fa-piggy-bank mb-1 text-base"></i>存入</button>
+        <div class="flex gap-3 pt-1">
+          <input type="file" id="exp-img" accept="image/*" capture="environment" class="hidden" onchange="previewImg(event)">
+          <label for="exp-img" class="flex-1 bg-draw-blue text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-solid-sm click-effect text-xs font-black cursor-pointer flex flex-col justify-center items-center"><i class="fa-solid fa-camera mb-1 text-base"></i>拍照/上傳</label>
+          <button onclick="addExpense()" class="flex-1 bg-draw-pink text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-solid-sm click-effect text-xs font-black flex flex-col justify-center items-center"><i class="fa-solid fa-piggy-bank mb-1 text-base"></i>存入撲滿</button>
         </div>
-        <div id="img-preview-box" class="hidden relative w-full h-24 border-2 border-draw-ink rounded-xl overflow-hidden mt-2 bg-gray-100">
-            <img id="img-preview" src="" class="w-full h-full object-contain">
-            <button onclick="removePreview()" class="absolute top-0 right-0 bg-red-500 text-white w-6 h-6 flex items-center justify-center text-[10px] border-l-2 border-b-2 border-draw-ink rounded-bl-xl"><i class="fa-solid fa-times"></i></button>
+        <div id="img-preview-box" class="hidden relative w-full h-32 border-2 border-draw-ink rounded-xl overflow-hidden mt-2 bg-gray-100">
+          <img id="img-preview" src="" class="w-full h-full object-contain">
+          <button onclick="removePreview()" class="absolute top-0 right-0 bg-red-500 text-white w-8 h-8 flex items-center justify-center text-sm border-l-2 border-b-2 border-draw-ink rounded-bl-xl"><i class="fa-solid fa-times"></i></button>
         </div>
       </div>
       <div id="expense-list" class="space-y-4 pb-4"></div>
@@ -513,7 +518,7 @@
       <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-5 relative mb-5 mt-2">
         <div class="absolute -top-3 left-4 bg-draw-pink text-white text-[11px] font-black px-4 py-1 border-2 border-draw-ink shadow-sm rounded-lg flex items-center justify-between w-[calc(100%-2rem)]">
           <span><i class="fa-solid fa-bookmark mr-1"></i> 預訂快訊</span>
-          <button onclick="loadInfoSheet()" class="text-white hover:text-gray-200"><i class="fa-solid fa-rotate"></i> 更新</button>
+          <button onclick="loadInfoSheet()" class="text-white hover:text-gray-200 click-effect bg-draw-pink/80 px-2 py-0.5 rounded border border-white"><i class="fa-solid fa-rotate"></i> 更新</button>
         </div>
         <div id="info-sheet-content" class="mt-4 space-y-3">
           <div class="text-center text-draw-muted text-xs animate-pulse py-6 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入試算表資料...</div>
@@ -607,7 +612,7 @@
       currentIconBox.classList.remove('border-transparent');
       currentIconBox.classList.add('bg-white', 'border-draw-ink', 'shadow-solid-sm', '-mt-6', 'rounded-xl');
       
-      if(tabId === 'wallet') fetchGroupExpenses();
+      if (tabId === 'wallet') fetchGroupExpenses();
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
@@ -624,182 +629,33 @@
       target.classList.add(day===1 ? 'bg-draw-pink' : 'bg-draw-yellow', 'text-white');
     }
 
-    /* ========== Image Lightbox & Toast ========== */
-    function openImg(src) {
-      document.getElementById('lightbox-img').src = src;
-      document.getElementById('lightbox').classList.remove('hidden');
-    }
-    function closeImg() { document.getElementById('lightbox').classList.add('hidden'); }
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-msg').innerText = msg;
-      toast.classList.remove('opacity-0');
-      setTimeout(() => toast.classList.add('opacity-0'), 1500);
-    }
-
-    /* ========== GUIDE Tab - 動態抓取 place sheet ========== */
-    function loadPlaceSheet() {
-      document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
-      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
-      fetch(url)
-        .then(r => r.text())
-        .then(txt => {
-          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
-          const rows = json.table.rows;
-          const categories = { '景點': [], '美食': [], '逛街': [], '其他': [] };
-
-          rows.forEach((row, i) => {
-            if(!row.c || !row.c[0] || !row.c[0].v) return;
-            const title = String(row.c[0].v).trim();
-            if(i === 0 && (title === "標題" || title === "名稱" || title === "A" || title.toLowerCase().includes("name"))) return;
-
-            let category = '其他'; let mapLink = ''; let dayBadge = '';
-
-            if(row.c[1] && row.c[1].v) {
-                let catText = String(row.c[1].v).trim();
-                if(catText.includes('景點')) category = '景點';
-                else if(catText.includes('美食') || catText.includes('餐廳')) category = '美食';
-                else if(catText.includes('逛街') || catText.includes('購物')) category = '逛街';
-                else category = catText;
-            }
-
-            if(row.c[2] && row.c[2].v) {
-                mapLink = String(row.c[2].v).trim();
-            } else if (row.c[1] && row.c[1].v && String(row.c[1].v).includes('http')) {
-                mapLink = String(row.c[1].v).trim(); category = '其他';
-            }
-
-            if(row.c[3] && row.c[3].v) {
-                let dayNum = String(row.c[3].v).trim();
-                if (dayNum) dayBadge = `<span class="bg-draw-yellow text-draw-ink px-1.5 py-0.5 rounded border border-draw-ink text-[10px] font-black shadow-sm ml-2 shrink-0">D${dayNum}</span>`;
-            }
-
-            let itemHtml = '';
-            if(mapLink) {
-                itemHtml = `
-                <div class="flex justify-between items-center bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm fade-in mb-3">
-                    <div class="flex items-center flex-1 min-w-0 pr-2">
-                        <span class="font-black text-xs text-draw-ink truncate">${title}</span>
-                        ${dayBadge}
-                    </div>
-                    <a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center">
-                        <i class="fa-solid fa-map-location-dot mr-1.5"></i> 開啟地圖
-                    </a>
-                </div>`;
-            } else {
-                itemHtml = `
-                <div class="flex justify-between items-center bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm fade-in mb-3">
-                    <div class="flex items-center flex-1 min-w-0">
-                        <span class="font-black text-xs text-draw-ink truncate">${title}</span>
-                        ${dayBadge}
-                    </div>
-                </div>`;
-            }
-            if (!categories[category]) categories[category] = [];
-            categories[category].push(itemHtml);
-          });
-
-          let finalHtml = '';
-          const categoryIcons = {
-              '景點': '<i class="fa-solid fa-camera-retro text-draw-pink mr-1.5"></i>',
-              '美食': '<i class="fa-solid fa-utensils text-draw-yellow mr-1.5"></i>',
-              '逛街': '<i class="fa-solid fa-bag-shopping text-draw-blue mr-1.5"></i>',
-              '其他': '<i class="fa-solid fa-location-dot text-draw-green mr-1.5"></i>'
-          };
-
-          for (const [cat, items] of Object.entries(categories)) {
-              if (items.length > 0) {
-                  const icon = categoryIcons[cat] || categoryIcons['其他'];
-                  finalHtml += `
-                    <div class="mb-4 last:mb-0">
-                        <h4 class="font-black text-draw-ink text-sm mb-3 border-b-2 border-dashed border-gray-300 pb-1 flex items-center">${icon} ${cat}</h4>
-                        ${items.join('')}
-                    </div>`;
-              }
-          }
-          document.getElementById('guide-place-list').innerHTML = finalHtml || '<p class="text-center text-draw-muted text-xs font-bold">目前沒有景點資料喔！</p>';
-          showToast("地點已更新");
-        })
-        .catch(err => { document.getElementById('guide-place-list').innerHTML = '<div class="p-3 text-center text-draw-pink text-xs font-bold border-2 border-draw-pink rounded-xl bg-pink-50">連線失敗，請檢查網路</div>'; });
-    }
-
-    /* ========== INFO Tab - Google Sheet Fetch (Fly_hotels) ========== */
-    function loadInfoSheet() {
-      document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse py-6 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入試算表資料...</div>';
-      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
-      fetch(url)
-        .then(r => r.text())
-        .then(txt => {
-          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
-          const rows = json.table.rows; let html = '';
-          
-          rows.forEach((row, i) => {
-            if(row.c && row.c[0] && row.c[0].v) {
-              const title = String(row.c[0].v).trim();
-              if(title === "標題" || title === "項目名稱" || title === "項目") return;
-
-              let iconClass = 'fa-star text-draw-yellow'; 
-              if (title.includes('機票') || title.includes('航班')) iconClass = 'fa-plane text-draw-blue';
-              else if (title.includes('住宿') || title.includes('飯店') || title.includes('民宿') || title.toLowerCase().includes('airbnb')) iconClass = 'fa-hotel text-draw-green';
-              else if (title.includes('迪士尼') || title.toLowerCase().includes('disney')) iconClass = 'fa-wand-magic-sparkles text-draw-pink';
-              else if (title.includes('車') || title.includes('接送')) iconClass = 'fa-car text-draw-yellow';
-              else if (title.toLowerCase().includes('wifi') || title.toLowerCase().includes('esim') || title.includes('網')) iconClass = 'fa-wifi text-draw-blue';
-              else if (title.includes('保險')) iconClass = 'fa-shield-halved text-draw-green';
-              else if (title.includes('票')) iconClass = 'fa-ticket text-draw-pink';
-
-              let detailsHtml = '';
-              for(let j=1; j<row.c.length; j++) {
-                  if(row.c[j] && (row.c[j].v || row.c[j].f)) {
-                      const val = String(row.c[j].f || row.c[j].v); 
-                      if(val.startsWith('http')) {
-                          detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-4 py-2.5 rounded-xl border-2 border-draw-ink shadow-solid-sm mt-2 text-xs font-black click-effect w-full text-center"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
-                      } else { detailsHtml += `<p class="mb-2 last:mb-0">${val.replace(/\n/g, '<br>')}</p>`; }
-                  }
-              }
-              if(detailsHtml === '') detailsHtml = '<p class="text-draw-muted text-[10px]">無詳細說明</p>';
-
-              html += `
-                <details class="bg-white border-2 border-draw-ink rounded-2xl mb-3 group outline-none overflow-hidden shadow-solid-sm">
-                  <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-sm transition-colors hover:bg-yellow-50">
-                    <span><i class="fa-solid ${iconClass} mr-2 text-lg"></i> ${title}</span> 
-                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
-                  </summary>
-                  <div class="p-4 text-xs bg-gray-50 leading-relaxed break-words text-draw-ink border-t-2 border-draw-ink font-bold">${detailsHtml}</div>
-                </details>`;
-            }
-          });
-          document.getElementById('info-sheet-content').innerHTML = html || '<div class="text-center text-draw-muted text-xs">目前沒有預訂資料喔！</div>';
-          showToast("快訊已更新");
-        })
-        .catch(err => { document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-3 rounded-xl bg-pink-50"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 預訂快訊載入失敗</div>'; });
-    }
-
-    /* ========== 雲端公帳 (Sheet: Expense) ========== */
+    /* ========== 雲端公帳抓取 (Sheet: Expense) ========== */
     async function fetchGroupExpenses() {
         const sheetId = '16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc';
         const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Expense`;
-        const listDiv = document.getElementById('group-expense-body');
-        listDiv.innerHTML = '<div class="text-center py-6 text-[10px] font-black text-draw-muted animate-pulse">讀取雲端資料中...</div>';
-        
+        const listContainer = document.getElementById('group-expense-body');
+        listContainer.innerHTML = '<div class="text-center text-draw-muted text-[10px] py-6 font-bold animate-pulse">正在連線 Google Sheet...</div>';
+
         try {
             const response = await fetch(url);
             const data = await response.text();
             const rows = data.split('\n').slice(1);
-            let html = ''; let totalTWD = 0;
+            let html = '';
+            let totalTWD = 0;
 
             rows.forEach(row => {
                 const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(c => c.replace(/"/g, '')) || [];
                 if (cols.length < 3) return;
 
-                const [category, item, amount, currency, payer, perHead] = cols;
-                const cost = parseFloat(perHead) || 0;
+                const [category, item, amount, currency, payer, costPerHead] = cols;
+                const cost = parseFloat(costPerHead) || 0;
                 totalTWD += cost;
 
                 html += `
-                <div class="flex items-center justify-between bg-gray-50 border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in">
+                <div class="flex items-center justify-between bg-gray-50 border-2 border-draw-ink rounded-xl p-3 fade-in shadow-sm mb-2">
                     <div class="flex flex-col">
                         <span class="text-[9px] font-black px-1.5 py-0.5 rounded border border-draw-ink shadow-sm w-fit cat-${category}">${category}</span>
-                        <span class="text-xs font-black mt-1">${item}</span>
+                        <span class="text-xs font-black text-draw-ink mt-1">${item}</span>
                     </div>
                     <div class="text-right leading-tight">
                         <div class="text-[9px] font-bold text-draw-muted">${amount} ${currency}</div>
@@ -807,15 +663,15 @@
                     </div>
                 </div>`;
             });
-            listDiv.innerHTML = html || '<div class="text-center py-6 text-[10px] font-black text-draw-muted">目前無公帳資料</div>';
+
+            listContainer.innerHTML = html || '<div class="text-center text-draw-muted text-[10px] py-6 font-bold">目前無公帳紀錄</div>';
             document.getElementById('group-total-twd').innerText = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
-        } catch (e) { 
-            console.error("雲端載入錯誤:", e); 
-            listDiv.innerHTML = '<div class="text-center py-6 text-[10px] font-black text-draw-pink">載入失敗，請檢查權限</div>';
+        } catch (error) {
+            listContainer.innerHTML = '<div class="text-center text-draw-pink text-[10px] py-6 font-bold">載入失敗，請檢查權限</div>';
         }
     }
 
-    /* ========== 私帳記帳 (LocalStorage + 計算機 + 照片) ========== */
+    /* ========== 私帳與照片上傳邏輯 ========== */
     let rate = parseFloat(localStorage.getItem('tk26_rate_st')) || 0.21;
     let expenses = JSON.parse(localStorage.getItem('tk26_exp_st')) || [];
     let b64 = null;
@@ -824,11 +680,12 @@
         rate = parseFloat(this.value) || 0.21;
         localStorage.setItem('tk26_rate_st', rate);
         renderExp();
-        showToast("匯率已更新");
+        showToast("匯率已自動儲存！");
     });
 
     function previewImg(e) {
-      const file = e.target.files[0]; if(!file) return;
+      const file = e.target.files[0];
+      if(!file) return;
       const reader = new FileReader();
       reader.onload = function(event) {
         const img = new Image();
@@ -841,12 +698,15 @@
           b64 = canvas.toDataURL('image/jpeg', 0.6); 
           document.getElementById('img-preview').src = b64;
           document.getElementById('img-preview-box').classList.remove('hidden');
-        }; img.src = event.target.result;
-      }; reader.readAsDataURL(file);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
     }
 
     function removePreview() {
-      b64 = null; document.getElementById('exp-img').value = '';
+      b64 = null;
+      document.getElementById('exp-img').value = '';
       document.getElementById('img-preview-box').classList.add('hidden');
     }
 
@@ -860,7 +720,8 @@
         const safeMath = mathStr.replace(/[^0-9+\-*/().]/g, '');
         if(safeMath === "") throw new Error();
         jpy = Math.round(new Function('return ' + safeMath)()); 
-      } catch(e) { return alert("金額算式格式錯誤~"); }
+      } 
+      catch(e) { return alert("金額算式格式錯誤~"); }
       
       expenses.unshift({ 
         id: Date.now(), name, jpy, img: b64, 
@@ -868,8 +729,11 @@
       });
       localStorage.setItem('tk26_exp_st', JSON.stringify(expenses));
       
-      document.getElementById('exp-name').value = ''; document.getElementById('exp-jpy').value = '';
-      removePreview(); renderExp(); showToast("金幣存入撲滿！💰");
+      document.getElementById('exp-name').value = '';
+      document.getElementById('exp-jpy').value = '';
+      removePreview();
+      renderExp();
+      showToast("金幣存入撲滿！💰");
     }
 
     function delExp(id) {
@@ -917,7 +781,157 @@
       document.getElementById('total-twd').innerText = `NT$ ${twdTotal.toLocaleString()}`;
     }
 
-    /* ========== LISTS & MEMO ========== */
+    /* ========== 系統基礎與表單載入邏輯 ========== */
+    function openImg(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.remove('hidden');
+    }
+    function closeImg() { document.getElementById('lightbox').classList.add('hidden'); }
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('opacity-0');
+      setTimeout(() => toast.classList.add('opacity-0'), 1500);
+    }
+
+    /* 修改：動態抓取 place sheet 並依據天數(Day)展開 */
+    function loadPlaceSheet() {
+      document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
+      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
+      
+      fetch(url)
+        .then(r => r.text())
+        .then(txt => {
+          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+          const rows = json.table.rows;
+          
+          // 建立以天數為 key 的容器
+          const days = {};
+
+          rows.forEach((row, i) => {
+            if(!row.c || !row.c[0] || !row.c[0].v) return;
+            const title = String(row.c[0].v).trim();
+            if(i === 0 && (title === "標題" || title === "名稱" || title === "A" || title.toLowerCase().includes("name"))) return;
+
+            let category = '其他';
+            let mapLink = '';
+            
+            if(row.c[1] && row.c[1].v) category = String(row.c[1].v).trim();
+            if(row.c[2] && row.c[2].v) {
+                mapLink = String(row.c[2].v).trim();
+            } else if (row.c[1] && row.c[1].v && String(row.c[1].v).includes('http')) {
+                mapLink = String(row.c[1].v).trim();
+                category = '其他';
+            }
+
+            let dayNum = row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : '未分類';
+            let dayKey = dayNum === '未分類' ? '未分類' : `Day ${dayNum}`;
+
+            if (!days[dayKey]) days[dayKey] = [];
+
+            let icon = '<i class="fa-solid fa-location-dot text-draw-green"></i>';
+            if(category.includes('景點')) icon = '<i class="fa-solid fa-camera-retro text-draw-pink"></i>';
+            else if(category.includes('美食') || category.includes('餐廳')) icon = '<i class="fa-solid fa-utensils text-draw-yellow"></i>';
+            else if(category.includes('逛街') || category.includes('購物')) icon = '<i class="fa-solid fa-bag-shopping text-draw-blue"></i>';
+
+            let itemHtml = `
+            <div class="flex justify-between items-center bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in">
+                <div class="flex items-center flex-1 min-w-0 pr-2">
+                    <div class="w-6 text-center shrink-0 mr-1">${icon}</div>
+                    <span class="font-black text-xs text-draw-ink truncate">${title}</span>
+                </div>
+                ${mapLink ? `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1.5"></i>地圖</a>` : ''}
+            </div>`;
+
+            days[dayKey].push(itemHtml);
+          });
+
+          let finalHtml = '';
+          const sortedKeys = Object.keys(days).sort((a, b) => {
+              if(a === '未分類') return 1;
+              if(b === '未分類') return -1;
+              return (parseInt(a.replace('Day ', '')) || 0) - (parseInt(b.replace('Day ', '')) || 0);
+          });
+
+          sortedKeys.forEach(key => {
+              finalHtml += `
+              <details class="mb-3 group outline-none bg-gray-50 border-2 border-draw-ink rounded-xl overflow-hidden shadow-sm" ${key === 'Day 1' ? 'open' : ''}>
+                  <summary class="font-black p-3 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-xs transition-colors hover:bg-gray-100">
+                      <span>📅 ${key} 行程地點</span>
+                      <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
+                  </summary>
+                  <div class="p-3 bg-gray-50 border-t-2 border-draw-ink">
+                      ${days[key].join('')}
+                  </div>
+              </details>
+              `;
+          });
+
+          document.getElementById('guide-place-list').innerHTML = finalHtml || '<p class="text-center text-draw-muted text-xs font-bold py-4">目前沒有景點資料喔！</p>';
+          showToast("地點已更新");
+        })
+        .catch(err => {
+          document.getElementById('guide-place-list').innerHTML = '<div class="p-3 text-center text-draw-pink text-xs font-bold border-2 border-draw-pink rounded-xl bg-pink-50">連線失敗，請檢查網路</div>';
+        });
+    }
+
+    function loadInfoSheet() {
+      document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse py-6 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入試算表資料...</div>';
+      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
+      fetch(url)
+        .then(r => r.text())
+        .then(txt => {
+          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+          const rows = json.table.rows;
+          let html = '';
+          
+          rows.forEach((row, i) => {
+            if(row.c && row.c[0] && row.c[0].v) {
+              const title = String(row.c[0].v).trim();
+              if(title === "標題" || title === "項目名稱" || title === "項目") return;
+
+              let iconClass = 'fa-star text-draw-yellow'; 
+              if (title.includes('機票') || title.includes('航班')) iconClass = 'fa-plane text-draw-blue';
+              else if (title.includes('住宿') || title.includes('飯店') || title.includes('民宿') || title.toLowerCase().includes('airbnb')) iconClass = 'fa-hotel text-draw-green';
+              else if (title.includes('迪士尼') || title.toLowerCase().includes('disney')) iconClass = 'fa-wand-magic-sparkles text-draw-pink';
+              else if (title.includes('車') || title.includes('接送')) iconClass = 'fa-car text-draw-yellow';
+              else if (title.toLowerCase().includes('wifi') || title.toLowerCase().includes('esim') || title.includes('網')) iconClass = 'fa-wifi text-draw-blue';
+              else if (title.includes('保險')) iconClass = 'fa-shield-halved text-draw-green';
+              else if (title.includes('票')) iconClass = 'fa-ticket text-draw-pink';
+
+              let detailsHtml = '';
+              for(let j=1; j<row.c.length; j++) {
+                  if(row.c[j] && (row.c[j].v || row.c[j].f)) {
+                      const val = String(row.c[j].f || row.c[j].v); 
+                      if(val.startsWith('http')) {
+                          detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-4 py-2.5 rounded-xl border-2 border-draw-ink shadow-solid-sm mt-2 text-xs font-black click-effect w-full text-center"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
+                      } else {
+                          detailsHtml += `<p class="mb-2 last:mb-0">${val.replace(/\n/g, '<br>')}</p>`;
+                      }
+                  }
+              }
+              if(detailsHtml === '') detailsHtml = '<p class="text-draw-muted text-[10px]">無詳細說明</p>';
+
+              html += `
+                <details class="bg-white border-2 border-draw-ink rounded-2xl mb-3 group outline-none overflow-hidden shadow-solid-sm">
+                  <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-sm transition-colors hover:bg-yellow-50">
+                    <span><i class="fa-solid ${iconClass} mr-2 text-lg"></i> ${title}</span> 
+                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
+                  </summary>
+                  <div class="p-4 text-xs bg-gray-50 leading-relaxed break-words text-draw-ink border-t-2 border-draw-ink font-bold">
+                    ${detailsHtml}
+                  </div>
+                </details>`;
+            }
+          });
+          document.getElementById('info-sheet-content').innerHTML = html || '<div class="text-center text-draw-muted text-xs">目前沒有預訂資料喔！</div>';
+          showToast("快訊已更新");
+        })
+        .catch(err => {
+          document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-3 rounded-xl bg-pink-50"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 預訂快訊載入失敗</div>';
+        });
+    }
+
     const defaultChk = ["護照正本 (效期需滿6個月)", "日幣現金與信用卡 (JCB)", "網卡 / eSIM", "迪士尼門票 / 飯店訂單", "行動電源與充電線", "個人常備藥品", "輕便雨具", "好穿的運動鞋"];
     
     function initLists() {
@@ -971,7 +985,6 @@
       }).replace(/\n/g, '<br>');
     }
 
-    /* ========== 初始化 ========== */
     window.onload = () => {
       loadInfoSheet();
       loadPlaceSheet(); 
