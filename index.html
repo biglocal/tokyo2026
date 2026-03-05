@@ -804,44 +804,57 @@
     }
 
     /* ========== WALLET Tab - 雲端公帳 (Sheet: Expense) ========== */
+/* ========== WALLET Tab - 雲端公帳 (Sheet: Expense) ========== */
     async function fetchGroupExpenses() {
         const sheetId = '16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc';
         const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Expense`;
-        
+        const listContainer = document.getElementById('group-expense-body');
+        listContainer.innerHTML = '<div class="text-center text-draw-muted text-[10px] py-6 font-bold animate-pulse">正在連線 Google Sheet...</div>';
+
         try {
             const response = await fetch(url);
             const data = await response.text();
             const rows = data.split('\n').slice(1);
-            
             let html = '';
             let totalTWD = 0;
 
-            rows.forEach(row => {
+            rows.forEach((row, index) => {
                 const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(c => c.replace(/"/g, '')) || [];
                 if (cols.length < 3) return;
 
-                const [category, item, amount, currency, payer, perHead] = cols;
-                const cost = parseFloat(perHead) || 0;
+                const [category, item, amount, currency, payer, costPerHead] = cols;
+                const cost = parseFloat(costPerHead) || 0;
                 totalTWD += cost;
 
+                // 核心修改：計算這是 Google 試算表中的第幾行 (加 2 是因為陣列從 0 開始，且表單有標題列)
+                const sheetRowIndex = index + 2; 
+
+                // 將該筆資料的內容打包成網址參數
+                const editParams = new URLSearchParams({
+                    row: sheetRowIndex,
+                    cat: category, item: item, amt: amount, curr: currency, payer: payer, perhead: costPerHead
+                }).toString();
+
+                // 將 <div> 改為可點擊的 <a> 標籤，並連到編輯頁面
                 html += `
-                <div class="flex items-center justify-between bg-gray-50 border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in">
-                    <div class="flex flex-col">
-                        <span class="text-[9px] font-black px-1.5 py-0.5 rounded border border-draw-ink shadow-sm w-fit cat-${category}">${category}</span>
-                        <span class="text-xs font-black mt-1">${item}</span>
+                <a href="edit_expense.html?${editParams}" class="block bg-gray-50 border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in click-effect transition-transform active:scale-95">
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-black px-1.5 py-0.5 rounded border border-draw-ink shadow-sm w-fit cat-${category}">${category}</span>
+                            <span class="text-xs font-black text-draw-ink mt-1">${item} <i class="fa-solid fa-pen text-gray-300 ml-1 text-[10px]"></i></span>
+                        </div>
+                        <div class="text-right leading-tight">
+                            <div class="text-[9px] font-bold text-draw-muted">${amount} ${currency}</div>
+                            <div class="text-xs font-black text-draw-pink">NT$ ${Math.round(cost).toLocaleString()}</div>
+                        </div>
                     </div>
-                    <div class="text-right leading-tight">
-                        <div class="text-[9px] font-bold text-draw-muted">${amount} ${currency}</div>
-                        <div class="text-xs font-black text-draw-pink">NT$ ${Math.round(cost).toLocaleString()}</div>
-                    </div>
-                </div>`;
+                </a>`;
             });
 
-            document.getElementById('group-expense-body').innerHTML = html || '<div class="text-center text-draw-muted text-[10px] py-6 font-bold">無公帳紀錄</div>';
+            listContainer.innerHTML = html || '<div class="text-center text-draw-muted text-[10px] py-6 font-bold">目前無公帳紀錄</div>';
             document.getElementById('group-total-twd').innerText = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
-        } catch (e) { 
-            console.error(e); 
-            document.getElementById('group-expense-body').innerHTML = '<div class="text-center text-draw-pink text-[10px] py-6 font-bold">載入失敗，請檢查權限</div>'; 
+        } catch (error) {
+            listContainer.innerHTML = '<div class="text-center text-draw-pink text-[10px] py-6 font-bold">載入失敗，請檢查權限</div>';
         }
     }
 

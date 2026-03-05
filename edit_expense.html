@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>編輯公帳明細 | Tokyo 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"M PLUS Rounded 1c"', 'sans-serif'] },
+          colors: { draw: { bg: '#FDFCF8', ink: '#2B2D42', yellow: '#FFD166', pink: '#EF476F', blue: '#118AB2', green: '#06D6A0', muted: '#6C757D' } },
+          boxShadow: { 'solid': '3px 3px 0px 0px #2B2D42', 'solid-sm': '2px 2px 0px 0px #2B2D42' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #FDFCF8; color: #2B2D42; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(#E8E8E8 1.5px, transparent 1.5px); background-size: 24px 24px; z-index: -1; pointer-events: none; }
+    .click-effect { transition: transform 0.1s, box-shadow 0.1s; }
+    .click-effect:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #2B2D42 !important; }
+  </style>
+</head>
+<body class="font-sans min-h-screen p-4 relative z-10">
+
+  <header class="flex items-center justify-between mb-6 pt-4">
+    <div class="flex items-center">
+        <a href="index.html" class="bg-white border-2 border-draw-ink shadow-solid-sm w-10 h-10 rounded-xl flex items-center justify-center text-draw-ink click-effect">
+        <i class="fa-solid fa-chevron-left text-xl"></i>
+        </a>
+        <h1 class="text-xl font-black ml-4">編輯公帳</h1>
+    </div>
+    <button onclick="deleteExpense()" class="bg-white border-2 border-draw-ink shadow-solid-sm w-10 h-10 rounded-xl flex items-center justify-center text-draw-pink click-effect">
+        <i class="fa-solid fa-trash-can"></i>
+    </button>
+  </header>
+
+  <main class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-5 space-y-5">
+    <input type="hidden" id="inp-row"> <div>
+      <label class="block text-xs font-black text-draw-ink mb-2">🏷️ 類別 (Category)</label>
+      <select id="inp-category" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+        <option value="飲食">飲食</option><option value="交通">交通</option><option value="門票">門票</option><option value="住宿">住宿</option><option value="其他">其他</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-xs font-black text-draw-ink mb-2">📝 項目名稱 (Item)</label>
+      <input type="text" id="inp-item" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+    </div>
+
+    <div class="flex gap-3">
+      <div class="flex-1">
+        <label class="block text-xs font-black text-draw-ink mb-2">💰 總金額 (Amount)</label>
+        <input type="number" id="inp-amount" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white" oninput="calculatePerHead()">
+      </div>
+      <div class="w-1/3">
+        <label class="block text-xs font-black text-draw-ink mb-2">幣別</label>
+        <select id="inp-currency" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+          <option value="日幣">日幣</option><option value="台幣">台幣</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <div class="w-1/2">
+        <label class="block text-xs font-black text-draw-ink mb-2">💳 代墊人 (Payer)</label>
+        <select id="inp-payer" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+          <option value="YUAN">YUAN</option><option value="團員A">團員A</option><option value="團員B">團員B</option><option value="公費">公費</option>
+        </select>
+      </div>
+      <div class="w-1/2">
+        <label class="block text-xs font-black text-draw-ink mb-2">🧮 人均 (Cost per head)</label>
+        <input type="number" id="inp-perhead" class="w-full bg-yellow-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-black outline-none text-draw-pink">
+      </div>
+    </div>
+
+    <button id="submit-btn" onclick="updateExpense()" class="w-full bg-draw-green text-white border-2 border-draw-ink shadow-solid-sm rounded-xl py-4 font-black text-base mt-2 click-effect">
+      <i class="fa-solid fa-floppy-disk mr-2"></i>儲存變更
+    </button>
+  </main>
+
+  <div id="toast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-draw-ink text-white text-sm font-black px-6 py-4 rounded-2xl shadow-solid opacity-0 pointer-events-none z-[60] flex items-center transition-opacity duration-300">
+    <i class="fa-solid fa-check-circle text-draw-green mr-2 text-xl"></i> <span id="toast-msg">處理成功！</span>
+  </div>
+
+  <script>
+    // ⚠️ 記得替換成你的 URL！
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOxnbns2WDdgF8uXtkz2cd2KycdBXRSCxhGlUzErA1HyeE1Xjl6H6TR3YP0Zxl1zKL/exec"; 
+
+    // 載入時自動讀取網址上的資料並填入欄位
+    window.onload = () => {
+        const params = new URLSearchParams(window.location.search);
+        if(params.has('row')) {
+            document.getElementById('inp-row').value = params.get('row');
+            document.getElementById('inp-category').value = params.get('cat');
+            document.getElementById('inp-item').value = params.get('item');
+            document.getElementById('inp-amount').value = params.get('amt');
+            document.getElementById('inp-currency').value = params.get('curr');
+            document.getElementById('inp-perhead').value = params.get('perhead');
+            
+            // 處理代墊人選項 (如果原本的名字不在預設清單中，自動加進去)
+            const payerSelect = document.getElementById('inp-payer');
+            const payerVal = params.get('payer');
+            let exists = Array.from(payerSelect.options).some(opt => opt.value === payerVal);
+            if(!exists && payerVal) {
+                payerSelect.add(new Option(payerVal, payerVal));
+            }
+            payerSelect.value = payerVal;
+        }
+    };
+
+    function calculatePerHead() {
+        const amt = parseFloat(document.getElementById('inp-amount').value);
+        if(!isNaN(amt)) document.getElementById('inp-perhead').value = Math.round(amt / 6);
+    }
+
+    function sendRequest(action) {
+        const btn = document.getElementById('submit-btn');
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>傳送中...';
+        btn.disabled = true;
+
+        const params = new URLSearchParams({
+            action: action,
+            row: document.getElementById('inp-row').value,
+            category: document.getElementById('inp-category').value,
+            item: document.getElementById('inp-item').value.trim(),
+            amount: document.getElementById('inp-amount').value,
+            currency: document.getElementById('inp-currency').value,
+            payer: document.getElementById('inp-payer').value,
+            perhead: document.getElementById('inp-perhead').value
+        });
+
+        fetch(SCRIPT_URL + "?" + params.toString(), { method: 'GET', mode: 'no-cors' })
+        .then(() => {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = action === 'delete' ? '已刪除！' : '修改成功！';
+            toast.classList.replace('opacity-0', 'opacity-100');
+            setTimeout(() => { window.location.href = "index.html"; }, 1500);
+        });
+    }
+
+    function updateExpense() { sendRequest('update'); }
+    function deleteExpense() { if(confirm('確定要刪除這筆公帳嗎？（此動作無法復原）')) sendRequest('delete'); }
+  </script>
+</body>
+</html>
