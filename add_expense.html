@@ -94,8 +94,8 @@
     <i class="fa-solid fa-check-circle text-draw-green mr-2 text-xl"></i> 寫入成功！
   </div>
 
-  <script>
-    // ⚠️ 這裡非常重要！記得換成你在 Google Apps Script 取得的「網頁應用程式網址」
+<script>
+    // ⚠️ 貼上你剛剛取得的「最新」Web App URL
     const SCRIPT_URL = "在此貼上你的_Web_App_URL"; 
 
     // 自動計算人均 (預設 ÷ 6)
@@ -108,45 +108,49 @@
         }
     }
 
-    async function submitExpense() {
+    function submitExpense() {
         const category = document.getElementById('inp-category').value;
         const item = document.getElementById('inp-item').value.trim();
         const amount = document.getElementById('inp-amount').value;
         const currency = document.getElementById('inp-currency').value;
-        const payer = document.getElementById('inp-payer').value; // 抓取下拉選單的值
+        const payer = document.getElementById('inp-payer').value;
         const perhead = document.getElementById('inp-perhead').value;
 
         if (!item || !amount) return alert("請輸入項目名稱與金額喔！");
-        if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbxVTZLwbnDWG1dAm4KBn1lJygOFxFAagmvxP_EBEBrd_HEEcKCB_L8SQwjZm3WKEVwr/execL") return alert("請先設定 Google Apps Script URL！");
+        if (SCRIPT_URL === "在此貼上你的_Web_App_URL") return alert("請先設定 Google Apps Script URL！");
 
         const btn = document.getElementById('submit-btn');
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>傳送中...';
         btn.disabled = true;
         btn.classList.replace('bg-draw-pink', 'bg-gray-400');
 
-        try {
-            // 注意：這裡使用 no-cors 模式避免跨域問題，但無法讀取 response.ok
-            await fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ category, item, amount, currency, payer, perhead })
-            });
+        // 改用 URLSearchParams (最穩定的表單傳送格式，不會被跨域擋下)
+        const formData = new URLSearchParams();
+        formData.append('category', category);
+        formData.append('item', item);
+        formData.append('amount', amount);
+        formData.append('currency', currency);
+        formData.append('payer', payer);
+        formData.append('perhead', perhead);
 
-            // 因為 no-cors 無法驗證狀態，直接假設送出成功並跳轉
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
             const toast = document.getElementById('toast');
             toast.classList.replace('opacity-0', 'opacity-100');
             setTimeout(() => {
                 toast.classList.replace('opacity-100', 'opacity-0');
-                window.location.href = "index.html"; 
+                window.location.href = "index.html"; // 成功後跳回主頁
             }, 1500);
-            
-        } catch (error) {
+        })
+        .catch(error => {
             alert("傳送失敗，請檢查網路連線。");
             btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i>送出至雲端帳本';
             btn.disabled = false;
             btn.classList.replace('bg-gray-400', 'bg-draw-pink');
-        }
+        });
     }
   </script>
 </body>
