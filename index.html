@@ -156,7 +156,7 @@
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-pink border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
-                    <h3 class="font-black text-draw-pink text-sm mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Disney Land 夢幻全日</h3>
+                    <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Disney Land 夢幻全日</h3>
                     <p class="text-[11px] font-bold text-draw-muted mb-3">Happy Entry 通常 <span class="bg-draw-pink text-white px-1 rounded font-black border-2 border-draw-ink">08:30-08:45</span> 放人，<strong class="text-draw-ink bg-yellow-100 px-1 rounded">請務必 8 點前到</strong>。</p>
                     <a href="https://www.google.com/maps/search/?api=1&query=東京迪士尼樂園" target="_blank" class="inline-flex items-center bg-draw-pink text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect mb-3"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 迪士尼樂園 Map</a>
                     <div class="img-frame">
@@ -612,7 +612,7 @@
       currentIconBox.classList.remove('border-transparent');
       currentIconBox.classList.add('bg-white', 'border-draw-ink', 'shadow-solid-sm', '-mt-6', 'rounded-xl');
       
-      if (tabId === 'wallet') fetchGroupExpenses();
+      if(tabId === 'wallet') fetchGroupExpenses();
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
@@ -629,17 +629,183 @@
       target.classList.add(day===1 ? 'bg-draw-pink' : 'bg-draw-yellow', 'text-white');
     }
 
-    /* ========== 雲端公帳抓取 (Sheet: Expense) ========== */
+    /* ========== Image Lightbox & Toast ========== */
+    function openImg(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.remove('hidden');
+    }
+    function closeImg() { document.getElementById('lightbox').classList.add('hidden'); }
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('opacity-0');
+      setTimeout(() => toast.classList.add('opacity-0'), 1500);
+    }
+
+    /* ========== GUIDE Tab - 動態抓取 place sheet 並依據天數(Day)展開 ========== */
+    function loadPlaceSheet() {
+      document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
+      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
+      
+      fetch(url)
+        .then(r => r.text())
+        .then(txt => {
+          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+          const rows = json.table.rows;
+          
+          // 建立以天數為 key 的容器
+          const days = {};
+
+          rows.forEach((row, i) => {
+            if(!row.c || !row.c[0] || !row.c[0].v) return;
+            const title = String(row.c[0].v).trim();
+            if(i === 0 && (title === "標題" || title === "名稱" || title === "A" || title.toLowerCase().includes("name"))) return;
+
+            let category = '其他';
+            let mapLink = '';
+            
+            if(row.c[1] && row.c[1].v) category = String(row.c[1].v).trim();
+            if(row.c[2] && row.c[2].v) {
+                mapLink = String(row.c[2].v).trim();
+            } else if (row.c[1] && row.c[1].v && String(row.c[1].v).includes('http')) {
+                mapLink = String(row.c[1].v).trim();
+                category = '其他';
+            }
+
+            let dayNum = row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : '未分類';
+            let dayKey = dayNum === '未分類' ? '未分類' : `Day ${dayNum}`;
+
+            if (!days[dayKey]) days[dayKey] = [];
+
+            let icon = '<i class="fa-solid fa-location-dot text-draw-green"></i>';
+            if(category.includes('景點')) icon = '<i class="fa-solid fa-camera-retro text-draw-pink"></i>';
+            else if(category.includes('美食') || category.includes('餐廳')) icon = '<i class="fa-solid fa-utensils text-draw-yellow"></i>';
+            else if(category.includes('逛街') || category.includes('購物')) icon = '<i class="fa-solid fa-bag-shopping text-draw-blue"></i>';
+
+            // 抓取 E 欄 (row.c[4]) 作為 Review，並僅在分類為美食時顯示
+            let reviewHtml = '';
+            if (row.c[4] && row.c[4].v) {
+                let reviewText = String(row.c[4].v).trim();
+                if ((category.includes('美食') || category.includes('餐廳')) && reviewText) {
+                    reviewHtml = `
+                    <div class="mt-2 ml-7 text-[10px] font-bold text-draw-ink bg-yellow-50 border-2 border-dashed border-draw-yellow p-2 rounded-lg leading-relaxed">
+                        <i class="fa-solid fa-star text-draw-yellow mr-1"></i>${reviewText}
+                    </div>`;
+                }
+            }
+
+            let itemHtml = `
+            <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in flex flex-col">
+                <div class="flex justify-between items-start w-full">
+                    <div class="flex items-start flex-1 min-w-0 pr-2">
+                        <div class="w-6 text-center shrink-0 mr-1 mt-0.5">${icon}</div>
+                        <span class="font-black text-xs text-draw-ink break-words">${title}</span>
+                    </div>
+                    ${mapLink ? `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center mt-0.5"><i class="fa-solid fa-map-location-dot mr-1.5"></i>地圖</a>` : ''}
+                </div>
+                ${reviewHtml}
+            </div>`;
+
+            days[dayKey].push(itemHtml);
+          });
+
+          let finalHtml = '';
+          const sortedKeys = Object.keys(days).sort((a, b) => {
+              if(a === '未分類') return 1;
+              if(b === '未分類') return -1;
+              return (parseInt(a.replace('Day ', '')) || 0) - (parseInt(b.replace('Day ', '')) || 0);
+          });
+
+          sortedKeys.forEach(key => {
+              finalHtml += `
+              <details class="mb-3 group outline-none bg-gray-50 border-2 border-draw-ink rounded-xl overflow-hidden shadow-sm" ${key === 'Day 1' ? 'open' : ''}>
+                  <summary class="font-black p-3 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-xs transition-colors hover:bg-gray-100">
+                      <span>📅 ${key} 行程地點</span>
+                      <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
+                  </summary>
+                  <div class="p-3 bg-gray-50 border-t-2 border-draw-ink">
+                      ${days[key].join('')}
+                  </div>
+              </details>
+              `;
+          });
+
+          document.getElementById('guide-place-list').innerHTML = finalHtml || '<p class="text-center text-draw-muted text-xs font-bold py-4">目前沒有景點資料喔！</p>';
+          showToast("地點已更新");
+        })
+        .catch(err => {
+          document.getElementById('guide-place-list').innerHTML = '<div class="p-3 text-center text-draw-pink text-xs font-bold border-2 border-draw-pink rounded-xl bg-pink-50">連線失敗，請檢查網路</div>';
+        });
+    }
+
+    /* ========== INFO Tab - Google Sheet Fetch (Fly_hotels) ========== */
+    function loadInfoSheet() {
+      document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse py-6 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入試算表資料...</div>';
+      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
+      fetch(url)
+        .then(r => r.text())
+        .then(txt => {
+          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+          const rows = json.table.rows;
+          let html = '';
+          
+          rows.forEach((row, i) => {
+            if(row.c && row.c[0] && row.c[0].v) {
+              const title = String(row.c[0].v).trim();
+              if(title === "標題" || title === "項目名稱" || title === "項目") return;
+
+              let iconClass = 'fa-star text-draw-yellow'; 
+              if (title.includes('機票') || title.includes('航班')) iconClass = 'fa-plane text-draw-blue';
+              else if (title.includes('住宿') || title.includes('飯店') || title.includes('民宿') || title.toLowerCase().includes('airbnb')) iconClass = 'fa-hotel text-draw-green';
+              else if (title.includes('迪士尼') || title.toLowerCase().includes('disney')) iconClass = 'fa-wand-magic-sparkles text-draw-pink';
+              else if (title.includes('車') || title.includes('接送')) iconClass = 'fa-car text-draw-yellow';
+              else if (title.toLowerCase().includes('wifi') || title.toLowerCase().includes('esim') || title.includes('網')) iconClass = 'fa-wifi text-draw-blue';
+              else if (title.includes('保險')) iconClass = 'fa-shield-halved text-draw-green';
+              else if (title.includes('票')) iconClass = 'fa-ticket text-draw-pink';
+
+              let detailsHtml = '';
+              for(let j=1; j<row.c.length; j++) {
+                  if(row.c[j] && (row.c[j].v || row.c[j].f)) {
+                      const val = String(row.c[j].f || row.c[j].v); 
+                      if(val.startsWith('http')) {
+                          detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-4 py-2.5 rounded-xl border-2 border-draw-ink shadow-solid-sm mt-2 text-xs font-black click-effect w-full text-center"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
+                      } else {
+                          detailsHtml += `<p class="mb-2 last:mb-0">${val.replace(/\n/g, '<br>')}</p>`;
+                      }
+                  }
+              }
+              if(detailsHtml === '') detailsHtml = '<p class="text-draw-muted text-[10px]">無詳細說明</p>';
+
+              html += `
+                <details class="bg-white border-2 border-draw-ink rounded-2xl mb-3 group outline-none overflow-hidden shadow-solid-sm">
+                  <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-sm transition-colors hover:bg-yellow-50">
+                    <span><i class="fa-solid ${iconClass} mr-2 text-lg"></i> ${title}</span> 
+                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
+                  </summary>
+                  <div class="p-4 text-xs bg-gray-50 leading-relaxed break-words text-draw-ink border-t-2 border-draw-ink font-bold">
+                    ${detailsHtml}
+                  </div>
+                </details>`;
+            }
+          });
+          document.getElementById('info-sheet-content').innerHTML = html || '<div class="text-center text-draw-muted text-xs">目前沒有預訂資料喔！</div>';
+          showToast("快訊已更新");
+        })
+        .catch(err => {
+          document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-3 rounded-xl bg-pink-50"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 預訂快訊載入失敗</div>';
+        });
+    }
+
+    /* ========== WALLET Tab - 雲端公帳 (Sheet: Expense) ========== */
     async function fetchGroupExpenses() {
         const sheetId = '16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc';
         const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Expense`;
-        const listContainer = document.getElementById('group-expense-body');
-        listContainer.innerHTML = '<div class="text-center text-draw-muted text-[10px] py-6 font-bold animate-pulse">正在連線 Google Sheet...</div>';
-
+        
         try {
             const response = await fetch(url);
             const data = await response.text();
             const rows = data.split('\n').slice(1);
+            
             let html = '';
             let totalTWD = 0;
 
@@ -647,15 +813,15 @@
                 const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(c => c.replace(/"/g, '')) || [];
                 if (cols.length < 3) return;
 
-                const [category, item, amount, currency, payer, costPerHead] = cols;
-                const cost = parseFloat(costPerHead) || 0;
+                const [category, item, amount, currency, payer, perHead] = cols;
+                const cost = parseFloat(perHead) || 0;
                 totalTWD += cost;
 
                 html += `
-                <div class="flex items-center justify-between bg-gray-50 border-2 border-draw-ink rounded-xl p-3 fade-in shadow-sm mb-2">
+                <div class="flex items-center justify-between bg-gray-50 border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in">
                     <div class="flex flex-col">
                         <span class="text-[9px] font-black px-1.5 py-0.5 rounded border border-draw-ink shadow-sm w-fit cat-${category}">${category}</span>
-                        <span class="text-xs font-black text-draw-ink mt-1">${item}</span>
+                        <span class="text-xs font-black mt-1">${item}</span>
                     </div>
                     <div class="text-right leading-tight">
                         <div class="text-[9px] font-bold text-draw-muted">${amount} ${currency}</div>
@@ -664,14 +830,15 @@
                 </div>`;
             });
 
-            listContainer.innerHTML = html || '<div class="text-center text-draw-muted text-[10px] py-6 font-bold">目前無公帳紀錄</div>';
+            document.getElementById('group-expense-body').innerHTML = html || '<div class="text-center text-draw-muted text-[10px] py-6 font-bold">無公帳紀錄</div>';
             document.getElementById('group-total-twd').innerText = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
-        } catch (error) {
-            listContainer.innerHTML = '<div class="text-center text-draw-pink text-[10px] py-6 font-bold">載入失敗，請檢查權限</div>';
+        } catch (e) { 
+            console.error(e); 
+            document.getElementById('group-expense-body').innerHTML = '<div class="text-center text-draw-pink text-[10px] py-6 font-bold">載入失敗，請檢查權限</div>'; 
         }
     }
 
-    /* ========== 私帳與照片上傳邏輯 ========== */
+    /* ========== WALLET Tab - 個人私帳 (LocalStorage) ========== */
     let rate = parseFloat(localStorage.getItem('tk26_rate_st')) || 0.21;
     let expenses = JSON.parse(localStorage.getItem('tk26_exp_st')) || [];
     let b64 = null;
@@ -781,157 +948,7 @@
       document.getElementById('total-twd').innerText = `NT$ ${twdTotal.toLocaleString()}`;
     }
 
-    /* ========== 系統基礎與表單載入邏輯 ========== */
-    function openImg(src) {
-      document.getElementById('lightbox-img').src = src;
-      document.getElementById('lightbox').classList.remove('hidden');
-    }
-    function closeImg() { document.getElementById('lightbox').classList.add('hidden'); }
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-msg').innerText = msg;
-      toast.classList.remove('opacity-0');
-      setTimeout(() => toast.classList.add('opacity-0'), 1500);
-    }
-
-    /* 修改：動態抓取 place sheet 並依據天數(Day)展開 */
-    function loadPlaceSheet() {
-      document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
-      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
-      
-      fetch(url)
-        .then(r => r.text())
-        .then(txt => {
-          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
-          const rows = json.table.rows;
-          
-          // 建立以天數為 key 的容器
-          const days = {};
-
-          rows.forEach((row, i) => {
-            if(!row.c || !row.c[0] || !row.c[0].v) return;
-            const title = String(row.c[0].v).trim();
-            if(i === 0 && (title === "標題" || title === "名稱" || title === "A" || title.toLowerCase().includes("name"))) return;
-
-            let category = '其他';
-            let mapLink = '';
-            
-            if(row.c[1] && row.c[1].v) category = String(row.c[1].v).trim();
-            if(row.c[2] && row.c[2].v) {
-                mapLink = String(row.c[2].v).trim();
-            } else if (row.c[1] && row.c[1].v && String(row.c[1].v).includes('http')) {
-                mapLink = String(row.c[1].v).trim();
-                category = '其他';
-            }
-
-            let dayNum = row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : '未分類';
-            let dayKey = dayNum === '未分類' ? '未分類' : `Day ${dayNum}`;
-
-            if (!days[dayKey]) days[dayKey] = [];
-
-            let icon = '<i class="fa-solid fa-location-dot text-draw-green"></i>';
-            if(category.includes('景點')) icon = '<i class="fa-solid fa-camera-retro text-draw-pink"></i>';
-            else if(category.includes('美食') || category.includes('餐廳')) icon = '<i class="fa-solid fa-utensils text-draw-yellow"></i>';
-            else if(category.includes('逛街') || category.includes('購物')) icon = '<i class="fa-solid fa-bag-shopping text-draw-blue"></i>';
-
-            let itemHtml = `
-            <div class="flex justify-between items-center bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in">
-                <div class="flex items-center flex-1 min-w-0 pr-2">
-                    <div class="w-6 text-center shrink-0 mr-1">${icon}</div>
-                    <span class="font-black text-xs text-draw-ink truncate">${title}</span>
-                </div>
-                ${mapLink ? `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1.5"></i>地圖</a>` : ''}
-            </div>`;
-
-            days[dayKey].push(itemHtml);
-          });
-
-          let finalHtml = '';
-          const sortedKeys = Object.keys(days).sort((a, b) => {
-              if(a === '未分類') return 1;
-              if(b === '未分類') return -1;
-              return (parseInt(a.replace('Day ', '')) || 0) - (parseInt(b.replace('Day ', '')) || 0);
-          });
-
-          sortedKeys.forEach(key => {
-              finalHtml += `
-              <details class="mb-3 group outline-none bg-gray-50 border-2 border-draw-ink rounded-xl overflow-hidden shadow-sm" ${key === 'Day 1' ? 'open' : ''}>
-                  <summary class="font-black p-3 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-xs transition-colors hover:bg-gray-100">
-                      <span>📅 ${key} 行程地點</span>
-                      <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
-                  </summary>
-                  <div class="p-3 bg-gray-50 border-t-2 border-draw-ink">
-                      ${days[key].join('')}
-                  </div>
-              </details>
-              `;
-          });
-
-          document.getElementById('guide-place-list').innerHTML = finalHtml || '<p class="text-center text-draw-muted text-xs font-bold py-4">目前沒有景點資料喔！</p>';
-          showToast("地點已更新");
-        })
-        .catch(err => {
-          document.getElementById('guide-place-list').innerHTML = '<div class="p-3 text-center text-draw-pink text-xs font-bold border-2 border-draw-pink rounded-xl bg-pink-50">連線失敗，請檢查網路</div>';
-        });
-    }
-
-    function loadInfoSheet() {
-      document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse py-6 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入試算表資料...</div>';
-      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=fly_cat_hotels`;
-      fetch(url)
-        .then(r => r.text())
-        .then(txt => {
-          const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
-          const rows = json.table.rows;
-          let html = '';
-          
-          rows.forEach((row, i) => {
-            if(row.c && row.c[0] && row.c[0].v) {
-              const title = String(row.c[0].v).trim();
-              if(title === "標題" || title === "項目名稱" || title === "項目") return;
-
-              let iconClass = 'fa-star text-draw-yellow'; 
-              if (title.includes('機票') || title.includes('航班')) iconClass = 'fa-plane text-draw-blue';
-              else if (title.includes('住宿') || title.includes('飯店') || title.includes('民宿') || title.toLowerCase().includes('airbnb')) iconClass = 'fa-hotel text-draw-green';
-              else if (title.includes('迪士尼') || title.toLowerCase().includes('disney')) iconClass = 'fa-wand-magic-sparkles text-draw-pink';
-              else if (title.includes('車') || title.includes('接送')) iconClass = 'fa-car text-draw-yellow';
-              else if (title.toLowerCase().includes('wifi') || title.toLowerCase().includes('esim') || title.includes('網')) iconClass = 'fa-wifi text-draw-blue';
-              else if (title.includes('保險')) iconClass = 'fa-shield-halved text-draw-green';
-              else if (title.includes('票')) iconClass = 'fa-ticket text-draw-pink';
-
-              let detailsHtml = '';
-              for(let j=1; j<row.c.length; j++) {
-                  if(row.c[j] && (row.c[j].v || row.c[j].f)) {
-                      const val = String(row.c[j].f || row.c[j].v); 
-                      if(val.startsWith('http')) {
-                          detailsHtml += `<a href="${val}" target="_blank" class="inline-block bg-draw-blue text-white px-4 py-2.5 rounded-xl border-2 border-draw-ink shadow-solid-sm mt-2 text-xs font-black click-effect w-full text-center"><i class="fa-solid fa-link mr-1"></i> 開啟相關連結</a><br>`;
-                      } else {
-                          detailsHtml += `<p class="mb-2 last:mb-0">${val.replace(/\n/g, '<br>')}</p>`;
-                      }
-                  }
-              }
-              if(detailsHtml === '') detailsHtml = '<p class="text-draw-muted text-[10px]">無詳細說明</p>';
-
-              html += `
-                <details class="bg-white border-2 border-draw-ink rounded-2xl mb-3 group outline-none overflow-hidden shadow-solid-sm">
-                  <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-sm transition-colors hover:bg-yellow-50">
-                    <span><i class="fa-solid ${iconClass} mr-2 text-lg"></i> ${title}</span> 
-                    <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
-                  </summary>
-                  <div class="p-4 text-xs bg-gray-50 leading-relaxed break-words text-draw-ink border-t-2 border-draw-ink font-bold">
-                    ${detailsHtml}
-                  </div>
-                </details>`;
-            }
-          });
-          document.getElementById('info-sheet-content').innerHTML = html || '<div class="text-center text-draw-muted text-xs">目前沒有預訂資料喔！</div>';
-          showToast("快訊已更新");
-        })
-        .catch(err => {
-          document.getElementById('info-sheet-content').innerHTML = '<div class="text-center text-draw-pink text-xs font-bold border-2 border-draw-pink p-3 rounded-xl bg-pink-50"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 預訂快訊載入失敗</div>';
-        });
-    }
-
+    /* ========== LISTS & MEMO ========== */
     const defaultChk = ["護照正本 (效期需滿6個月)", "日幣現金與信用卡 (JCB)", "網卡 / eSIM", "迪士尼門票 / 飯店訂單", "行動電源與充電線", "個人常備藥品", "輕便雨具", "好穿的運動鞋"];
     
     function initLists() {
@@ -985,6 +1002,7 @@
       }).replace(/\n/g, '<br>');
     }
 
+    /* ========== 頁面初始化 ========== */
     window.onload = () => {
       loadInfoSheet();
       loadPlaceSheet(); 
