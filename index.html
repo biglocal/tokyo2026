@@ -602,64 +602,7 @@
       target.classList.remove('bg-white', 'text-draw-ink');
       target.classList.add(day===1 ? 'bg-draw-pink' : 'bg-draw-yellow', 'text-white');
     }
-    /* ========== 新增：雲端帳單抓取邏輯 ========== */
-    async function fetchGroupExpenses() {
-        const sheetId = '16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc';
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Expense`;
-        try {
-            const response = await fetch(url);
-            const data = await response.text();
-            const rows = data.split('\n').slice(1);
-            let html = '';
-            let totalTWD = 0;
-            rows.forEach(row => {
-                const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(c => c.replace(/"/g, '')) || [];
-                if (cols.length < 3) return;
-                const [category, item, amount, currency, payer, perHead] = cols;
-                totalTWD += parseFloat(perHead) || 0;
-                html += `<div class="flex items-center justify-between bg-gray-50 border-2 border-draw-ink rounded-xl p-3 shadow-sm">
-                    <div class="flex flex-col"><span class="text-[9px] font-black px-1.5 py-0.5 rounded border border-draw-ink shadow-sm w-fit cat-${category}">${category}</span><span class="text-xs font-black mt-1">${item}</span></div>
-                    <div class="text-right"><div class="text-[9px] font-bold text-draw-muted">${amount} ${currency}</div><div class="text-xs font-black text-draw-pink">NT$ ${Math.round(perHead)}</div></div>
-                </div>`;
-            });
-            document.getElementById('group-expense-body').innerHTML = html || "無公帳紀錄";
-            document.getElementById('group-total-twd').innerText = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
-        } catch (e) { console.error(e); }
-    }
 
-    /* ========== 個人記帳邏輯 ========== */
-    let rate = parseFloat(localStorage.getItem('tk26_rate_st')) || 0.21;
-    let expenses = JSON.parse(localStorage.getItem('tk26_exp_st')) || [];
-
-    document.getElementById('rate-input').addEventListener('change', function() {
-        rate = parseFloat(this.value);
-        localStorage.setItem('tk26_rate_st', rate);
-        renderExp();
-    });
-
-    function addExpense() {
-      const name = document.getElementById('exp-name').value;
-      const mathStr = document.getElementById('exp-jpy').value;
-      if(!name || !mathStr) return;
-      let jpy = 0;
-      try { jpy = eval(mathStr.replace(/[^0-9+\-*/().]/g, '')); } catch(e) { return; }
-      expenses.unshift({ id: Date.now(), name, jpy, date: new Date().toLocaleDateString('zh-TW', {month:'numeric', day:'numeric'}) });
-      localStorage.setItem('tk26_exp_st', JSON.stringify(expenses));
-      document.getElementById('exp-name').value = '';
-      document.getElementById('exp-jpy').value = '';
-      renderExp();
-    }
-
-    function renderExp() {
-      const list = document.getElementById('expense-list');
-      let total = 0;
-      list.innerHTML = expenses.map(e => {
-          const twd = Math.round(e.jpy * rate);
-          total += twd;
-          return `<div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-3 flex justify-between items-center"><div class="text-xs font-black">${e.name}</div><div class="text-right leading-tight"><div class="text-[9px] font-bold text-draw-muted">¥ ${e.jpy}</div><div class="text-xs font-black text-draw-blue">NT$ ${twd}</div></div></div>`;
-      }).join('');
-      document.getElementById('total-twd').innerText = `NT$ ${total.toLocaleString()}`;
-    }
     /* ========== Image Lightbox & Toast ========== */
     function openImg(src) {
       document.getElementById('lightbox-img').src = src;
