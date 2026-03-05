@@ -439,37 +439,42 @@
 
     <section id="tab-wallet" class="hidden fade-in space-y-5">
       <div class="bg-draw-green text-draw-ink border-2 border-draw-ink shadow-solid rounded-2xl p-5 flex justify-between items-center relative overflow-hidden">
-        <i class="fa-solid fa-yen-sign absolute -right-2 -bottom-6 text-7xl text-white opacity-30"></i>
+        <i class="fa-solid fa-sack-dollar absolute -right-2 -bottom-6 text-7xl text-white opacity-30"></i>
         <div class="relative z-10">
-          <p class="text-[10px] font-black mb-1 bg-white px-2 py-0.5 rounded inline-block border-2 border-draw-ink">設定匯率</p>
-          <div class="flex items-center gap-2 mt-1">
-            <span class="font-black text-sm text-white drop-shadow-md">1 JPY =</span>
-            <input type="number" id="rate-input" value="0.21" step="0.001" class="w-20 px-2 py-1.5 rounded-lg border-2 border-draw-ink font-black text-sm outline-none text-center">
-            <span class="font-black text-sm text-white drop-shadow-md">TWD</span>
+          <p class="text-[10px] font-black mb-1 bg-white px-2 py-0.5 rounded inline-block border-2 border-draw-ink">雲端公帳人均</p>
+          <div class="mt-1">
+            <p id="group-total-twd" class="text-2xl font-black text-white drop-shadow-md">NT$ 0</p>
           </div>
         </div>
         <div class="text-right relative z-10">
-          <p class="text-[10px] font-black bg-black text-white px-2 py-0.5 rounded inline-block mb-1 border-2 border-black shadow-sm">台幣總花費</p>
-          <p id="total-twd" class="text-2xl font-black text-white drop-shadow-md">NT$ 0</p>
+          <p class="text-[10px] font-black bg-black text-white px-2 py-0.5 rounded inline-block mb-1 border-2 border-black shadow-sm">個人私帳總額</p>
+          <p id="total-twd" class="text-xl font-black text-white drop-shadow-md">NT$ 0</p>
+        </div>
+      </div>
+
+      <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-4">
+        <div class="flex justify-between items-center mb-4 border-b-2 border-dashed border-gray-300 pb-2">
+            <h3 class="font-black text-sm"><i class="fa-solid fa-users-rectangle text-draw-blue mr-1 text-lg"></i> 雲端公帳明細</h3>
+            <a href="https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/edit" target="_blank" class="text-[10px] font-black bg-gray-50 border-2 border-draw-ink px-2 py-1 rounded-lg click-effect">編輯</a>
+        </div>
+        <div id="group-expense-body" class="space-y-3 max-h-60 overflow-y-auto no-scrollbar">
+            <div class="text-center py-6 text-[10px] font-black text-draw-muted animate-pulse">讀取雲端資料中...</div>
         </div>
       </div>
 
       <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-5 space-y-4">
-        <h3 class="font-black text-sm border-b-2 border-dashed border-gray-300 pb-2"><i class="fa-solid fa-coins text-draw-yellow mr-1 text-lg"></i> 記一筆花費</h3>
-        <input type="text" id="exp-name" placeholder="買了什麼？ (例: 恐龍扭蛋)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3.5 text-sm font-bold outline-none focus:bg-white transition-colors">
+        <div class="flex items-center justify-between mb-2">
+            <h3 class="font-black text-sm"><i class="fa-solid fa-coins text-draw-yellow mr-1 text-lg"></i> 個人私帳撲滿</h3>
+            <div class="flex items-center gap-1 text-[10px] font-black">
+                匯率: <input type="number" id="rate-input" value="0.21" step="0.001" class="w-12 border-2 border-draw-ink rounded-lg text-center outline-none">
+            </div>
+        </div>
+        <input type="text" id="exp-name" placeholder="買了什麼？" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none">
         <div class="relative">
-          <input type="text" id="exp-jpy" placeholder="日幣金額 (支援算式如 500+200*3)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3.5 text-sm font-bold outline-none focus:bg-white transition-colors pr-10">
-          <span class="absolute right-4 top-4 font-black text-draw-pink text-base">¥</span>
+          <input type="text" id="exp-jpy" placeholder="日幣金額 (算式OK)" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none pr-10">
+          <span class="absolute right-4 top-3.5 font-black text-draw-pink text-sm">¥</span>
         </div>
-        <div class="flex gap-3 pt-1">
-          <input type="file" id="exp-img" accept="image/*" capture="environment" class="hidden" onchange="previewImg(event)">
-          <label for="exp-img" class="flex-1 bg-draw-blue text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-solid-sm click-effect text-xs font-black cursor-pointer flex flex-col justify-center items-center"><i class="fa-solid fa-camera mb-1 text-base"></i>拍照/上傳</label>
-          <button onclick="addExpense()" class="flex-1 bg-draw-pink text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-solid-sm click-effect text-xs font-black flex flex-col justify-center items-center"><i class="fa-solid fa-piggy-bank mb-1 text-base"></i>存入撲滿</button>
-        </div>
-        <div id="img-preview-box" class="hidden relative w-full h-32 border-2 border-draw-ink rounded-xl overflow-hidden mt-2 bg-gray-100">
-          <img id="img-preview" src="" class="w-full h-full object-contain">
-          <button onclick="removePreview()" class="absolute top-0 right-0 bg-red-500 text-white w-8 h-8 flex items-center justify-center text-sm border-l-2 border-b-2 border-draw-ink rounded-bl-xl"><i class="fa-solid fa-times"></i></button>
-        </div>
+        <button onclick="addExpense()" class="w-full bg-draw-pink text-white text-center rounded-xl p-3 border-2 border-draw-ink shadow-solid-sm click-effect text-xs font-black">存入撲滿</button>
       </div>
       <div id="expense-list" class="space-y-4 pb-4"></div>
     </section>
