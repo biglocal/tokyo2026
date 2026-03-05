@@ -96,9 +96,8 @@
 
 <script>
     // ⚠️ 貼上你剛剛取得的「最新」Web App URL
-    const SCRIPT_URL = "在此貼上你的_Web_App_URL"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOxnbns2WDdgF8uXtkz2cd2KycdBXRSCxhGlUzErA1HyeE1Xjl6H6TR3YP0Zxl1zKL/exec"; 
 
-    // 自動計算人均 (預設 ÷ 6)
     function calculatePerHead() {
         const amt = parseFloat(document.getElementById('inp-amount').value);
         if(!isNaN(amt)) {
@@ -124,25 +123,30 @@
         btn.disabled = true;
         btn.classList.replace('bg-draw-pink', 'bg-gray-400');
 
-        // 改用 URLSearchParams (最穩定的表單傳送格式，不會被跨域擋下)
-        const formData = new URLSearchParams();
-        formData.append('category', category);
-        formData.append('item', item);
-        formData.append('amount', amount);
-        formData.append('currency', currency);
-        formData.append('payer', payer);
-        formData.append('perhead', perhead);
+        // 把所有資料打包成網址參數 (這跟你在瀏覽器測試的原理一模一樣，100% 不會被擋)
+        const params = new URLSearchParams({
+            category: category,
+            item: item,
+            amount: amount,
+            currency: currency,
+            payer: payer,
+            perhead: perhead
+        });
 
-        fetch(SCRIPT_URL, {
-            method: "POST",
-            body: formData
+        // 將參數接在你的 URL 後面
+        const finalUrl = SCRIPT_URL + "?" + params.toString();
+
+        // 改用 GET 請求，這能完美繞過所有瀏覽器的跨域阻擋
+        fetch(finalUrl, {
+            method: 'GET',
+            mode: 'no-cors'
         })
-        .then(response => {
+        .then(() => {
             const toast = document.getElementById('toast');
             toast.classList.replace('opacity-0', 'opacity-100');
             setTimeout(() => {
                 toast.classList.replace('opacity-100', 'opacity-0');
-                window.location.href = "index.html"; // 成功後跳回主頁
+                window.location.href = "index.html"; // 送出成功後跳回主頁
             }, 1500);
         })
         .catch(error => {
