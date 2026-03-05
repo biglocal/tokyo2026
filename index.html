@@ -996,10 +996,11 @@
     }
 
     window.onload = () => {
-      loadInfoSheet();
-      loadPlaceSheet(); // 載入 GUIDE 頁面的動態地點清單 (包含分類與天數)
       renderExp();
+      fetchGroupExpenses();
       initLists();
+      loadInfoSheet();
+      loadPlaceSheet();
     };
   </script>
 </body>
