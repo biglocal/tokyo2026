@@ -156,7 +156,7 @@
             <li class="relative">
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-pink border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
-                    <h3 class="font-black text-draw-ink text-sm mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Disney Land 夢幻全日</h3>
+                    <h3 class="font-black text-draw-pink text-sm mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Disney Land 夢幻全日</h3>
                     <p class="text-[11px] font-bold text-draw-muted mb-3">Happy Entry 通常 <span class="bg-draw-pink text-white px-1 rounded font-black border-2 border-draw-ink">08:30-08:45</span> 放人，<strong class="text-draw-ink bg-yellow-100 px-1 rounded">請務必 8 點前到</strong>。</p>
                     <a href="https://www.google.com/maps/search/?api=1&query=東京迪士尼樂園" target="_blank" class="inline-flex items-center bg-draw-pink text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect mb-3"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 迪士尼樂園 Map</a>
                     <div class="img-frame">
@@ -470,7 +470,6 @@
                 <a href="https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/edit" target="_blank" class="text-[10px] font-black bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg click-effect">編輯表單</a>
             </div>
         </div>
-        
         <div id="group-expense-body" class="space-y-3 max-h-[300px] overflow-y-auto no-scrollbar">
             <div class="text-center text-draw-muted text-[10px] py-6 animate-pulse font-bold">正在連線 Google Sheet...</div>
         </div>
@@ -642,7 +641,7 @@
       setTimeout(() => toast.classList.add('opacity-0'), 1500);
     }
 
-    /* ========== GUIDE Tab - 動態抓取 place sheet 並依據天數(Day)展開 ========== */
+    /* ========== GUIDE Tab - 動態抓取 place sheet (修改：評價按鈕放在地圖左邊) ========== */
     function loadPlaceSheet() {
       document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
@@ -653,7 +652,6 @@
           const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
           const rows = json.table.rows;
           
-          // 建立以天數為 key 的容器
           const days = {};
 
           rows.forEach((row, i) => {
@@ -682,28 +680,30 @@
             else if(category.includes('美食') || category.includes('餐廳')) icon = '<i class="fa-solid fa-utensils text-draw-yellow"></i>';
             else if(category.includes('逛街') || category.includes('購物')) icon = '<i class="fa-solid fa-bag-shopping text-draw-blue"></i>';
 
-            // 抓取 E 欄 (row.c[4]) 作為 Review，並僅在分類為美食時顯示
+            // 修改點：抓取 E 欄 (評價)，並產生與地圖按鈕相同的樣式
             let reviewHtml = '';
             if (row.c[4] && row.c[4].v) {
                 let reviewText = String(row.c[4].v).trim();
                 if ((category.includes('美食') || category.includes('餐廳')) && reviewText) {
-                    reviewHtml = `
-                    <div class="mt-2 ml-7 text-[10px] font-bold text-draw-ink bg-yellow-50 border-2 border-dashed border-draw-yellow p-2 rounded-lg leading-relaxed">
-                        <i class="fa-solid fa-star text-draw-yellow mr-1"></i>${reviewText}
-                    </div>`;
+                    reviewHtml = `<div class="bg-draw-yellow text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-star mr-1"></i>${reviewText}</div>`;
                 }
             }
 
+            let mapHtml = '';
+            if(mapLink) {
+                mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>`;
+            }
+
             let itemHtml = `
-            <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in flex flex-col">
-                <div class="flex justify-between items-start w-full">
-                    <div class="flex items-start flex-1 min-w-0 pr-2">
-                        <div class="w-6 text-center shrink-0 mr-1 mt-0.5">${icon}</div>
-                        <span class="font-black text-xs text-draw-ink break-words">${title}</span>
-                    </div>
-                    ${mapLink ? `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center mt-0.5"><i class="fa-solid fa-map-location-dot mr-1.5"></i>地圖</a>` : ''}
+            <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in flex items-center justify-between w-full">
+                <div class="flex items-center flex-1 min-w-0 pr-2">
+                    <div class="w-6 text-center shrink-0 mr-1">${icon}</div>
+                    <span class="font-black text-xs text-draw-ink truncate">${title}</span>
                 </div>
-                ${reviewHtml}
+                <div class="flex gap-2 shrink-0">
+                    ${reviewHtml}
+                    ${mapHtml}
+                </div>
             </div>`;
 
             days[dayKey].push(itemHtml);
