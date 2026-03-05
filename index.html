@@ -470,7 +470,6 @@
                 <a href="https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/edit" target="_blank" class="text-[10px] font-black bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg click-effect">編輯表單</a>
             </div>
         </div>
-        
         <div id="group-expense-body" class="space-y-3 max-h-[300px] overflow-y-auto no-scrollbar">
             <div class="text-center text-draw-muted text-[10px] py-6 animate-pulse font-bold">正在讀取雲端資料...</div>
         </div>
@@ -534,6 +533,13 @@
             <div class="bg-green-50 w-12 h-12 rounded-full flex items-center justify-center border-2 border-draw-ink mb-2"><i class="fa-solid fa-train-subway text-draw-green text-xl"></i></div>
             地鐵地圖 PDF
         </a>
+      </div>
+
+      <div class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-5">
+        <h3 class="font-black text-draw-ink mb-3 border-b-2 border-dashed border-gray-300 pb-2 text-sm"><i class="fa-solid fa-map text-draw-green mr-1"></i> 東京區域地圖</h3>
+        <div class="img-frame mt-0 mb-0">
+          <img src="https://biglocal.github.io/tokyo2026/tokyo_.png" onclick="openImg(this.src)" alt="東京區域地圖" onerror="this.style.display='none'">
+        </div>
       </div>
 
       <div class="bg-draw-ink text-white border-2 border-draw-ink shadow-solid rounded-2xl p-5 font-black text-xs">
@@ -642,7 +648,7 @@
       setTimeout(() => toast.classList.add('opacity-0'), 1500);
     }
 
-    /* ========== GUIDE Tab - 動態抓取 place sheet (修改展開樣式) ========== */
+    /* ========== GUIDE Tab - 動態抓取 place sheet ========== */
     function loadPlaceSheet() {
       document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
@@ -694,7 +700,6 @@
                 mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>`;
             }
 
-            // 修改：這裡只保留 Item 本身的邊框
             let itemHtml = `
             <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-3 fade-in flex items-center justify-between w-full">
                 <div class="flex items-center flex-1 min-w-0 pr-2">
@@ -717,7 +722,6 @@
               return (parseInt(a.replace('Day ', '')) || 0) - (parseInt(b.replace('Day ', '')) || 0);
           });
 
-          // 修改：移除 Day 層級的 `<details>` 粗邊框與背景色，改為只有底部虛線的純文字標題
           sortedKeys.forEach(key => {
               finalHtml += `
               <details class="mb-5 group outline-none" ${key === 'Day 1' ? 'open' : ''}>
