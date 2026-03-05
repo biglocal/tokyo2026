@@ -425,14 +425,14 @@
       </details>
 
       <details class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl group outline-none overflow-hidden" open>
-        <summary class="font-black p-4 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center bg-green-50 transition-colors">
+        <summary class="font-black p-4 cursor-pointer flex justify-between items-center bg-green-50 transition-colors border-b-2 border-draw-ink">
           <span>📍 每日景點與地圖導航</span>
           <div class="flex gap-2 items-center">
             <button onclick="event.stopPropagation(); loadPlaceSheet()" class="text-[10px] font-black bg-white border-2 border-draw-ink px-2 py-0.5 rounded click-effect"><i class="fa-solid fa-rotate text-draw-green"></i> 更新</button>
             <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
           </div>
         </summary>
-        <div id="guide-place-list" class="p-4 bg-[#FAFAFA] border-t-2 border-draw-ink">
+        <div id="guide-place-list" class="p-4 bg-[#FAFAFA]">
             <div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4">
                 <i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...
             </div>
@@ -470,8 +470,9 @@
                 <a href="https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/edit" target="_blank" class="text-[10px] font-black bg-draw-yellow border-2 border-draw-ink px-2 py-1 rounded-lg click-effect">編輯表單</a>
             </div>
         </div>
+        
         <div id="group-expense-body" class="space-y-3 max-h-[300px] overflow-y-auto no-scrollbar">
-            <div class="text-center text-draw-muted text-[10px] py-6 animate-pulse font-bold">正在連線 Google Sheet...</div>
+            <div class="text-center text-draw-muted text-[10px] py-6 animate-pulse font-bold">正在讀取雲端資料...</div>
         </div>
       </div>
 
@@ -641,7 +642,7 @@
       setTimeout(() => toast.classList.add('opacity-0'), 1500);
     }
 
-    /* ========== GUIDE Tab - 動態抓取 place sheet (修改：評價按鈕放在地圖左邊) ========== */
+    /* ========== GUIDE Tab - 動態抓取 place sheet (修改展開樣式) ========== */
     function loadPlaceSheet() {
       document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
@@ -680,7 +681,6 @@
             else if(category.includes('美食') || category.includes('餐廳')) icon = '<i class="fa-solid fa-utensils text-draw-yellow"></i>';
             else if(category.includes('逛街') || category.includes('購物')) icon = '<i class="fa-solid fa-bag-shopping text-draw-blue"></i>';
 
-            // 修改點：抓取 E 欄 (評價)，並產生與地圖按鈕相同的樣式
             let reviewHtml = '';
             if (row.c[4] && row.c[4].v) {
                 let reviewText = String(row.c[4].v).trim();
@@ -694,8 +694,9 @@
                 mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>`;
             }
 
+            // 修改：這裡只保留 Item 本身的邊框
             let itemHtml = `
-            <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-2 fade-in flex items-center justify-between w-full">
+            <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-3 fade-in flex items-center justify-between w-full">
                 <div class="flex items-center flex-1 min-w-0 pr-2">
                     <div class="w-6 text-center shrink-0 mr-1">${icon}</div>
                     <span class="font-black text-xs text-draw-ink truncate">${title}</span>
@@ -716,14 +717,18 @@
               return (parseInt(a.replace('Day ', '')) || 0) - (parseInt(b.replace('Day ', '')) || 0);
           });
 
+          // 修改：移除 Day 層級的 `<details>` 粗邊框與背景色，改為只有底部虛線的純文字標題
           sortedKeys.forEach(key => {
               finalHtml += `
-              <details class="mb-3 group outline-none bg-gray-50 border-2 border-draw-ink rounded-xl overflow-hidden shadow-sm" ${key === 'Day 1' ? 'open' : ''}>
-                  <summary class="font-black p-3 border-b-2 border-transparent group-open:border-draw-ink cursor-pointer flex justify-between items-center text-draw-ink text-xs transition-colors hover:bg-gray-100">
-                      <span>📅 ${key} 行程地點</span>
+              <details class="mb-5 group outline-none" ${key === 'Day 1' ? 'open' : ''}>
+                  <summary class="font-black pb-2 mb-3 border-b-2 border-dashed border-gray-300 cursor-pointer flex justify-between items-center text-draw-ink text-sm select-none">
+                      <div class="flex items-center">
+                          <i class="fa-solid fa-calendar-day text-draw-yellow mr-2"></i>
+                          <span>${key} 行程地點</span>
+                      </div>
                       <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
                   </summary>
-                  <div class="p-3 bg-gray-50 border-t-2 border-draw-ink">
+                  <div class="space-y-3 px-1">
                       ${days[key].join('')}
                   </div>
               </details>
