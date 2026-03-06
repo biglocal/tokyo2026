@@ -214,6 +214,8 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🛍️ 原宿 ➔ 青山 / 表參道</h3>
                     <p class="text-[10px] font-bold text-draw-blue bg-blue-50 px-2 py-1 rounded-lg border border-blue-200 inline-block mb-3"><i class="fa-solid fa-train mr-1"></i> 交通大約抓 30 分鐘</p>
+                    
+                    <p class="text-[10px] text-draw-muted font-bold mb-2">點擊名店直接開啟 Google Map 導航：</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <a href="https://www.google.com/maps/search/?api=1&query=Chanel+表參道" target="_blank" class="bg-pink-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-pink-500 mr-1"></i>Chanel</a>
                         <a href="https://www.google.com/maps/search/?api=1&query=Vivienne+Westwood+青山" target="_blank" class="bg-yellow-100 px-2.5 py-1.5 rounded-lg border-2 border-draw-ink text-[10px] font-black shadow-sm click-effect"><i class="fa-solid fa-map-location-dot text-yellow-600 mr-1"></i>Vivienne W.</a>
@@ -415,9 +417,8 @@
                 <a href="add_expense.html" class="text-[10px] font-black bg-draw-yellow text-draw-ink border-2 border-draw-ink px-2 py-1 rounded-lg click-effect"><i class="fa-solid fa-plus mr-1"></i>新增公帳</a>
             </div>
         </div>
-        
         <div id="group-expense-body" class="space-y-3 max-h-[300px] overflow-y-auto no-scrollbar">
-            <div class="text-center text-draw-muted text-[10px] py-6 animate-pulse font-bold">正在連線 Google Sheet...</div>
+            <div class="text-center text-draw-muted text-[10px] py-6 animate-pulse font-bold">正在讀取雲端資料...</div>
         </div>
       </div>
 
@@ -593,7 +594,7 @@
       setTimeout(() => toast.classList.add('opacity-0'), 1500);
     }
 
-    /* ========== GUIDE Tab - 動態抓取 place sheet (加入編輯按鈕與補充欄位) ========== */
+    /* ========== GUIDE Tab - 動態抓取 place sheet (加入網址自動轉按鈕魔法) ========== */
     function loadPlaceSheet() {
       document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place`;
@@ -641,7 +642,16 @@
 
             let editBtnHtml = `<a href="edit_place.html?${editParams}" class="bg-white text-draw-ink px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center transition-transform active:scale-95"><i class="fa-solid fa-pen text-draw-blue"></i></a>`;
 
-            let notesHtml = notesText ? `<p class="text-[10px] font-bold text-draw-muted mt-1.5 leading-relaxed bg-gray-50 p-1.5 border border-dashed border-gray-300 rounded"><i class="fa-regular fa-comment-dots mr-1"></i>${notesText}</p>` : '';
+            // 🔥 將網址轉換為按鈕的魔法
+            let notesHtml = '';
+            if (notesText) {
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                let formattedNotes = notesText.replace(urlRegex, function(url) {
+                    return `<br><a href="${url}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm mt-1.5 text-[10px] click-effect font-black"><i class="fa-solid fa-earth-asia mr-1"></i> 相關介紹</a>`;
+                });
+                
+                notesHtml = `<div class="text-[10px] font-bold text-draw-muted mt-2 leading-relaxed bg-gray-50 p-2 border-2 border-dashed border-gray-300 rounded-xl"><i class="fa-regular fa-comment-dots mr-1"></i>${formattedNotes}</div>`;
+            }
 
             let itemHtml = `
             <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-3 fade-in flex flex-col w-full">
