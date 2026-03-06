@@ -265,7 +265,7 @@
                 <div class="absolute -left-[27.5px] top-1.5 w-3.5 h-3.5 bg-draw-green border-2 border-draw-ink rounded-full z-10 shadow-solid-sm"></div>
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🗻 驅車前往河口湖</h3>
-                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="day-marker bg-draw-yellow">06:30</span> 早起出發，記得帶好國際駕照！</p>
+                    <p class="text-xs font-bold text-draw-muted mb-3"><span class="day-marker bg-draw-yellow">06:30</span> 集合出發，記得帶好國際駕照！</p>
                     <a href="https://www.google.com/maps/search/?api=1&query=河口湖" target="_blank" class="inline-flex items-center bg-draw-green text-white px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot mr-1.5"></i> 河口湖 Map</a>
                 </div>
             </li>
@@ -365,7 +365,6 @@
                 <div class="bg-white border-2 border-draw-ink shadow-solid-sm rounded-2xl p-4">
                     <h3 class="font-black text-draw-ink text-sm mb-2">🏡 抵達台灣</h3>
                     <p class="text-xs font-bold text-draw-muted mb-3"><span class="bg-draw-ink text-white px-2 py-0.5 rounded-lg border-2 border-draw-ink mr-1 font-black">16:50</span> 抵達機場，搭乘專車平安回家。</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=桃園國際機場" target="_blank" class="inline-flex items-center bg-gray-100 text-draw-ink px-3 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] font-black click-effect"><i class="fa-solid fa-map-location-dot text-draw-green mr-1.5"></i> 桃園機場 Map</a>
                 </div>
             </li>
         </ul>
@@ -596,8 +595,8 @@
     function loadPlaceSheet() {
       document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
       
-      // 🔥 加入隨機時間參數，強制跳過 Google 的 5 分鐘快取！
-      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&sheet=place&_=${new Date().getTime()}`;
+      // 🔥 加入 headers=1 (強制作為標題列) 與隨機時間參數 (破除快取)
+      const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&headers=1&sheet=place&_=${new Date().getTime()}`;
       
       fetch(url)
         .then(r => r.text())
@@ -635,7 +634,7 @@
                 mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>`;
             }
 
-            // 因為你插入了標題列，所以實際資料從第 2 行開始 (i + 2)
+            // 加上 headers=1 後，i=0 就是試算表的第 2 行！這完美解決了你的編輯位移問題！
             const sheetRowIndex = i + 2; 
 
             const editParams = new URLSearchParams({
@@ -644,15 +643,44 @@
 
             let editBtnHtml = `<a href="edit_place.html?${editParams}" class="bg-white text-draw-ink px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center transition-transform active:scale-95"><i class="fa-solid fa-pen text-draw-blue"></i></a>`;
 
-            // 🔥 將網址轉換為漂亮的按鈕
+            // 🔥 網址與 Markdown 按鈕魔法
             let notesHtml = '';
             if (notesText) {
-                const urlRegex = /(https?:\/\/[^\s]+)/g;
-                let formattedNotes = notesText.replace(urlRegex, function(url) {
-                    return `<br><a href="${url}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-solid-sm mt-1.5 mb-0.5 text-[10px] click-effect font-black transition-transform active:scale-95"><i class="fa-solid fa-earth-asia mr-1"></i> 相關介紹</a>`;
-                });
-                
-                notesHtml = `<div class="text-[10px] font-bold text-draw-ink mt-2.5 leading-relaxed bg-gray-50 p-2.5 border-2 border-dashed border-gray-300 rounded-xl break-words"><i class="fa-regular fa-comment-dots text-draw-muted mr-1"></i>${formattedNotes}</div>`;
+                let cleanNotes = notesText.trim();
+                let isOnlyLink = false;
+                let parsedNotes = '';
+
+                // 檢查是否只是一段 Markdown 連結 [標題](網址)
+                const mdLinkRegexExact = /^\[([^\]]+)\]\((https?:\/\/[^\s]+)\)$/;
+                // 檢查是否只是一段純網址
+                const rawUrlRegexExact = /^https?:\/\/[^\s]+$/;
+
+                if (mdLinkRegexExact.test(cleanNotes)) {
+                    isOnlyLink = true;
+                    const match = cleanNotes.match(mdLinkRegexExact);
+                    parsedNotes = `<a href="${match[2]}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black transition-transform active:scale-95"><i class="fa-solid fa-link mr-1"></i> ${match[1]}</a>`;
+                } else if (rawUrlRegexExact.test(cleanNotes)) {
+                    isOnlyLink = true;
+                    parsedNotes = `<a href="${cleanNotes}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black transition-transform active:scale-95"><i class="fa-solid fa-link mr-1"></i> 相關介紹</a>`;
+                } else {
+                    // 有文字也有網址的情況：先替換 Markdown 語法
+                    parsedNotes = cleanNotes.replace(/\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g, function(match, btnTitle, url) {
+                        return `<span class="block mt-1.5 mb-0.5"><a href="${url}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] click-effect font-black"><i class="fa-solid fa-link mr-1"></i> ${btnTitle}</a></span>`;
+                    });
+                    // 再替換純網址
+                    parsedNotes = parsedNotes.replace(/(^|[\s\n])(https?:\/\/[^\s<]+)/g, function(match, space, url) {
+                        return `${space}<span class="block mt-1.5 mb-0.5"><a href="${url}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] click-effect font-black"><i class="fa-solid fa-link mr-1"></i> 相關介紹</a></span>`;
+                    });
+                    parsedNotes = parsedNotes.replace(/\n/g, '<br>');
+                }
+
+                if (isOnlyLink) {
+                    // 如果只有連結，不要灰色虛線框，保持乾淨
+                    notesHtml = `<div class="mt-2.5">${parsedNotes}</div>`;
+                } else {
+                    // 如果有文字，就用灰色對話框包起來
+                    notesHtml = `<div class="text-[10px] font-bold text-draw-ink mt-2.5 leading-relaxed bg-gray-50 p-2.5 border-2 border-dashed border-gray-300 rounded-xl break-words"><i class="fa-regular fa-comment-dots text-draw-muted mr-1"></i> ${parsedNotes}</div>`;
+                }
             }
 
             let itemHtml = `
