@@ -543,7 +543,7 @@
     const TABS = ['plan', 'guide', 'wallet', 'lists', 'info'];
     const COLORS = ['text-draw-pink', 'text-draw-yellow', 'text-draw-green', 'text-draw-blue', 'text-draw-ink'];
 
-      function switchTab(tabId, el) {
+    function switchTab(tabId, el) {
       TABS.forEach(t => document.getElementById(`tab-${t}`).classList.add('hidden'));
       document.getElementById(`tab-${tabId}`).classList.remove('hidden');
       
@@ -555,17 +555,6 @@
       el.classList.remove('text-draw-muted');
       el.classList.add(COLORS[TABS.indexOf(tabId)]);
       el.querySelector('span').classList.replace('font-bold', 'font-black');
-      
-      if(tabId === 'wallet') fetchGroupExpenses();
-      window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-
-      el.classList.remove('text-draw-muted');
-      el.classList.add(COLORS[TABS.indexOf(tabId)]);
-      el.querySelector('span').classList.replace('font-bold', 'font-black');
-      let currentIconBox = el.querySelector('.nav-icon-box');
-      currentIconBox.classList.remove('border-transparent');
-      currentIconBox.classList.add('bg-white', 'border-draw-ink', 'shadow-solid-sm', '-mt-6', 'rounded-xl');
       
       if(tabId === 'wallet') fetchGroupExpenses();
       window.scrollTo({top: 0, behavior: 'smooth'});
