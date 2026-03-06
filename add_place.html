@@ -9,133 +9,74 @@
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['"M PLUS Rounded 1c"', 'sans-serif'] },
-          colors: { draw: { bg: '#FDFCF8', ink: '#2B2D42', yellow: '#FFD166', pink: '#EF476F', blue: '#118AB2', green: '#06D6A0', muted: '#6C757D' } },
-          boxShadow: { 'solid': '3px 3px 0px 0px #2B2D42', 'solid-sm': '2px 2px 0px 0px #2B2D42' }
-        }
-      }
-    }
-  </script>
   <style>
-    body { background-color: #FDFCF8; color: #2B2D42; }
+    body { font-family: "M PLUS Rounded 1c", sans-serif; background-color: #FDFCF8; color: #2B2D42; }
     body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(#E8E8E8 1.5px, transparent 1.5px); background-size: 24px 24px; z-index: -1; pointer-events: none; }
-    .click-effect { transition: transform 0.1s, box-shadow 0.1s; }
-    .click-effect:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #2B2D42 !important; }
   </style>
 </head>
-<body class="font-sans min-h-screen p-4 relative z-10">
-
+<body class="min-h-screen p-4 relative z-10">
   <header class="flex items-center mb-6 pt-4">
-    <a href="index.html" class="bg-white border-2 border-draw-ink shadow-solid-sm w-10 h-10 rounded-xl flex items-center justify-center text-draw-ink click-effect">
+    <a href="index.html" class="bg-white border-2 border-[#2B2D42] shadow-[2px_2px_0px_0px_#2B2D42] w-10 h-10 rounded-xl flex items-center justify-center text-[#2B2D42] active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all">
       <i class="fa-solid fa-chevron-left text-xl"></i>
     </a>
     <h1 class="text-xl font-black ml-4">新增景點 / 美食</h1>
   </header>
 
-  <main class="bg-white border-2 border-draw-ink shadow-solid rounded-2xl p-5 space-y-5">
-    
+  <main class="bg-white border-2 border-[#2B2D42] shadow-[3px_3px_0px_0px_#2B2D42] rounded-2xl p-5 space-y-5">
     <div>
-      <label class="block text-xs font-black text-draw-ink mb-2">📍 地點名稱</label>
-      <input type="text" id="inp-title" placeholder="例：敘敘苑 晴空塔店" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+      <label class="block text-xs font-black text-[#2B2D42] mb-2">📍 地點名稱</label>
+      <input type="text" id="inp-title" placeholder="例：敘敘苑 晴空塔店" class="w-full bg-gray-50 border-2 border-[#2B2D42] rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
     </div>
-
     <div class="flex gap-3">
         <div class="w-1/2">
-            <label class="block text-xs font-black text-draw-ink mb-2">🏷️ 分類</label>
-            <select id="inp-category" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
-                <option value="景點">景點</option>
-                <option value="美食">美食</option>
-                <option value="逛街">逛街</option>
-                <option value="其他">其他</option>
+            <label class="block text-xs font-black text-[#2B2D42] mb-2">🏷️ 分類</label>
+            <select id="inp-category" class="w-full bg-gray-50 border-2 border-[#2B2D42] rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+                <option value="景點">景點</option><option value="美食">美食</option><option value="逛街">逛街</option><option value="其他">其他</option>
             </select>
         </div>
         <div class="w-1/2">
-            <label class="block text-xs font-black text-draw-ink mb-2">📅 預計在哪天？</label>
-            <select id="inp-day" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
-                <option value="1">Day 1</option>
-                <option value="2">Day 2</option>
-                <option value="3">Day 3</option>
-                <option value="4">Day 4</option>
-                <option value="5">Day 5</option>
-                <option value="6">Day 6</option>
-                <option value="未分類">尚未決定</option>
+            <label class="block text-xs font-black text-[#2B2D42] mb-2">📅 預計在哪天？</label>
+            <select id="inp-day" class="w-full bg-gray-50 border-2 border-[#2B2D42] rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+                <option value="1">Day 1</option><option value="2">Day 2</option><option value="3">Day 3</option><option value="4">Day 4</option><option value="5">Day 5</option><option value="6">Day 6</option><option value="未分類">尚未決定</option>
             </select>
         </div>
     </div>
-
     <div>
-      <label class="block text-xs font-black text-draw-ink mb-2">🗺️ Google Maps 連結 (選填)</label>
-      <input type="url" id="inp-maplink" placeholder="貼上地圖分享網址" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+      <label class="block text-xs font-black text-[#2B2D42] mb-2">🗺️ Google Maps 連結</label>
+      <input type="url" id="inp-maplink" placeholder="貼上地圖分享網址" class="w-full bg-gray-50 border-2 border-[#2B2D42] rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
     </div>
-
-    <div>
-      <label class="block text-xs font-black text-draw-ink mb-2">⭐ 短評 / 備註 (選填)</label>
-      <input type="text" id="inp-review" placeholder="例：4.5分 必吃燒肉 / 記得早點排隊" class="w-full bg-gray-50 border-2 border-draw-ink rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+    <div class="flex gap-3">
+        <div class="w-1/3">
+            <label class="block text-xs font-black text-[#2B2D42] mb-2">⭐ Google評分</label>
+            <input type="text" id="inp-rating" placeholder="例: 4.5" class="w-full bg-yellow-50 border-2 border-[#2B2D42] rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+        </div>
+        <div class="w-2/3">
+            <label class="block text-xs font-black text-[#2B2D42] mb-2">📝 補充欄位 (營業時間/短評)</label>
+            <input type="text" id="inp-notes" placeholder="例: 營業至21:00，必點和牛" class="w-full bg-gray-50 border-2 border-[#2B2D42] rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
+        </div>
     </div>
-
-    <button id="submit-btn" onclick="submitPlace()" class="w-full bg-draw-green text-white border-2 border-draw-ink shadow-solid-sm rounded-xl py-4 font-black text-base mt-2 click-effect">
+    <button id="submit-btn" onclick="submitPlace()" class="w-full bg-[#06D6A0] text-white border-2 border-[#2B2D42] shadow-[2px_2px_0px_0px_#2B2D42] rounded-xl py-4 font-black text-base mt-2 active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all">
       <i class="fa-solid fa-paper-plane mr-2"></i>新增至行程地圖
     </button>
   </main>
-
-  <div id="toast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-draw-ink text-white text-sm font-black px-6 py-4 rounded-2xl shadow-solid opacity-0 pointer-events-none z-[60] flex items-center transition-opacity duration-300">
-    <i class="fa-solid fa-check-circle text-draw-green mr-2 text-xl"></i> 寫入成功！
-  </div>
-
+  
   <script>
-    // ⚠️ 這裡換成你的 Web App URL (跟 add_expense.html 用同一個即可)
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOxnbns2WDdgF8uXtkz2cd2KycdBXRSCxhGlUzErA1HyeE1Xjl6H6TR3YP0Zxl1zKL/exec"; 
-
+    const SCRIPT_URL = "在此貼上你的_Web_App_URL"; 
     function submitPlace() {
         const title = document.getElementById('inp-title').value.trim();
-        const category = document.getElementById('inp-category').value;
-        const day = document.getElementById('inp-day').value;
-        const maplink = document.getElementById('inp-maplink').value.trim();
-        const review = document.getElementById('inp-review').value.trim();
-
         if (!title) return alert("名稱一定要填寫喔！");
-        if (SCRIPT_URL === "在此貼上你的_Web_App_URL") return alert("請先設定 Google Apps Script URL！");
-
         const btn = document.getElementById('submit-btn');
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>傳送中...';
-        btn.disabled = true;
-        btn.classList.replace('bg-draw-green', 'bg-gray-400');
-
-        // 使用 URLSearchParams 打包參數，並多傳一個 target_sheet=place
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>傳送中...'; btn.disabled = true;
         const params = new URLSearchParams({
-            action: 'add',
-            target_sheet: 'place', // 告訴後端寫入 place 表單
-            title: title,
-            category: category,
-            day: day,
-            maplink: maplink,
-            review: review
+            action: 'add', target_sheet: 'place', title: title,
+            category: document.getElementById('inp-category').value,
+            day: document.getElementById('inp-day').value,
+            maplink: document.getElementById('inp-maplink').value.trim(),
+            rating: document.getElementById('inp-rating').value.trim(),
+            notes: document.getElementById('inp-notes').value.trim()
         });
-
-        const finalUrl = SCRIPT_URL + "?" + params.toString();
-
-        fetch(finalUrl, {
-            method: 'GET',
-            mode: 'no-cors'
-        })
-        .then(() => {
-            const toast = document.getElementById('toast');
-            toast.classList.replace('opacity-0', 'opacity-100');
-            setTimeout(() => {
-                toast.classList.replace('opacity-100', 'opacity-0');
-                window.location.href = "index.html"; 
-            }, 1500);
-        })
-        .catch(error => {
-            alert("傳送失敗，請檢查網路連線。");
-            btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i>新增至行程地圖';
-            btn.disabled = false;
-            btn.classList.replace('bg-gray-400', 'bg-draw-green');
-        });
+        fetch(SCRIPT_URL + "?" + params.toString(), { method: 'GET', mode: 'no-cors' })
+        .then(() => { setTimeout(() => { window.location.href = "index.html"; }, 1000); });
     }
   </script>
 </body>
