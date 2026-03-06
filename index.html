@@ -626,72 +626,60 @@
 
             let reviewHtml = '';
             if (ratingText && (category.includes('美食') || category.includes('餐廳') || category.includes('景點'))) {
-                reviewHtml = `<div class="bg-draw-yellow text-draw-ink px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-star mr-1"></i>${ratingText}</div>`;
+                reviewHtml = `<div class="bg-draw-yellow text-draw-ink px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-star mr-1"></i>${ratingText}</div>`;
             }
 
             let mapHtml = '';
             if(mapLink) {
-                mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>`;
+                mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>`;
             }
 
-            // 加上 headers=1 後，i=0 就是試算表的第 2 行！這完美解決了你的編輯位移問題！
+            // 加上 headers=1 後，i=0 就是試算表的第 2 行！
             const sheetRowIndex = i + 2; 
 
             const editParams = new URLSearchParams({
                 row: sheetRowIndex, title: title, cat: category, day: dayNum, link: mapLink, rating: ratingText, notes: notesText
             }).toString();
 
-            let editBtnHtml = `<a href="edit_place.html?${editParams}" class="bg-white text-draw-ink px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center transition-transform active:scale-95"><i class="fa-solid fa-pen text-draw-blue"></i></a>`;
+            let editBtnHtml = `<a href="edit_place.html?${editParams}" class="bg-white text-draw-ink px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center transition-transform active:scale-95"><i class="fa-solid fa-pen text-draw-blue"></i></a>`;
 
-            // 🔥 網址與 Markdown 按鈕魔法
+            // 🔥 將網址轉換為按鈕，並移到上方並排
             let notesHtml = '';
+            let introBtnHtml = '';
+            let pureTextNotes = notesText;
+
             if (notesText) {
-                let cleanNotes = notesText.trim();
-                let isOnlyLink = false;
-                let parsedNotes = '';
+                // 1. 抓取 Markdown 格式 [按鈕名稱](網址)
+                const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g;
+                pureTextNotes = pureTextNotes.replace(mdLinkRegex, function(match, btnTitle, url) {
+                    introBtnHtml += `<a href="${url}" target="_blank" class="bg-draw-blue text-white px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black shrink-0 flex items-center justify-center"><i class="fa-solid fa-link mr-1"></i>${btnTitle}</a>`;
+                    return ''; // 把網址從文字中抽離
+                });
 
-                // 檢查是否只是一段 Markdown 連結 [標題](網址)
-                const mdLinkRegexExact = /^\[([^\]]+)\]\((https?:\/\/[^\s]+)\)$/;
-                // 檢查是否只是一段純網址
-                const rawUrlRegexExact = /^https?:\/\/[^\s]+$/;
+                // 2. 抓取剩下的純網址 https://...
+                const rawUrlRegex = /(https?:\/\/[^\s]+)/g;
+                pureTextNotes = pureTextNotes.replace(rawUrlRegex, function(match, url) {
+                    introBtnHtml += `<a href="${url}" target="_blank" class="bg-draw-blue text-white px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black shrink-0 flex items-center justify-center"><i class="fa-solid fa-link mr-1"></i>介紹</a>`;
+                    return '';
+                });
 
-                if (mdLinkRegexExact.test(cleanNotes)) {
-                    isOnlyLink = true;
-                    const match = cleanNotes.match(mdLinkRegexExact);
-                    parsedNotes = `<a href="${match[2]}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black transition-transform active:scale-95"><i class="fa-solid fa-link mr-1"></i> ${match[1]}</a>`;
-                } else if (rawUrlRegexExact.test(cleanNotes)) {
-                    isOnlyLink = true;
-                    parsedNotes = `<a href="${cleanNotes}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-3 py-2 rounded-xl border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black transition-transform active:scale-95"><i class="fa-solid fa-link mr-1"></i> 相關介紹</a>`;
-                } else {
-                    // 有文字也有網址的情況：先替換 Markdown 語法
-                    parsedNotes = cleanNotes.replace(/\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g, function(match, btnTitle, url) {
-                        return `<span class="block mt-1.5 mb-0.5"><a href="${url}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] click-effect font-black"><i class="fa-solid fa-link mr-1"></i> ${btnTitle}</a></span>`;
-                    });
-                    // 再替換純網址
-                    parsedNotes = parsedNotes.replace(/(^|[\s\n])(https?:\/\/[^\s<]+)/g, function(match, space, url) {
-                        return `${space}<span class="block mt-1.5 mb-0.5"><a href="${url}" target="_blank" class="inline-flex items-center bg-draw-blue text-white px-2.5 py-1.5 rounded-lg border-2 border-draw-ink shadow-sm text-[10px] click-effect font-black"><i class="fa-solid fa-link mr-1"></i> 相關介紹</a></span>`;
-                    });
-                    parsedNotes = parsedNotes.replace(/\n/g, '<br>');
-                }
-
-                if (isOnlyLink) {
-                    // 如果只有連結，不要灰色虛線框，保持乾淨
-                    notesHtml = `<div class="mt-2.5">${parsedNotes}</div>`;
-                } else {
-                    // 如果有文字，就用灰色對話框包起來
-                    notesHtml = `<div class="text-[10px] font-bold text-draw-ink mt-2.5 leading-relaxed bg-gray-50 p-2.5 border-2 border-dashed border-gray-300 rounded-xl break-words"><i class="fa-regular fa-comment-dots text-draw-muted mr-1"></i> ${parsedNotes}</div>`;
+                // 3. 剩下的如果還有文字，才顯示灰色框
+                pureTextNotes = pureTextNotes.trim();
+                if (pureTextNotes) {
+                    notesHtml = `<div class="text-[10px] font-bold text-draw-ink mt-2.5 leading-relaxed bg-gray-50 p-2 border-2 border-dashed border-gray-300 rounded-xl break-words"><i class="fa-regular fa-comment-dots text-draw-muted mr-1"></i> ${pureTextNotes.replace(/\n/g, '<br>')}</div>`;
                 }
             }
 
             let itemHtml = `
             <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-3 fade-in flex flex-col w-full">
-                <div class="flex items-start justify-between">
-                    <div class="flex items-center flex-1 min-w-0 pr-2 pt-1">
-                        <div class="w-6 text-center shrink-0 mr-1">${icon}</div>
-                        <span class="font-black text-xs text-draw-ink truncate">${title}</span>
+                <div class="flex items-start justify-between w-full gap-2">
+                    <div class="flex items-start flex-1 min-w-[80px] pt-0.5">
+                        <div class="w-5 text-center shrink-0 mr-1.5 text-[11px]">${icon}</div>
+                        <span class="font-black text-xs text-draw-ink break-words leading-tight">${title}</span>
                     </div>
-                    <div class="flex gap-1.5 shrink-0 items-center">
+                    <div class="flex gap-1.5 shrink-0 items-center flex-wrap justify-end max-w-[65%]">
                         ${reviewHtml}
+                        ${introBtnHtml}
                         ${mapHtml}
                         ${editBtnHtml}
                     </div>
