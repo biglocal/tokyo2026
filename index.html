@@ -504,27 +504,27 @@
     </section>
   </main>
 
-  <nav class="fixed bottom-0 left-0 w-full z-50 bg-[#FDFCF8] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] pb-[env(safe-area-inset-bottom)]">
-    <div class="flex justify-around items-center py-0.5 px-1 pointer-events-auto">
-      <button onclick="switchTab('plan', this)" class="nav-btn text-draw-pink flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
-        <div class="nav-icon-box bg-white border-2 border-draw-ink shadow-solid-sm rounded-xl p-2 mb-1 z-10 -mt-6"><i class="fa-solid fa-map-location-dot text-xl"></i></div>
-        <span class="text-[10px] font-black mt-0.5">行程</span>
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#FDFCF8] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] pb-[env(safe-area-inset-bottom)] border-t border-gray-200">
+    <div class="flex justify-around items-center py-1 px-1 pointer-events-auto">
+      <button onclick="switchTab('plan', this)" class="nav-btn text-draw-pink flex flex-col items-center w-[20%] pt-1 transition-transform active:scale-95">
+        <i class="fa-solid fa-map-location-dot text-[22px] mb-0.5"></i>
+        <span class="text-[10px] font-black leading-none">行程</span>
       </button>
-      <button onclick="switchTab('guide', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-book-open text-xl"></i></div>
-        <span class="text-[10px] font-bold mt-0.5">導覽</span>
+      <button onclick="switchTab('guide', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] pt-1 transition-transform active:scale-95">
+        <i class="fa-solid fa-book-open text-[22px] mb-0.5"></i>
+        <span class="text-[10px] font-bold leading-none">導覽</span>
       </button>
-      <button onclick="switchTab('wallet', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-wallet text-xl"></i></div>
-        <span class="text-[10px] font-bold mt-0.5">記帳</span>
+      <button onclick="switchTab('wallet', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] pt-1 transition-transform active:scale-95">
+        <i class="fa-solid fa-wallet text-[22px] mb-0.5"></i>
+        <span class="text-[10px] font-bold leading-none">記帳</span>
       </button>
-      <button onclick="switchTab('lists', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-clipboard-check text-xl"></i></div>
-        <span class="text-[10px] font-bold mt-0.5">清單</span>
+      <button onclick="switchTab('lists', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] pt-1 transition-transform active:scale-95">
+        <i class="fa-solid fa-clipboard-check text-[22px] mb-0.5"></i>
+        <span class="text-[10px] font-bold leading-none">清單</span>
       </button>
-      <button onclick="switchTab('info', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] transition-transform active:scale-90 relative">
-        <div class="nav-icon-box border-2 border-transparent p-2 mb-1 z-10"><i class="fa-solid fa-circle-info text-xl"></i></div>
-        <span class="text-[10px] font-bold mt-0.5">資訊</span>
+      <button onclick="switchTab('info', this)" class="nav-btn text-draw-muted flex flex-col items-center w-[20%] pt-1 transition-transform active:scale-95">
+        <i class="fa-solid fa-circle-info text-[22px] mb-0.5"></i>
+        <span class="text-[10px] font-bold leading-none">資訊</span>
       </button>
     </div>
   </nav>
@@ -543,17 +543,22 @@
     const TABS = ['plan', 'guide', 'wallet', 'lists', 'info'];
     const COLORS = ['text-draw-pink', 'text-draw-yellow', 'text-draw-green', 'text-draw-blue', 'text-draw-ink'];
 
-    function switchTab(tabId, el) {
+      function switchTab(tabId, el) {
       TABS.forEach(t => document.getElementById(`tab-${t}`).classList.add('hidden'));
       document.getElementById(`tab-${tabId}`).classList.remove('hidden');
       
       document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.className = btn.className.replace(/text-draw-\w+/g, 'text-draw-muted');
         btn.querySelector('span').classList.replace('font-black', 'font-bold');
-        let iconBox = btn.querySelector('.nav-icon-box');
-        iconBox.classList.remove('bg-white', 'border-draw-ink', 'shadow-solid-sm', '-mt-6', 'rounded-xl');
-        iconBox.classList.add('border-transparent');
       });
+
+      el.classList.remove('text-draw-muted');
+      el.classList.add(COLORS[TABS.indexOf(tabId)]);
+      el.querySelector('span').classList.replace('font-bold', 'font-black');
+      
+      if(tabId === 'wallet') fetchGroupExpenses();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
 
       el.classList.remove('text-draw-muted');
       el.classList.add(COLORS[TABS.indexOf(tabId)]);
