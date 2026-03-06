@@ -43,7 +43,7 @@
         <div class="w-1/2">
             <label class="block text-xs font-black text-[#2B2D42] mb-2">📅 預計在哪天？</label>
             <select id="inp-day" class="w-full bg-gray-50 border-2 border-[#2B2D42] rounded-xl p-3 text-sm font-bold outline-none focus:bg-white">
-                <option value="1">Day 1</option><option value="2">Day 2</option><option value="3">Day 3</option><option value="4">Day 4</option><option value="5">Day 5</option><option value="6">Day 6</option><option value="未分類">尚未決定</option>
+                <option value="">載入中...</option>
             </select>
         </div>
     </div>
@@ -68,18 +68,55 @@
   
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOxnbns2WDdgF8uXtkz2cd2KycdBXRSCxhGlUzErA1HyeE1Xjl6H6TR3YP0Zxl1zKL/exec"; 
-    window.onload = () => {
+    const SHEET_ID = '16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc';
+
+    // 🔥 非同步載入網頁初始化資料 (包含選項填入)
+    async function initPage() {
         const params = new URLSearchParams(window.location.search);
+        const selectEl = document.getElementById('inp-day');
+        
+        // 1. 先去抓表單資料更新下拉選單
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=schedule&_=${new Date().getTime()}`;
+            const res = await fetch(url);
+            const txt = await res.text();
+            const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+            
+            let optionsHtml = '';
+            json.table.rows.forEach(row => {
+                if(row.c && row.c[0] && row.c[0].v !== null && row.c[1] && row.c[1].v !== null) {
+                    let dayNum = String(row.c[0].v).trim();
+                    let dayTitle = String(row.c[1].v).trim();
+                    optionsHtml += `<option value="${dayNum}">Day ${dayNum} - ${dayTitle}</option>`;
+                }
+            });
+            optionsHtml += `<option value="未分類">尚未決定</option>`;
+            selectEl.innerHTML = optionsHtml;
+        } catch (err) {
+            selectEl.innerHTML = '<option value="1">Day 1</option><option value="2">Day 2</option><option value="未分類">尚未決定</option>';
+        }
+
+        // 2. 下拉選單長好之後，把網址上的舊資料自動填入對應的欄位
         if(params.has('row')) {
             document.getElementById('inp-row').value = params.get('row');
             document.getElementById('inp-title').value = params.get('title');
             document.getElementById('inp-category').value = params.get('cat') || '其他';
-            document.getElementById('inp-day').value = params.get('day');
+            
+            // 設定 Day (如果選項中沒有，則選未分類)
+            const dayVal = params.get('day');
+            if(!Array.from(selectEl.options).some(opt => opt.value === dayVal) && dayVal) {
+                selectEl.add(new Option(`Day ${dayVal}`, dayVal));
+            }
+            selectEl.value = dayVal || '未分類';
+            
             document.getElementById('inp-maplink').value = params.get('link');
             document.getElementById('inp-rating').value = params.get('rating');
             document.getElementById('inp-notes').value = params.get('notes');
         }
-    };
+    }
+
+    window.onload = initPage;
+
     function sendRequest(action) {
         const title = document.getElementById('inp-title').value.trim();
         if (!title && action === 'update') return alert("名稱一定要填寫喔！");
