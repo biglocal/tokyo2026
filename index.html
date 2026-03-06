@@ -586,10 +586,10 @@
     }
 
     /* ========== GUIDE Tab - 動態抓取 place sheet (無快取魔法版) ========== */
+/* ========== GUIDE Tab - 動態抓取 place sheet (按鈕極簡不換行版) ========== */
     function loadPlaceSheet() {
       document.getElementById('guide-place-list').innerHTML = '<div class="text-center text-draw-muted text-xs animate-pulse font-bold py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i>正在載入 Google 表單地點資料...</div>';
       
-      // 🔥 加入 headers=1 (強制作為標題列) 與隨機時間參數 (破除快取)
       const url = `https://docs.google.com/spreadsheets/d/16uetEwwxz6h9jG4iwl64O8KVmk7eFTIgQtOZ95R8Hmc/gviz/tq?tqx=out:json&headers=1&sheet=place&_=${new Date().getTime()}`;
       
       fetch(url)
@@ -618,60 +618,59 @@
             else if(category.includes('美食') || category.includes('餐廳')) icon = '<i class="fa-solid fa-utensils text-draw-yellow"></i>';
             else if(category.includes('逛街') || category.includes('購物')) icon = '<i class="fa-solid fa-bag-shopping text-draw-blue"></i>';
 
+            // 1. 評分按鈕 (縮小 padding 與字體)
             let reviewHtml = '';
             if (ratingText && (category.includes('美食') || category.includes('餐廳') || category.includes('景點'))) {
-                reviewHtml = `<div class="bg-draw-yellow text-draw-ink px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-star mr-1"></i>${ratingText}</div>`;
+                reviewHtml = `<div class="bg-draw-yellow text-draw-ink px-1.5 py-0.5 rounded-lg border-2 border-draw-ink shadow-sm text-[9px] font-black flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-star text-[8px] mr-0.5"></i>${ratingText}</div>`;
             }
 
+            // 2. 地圖按鈕 (縮小 padding)
             let mapHtml = '';
             if(mapLink) {
-                mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot mr-1"></i>地圖</a>`;
+                mapHtml = `<a href="${mapLink}" target="_blank" class="bg-draw-green text-white px-1.5 py-0.5 rounded-lg border-2 border-draw-ink shadow-sm text-[9px] font-black click-effect shrink-0 flex items-center justify-center"><i class="fa-solid fa-map-location-dot text-[9px] mr-0.5"></i>地圖</a>`;
             }
 
-            // 加上 headers=1 後，i=0 就是試算表的第 2 行！
             const sheetRowIndex = i + 2; 
-
             const editParams = new URLSearchParams({
                 row: sheetRowIndex, title: title, cat: category, day: dayNum, link: mapLink, rating: ratingText, notes: notesText
             }).toString();
 
-            let editBtnHtml = `<a href="edit_place.html?${editParams}" class="bg-white text-draw-ink px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] font-black click-effect shrink-0 flex items-center justify-center transition-transform active:scale-95"><i class="fa-solid fa-pen text-draw-blue"></i></a>`;
+            // 3. 編輯按鈕 (縮成極小的正方形 w-5 h-5)
+            let editBtnHtml = `<a href="edit_place.html?${editParams}" class="bg-white text-draw-ink w-5 h-5 rounded-lg border-2 border-draw-ink shadow-sm text-[9px] font-black click-effect shrink-0 flex items-center justify-center transition-transform active:scale-95"><i class="fa-solid fa-pen text-draw-blue"></i></a>`;
 
-            // 🔥 將網址轉換為按鈕，並移到上方並排
             let notesHtml = '';
             let introBtnHtml = '';
             let pureTextNotes = notesText;
 
             if (notesText) {
-                // 1. 抓取 Markdown 格式 [按鈕名稱](網址)
                 const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g;
                 pureTextNotes = pureTextNotes.replace(mdLinkRegex, function(match, btnTitle, url) {
-                    introBtnHtml += `<a href="${url}" target="_blank" class="bg-draw-blue text-white px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black shrink-0 flex items-center justify-center"><i class="fa-solid fa-link mr-1"></i>${btnTitle}</a>`;
-                    return ''; // 把網址從文字中抽離
+                    // 4. 介紹按鈕 (同步縮小)
+                    introBtnHtml += `<a href="${url}" target="_blank" class="bg-draw-blue text-white px-1.5 py-0.5 rounded-lg border-2 border-draw-ink shadow-sm text-[9px] click-effect font-black shrink-0 flex items-center justify-center"><i class="fa-solid fa-link text-[8px] mr-0.5"></i>${btnTitle}</a>`;
+                    return ''; 
                 });
 
-                // 2. 抓取剩下的純網址 https://...
                 const rawUrlRegex = /(https?:\/\/[^\s]+)/g;
                 pureTextNotes = pureTextNotes.replace(rawUrlRegex, function(match, url) {
-                    introBtnHtml += `<a href="${url}" target="_blank" class="bg-draw-blue text-white px-2 py-1.5 rounded-lg border-2 border-draw-ink shadow-solid-sm text-[10px] click-effect font-black shrink-0 flex items-center justify-center"><i class="fa-solid fa-link mr-1"></i>介紹</a>`;
+                    introBtnHtml += `<a href="${url}" target="_blank" class="bg-draw-blue text-white px-1.5 py-0.5 rounded-lg border-2 border-draw-ink shadow-sm text-[9px] click-effect font-black shrink-0 flex items-center justify-center"><i class="fa-solid fa-link text-[8px] mr-0.5"></i>介紹</a>`;
                     return '';
                 });
 
-                // 3. 剩下的如果還有文字，才顯示灰色框
                 pureTextNotes = pureTextNotes.trim();
                 if (pureTextNotes) {
-                    notesHtml = `<div class="text-[10px] font-bold text-draw-ink mt-2.5 leading-relaxed bg-gray-50 p-2 border-2 border-dashed border-gray-300 rounded-xl break-words"><i class="fa-regular fa-comment-dots text-draw-muted mr-1"></i> ${pureTextNotes.replace(/\n/g, '<br>')}</div>`;
+                    notesHtml = `<div class="text-[10px] font-bold text-draw-ink mt-2 leading-relaxed bg-gray-50 p-2 border border-dashed border-gray-300 rounded-xl break-words"><i class="fa-regular fa-comment-dots text-draw-muted mr-1"></i> ${pureTextNotes.replace(/\n/g, '<br>')}</div>`;
                 }
             }
 
+            // 5. 調整容器：把 gap 改小，避免被擠下去
             let itemHtml = `
-            <div class="bg-white border-2 border-draw-ink rounded-xl p-3 shadow-sm mb-3 fade-in flex flex-col w-full">
-                <div class="flex items-start justify-between w-full gap-2">
+            <div class="bg-white border-2 border-draw-ink rounded-xl p-2.5 shadow-sm mb-3 fade-in flex flex-col w-full">
+                <div class="flex items-start justify-between w-full gap-1.5">
                     <div class="flex items-start flex-1 min-w-[80px] pt-0.5">
-                        <div class="w-5 text-center shrink-0 mr-1.5 text-[11px]">${icon}</div>
-                        <span class="font-black text-xs text-draw-ink break-words leading-tight">${title}</span>
+                        <div class="w-5 text-center shrink-0 mr-1 text-[11px]">${icon}</div>
+                        <span class="font-black text-xs text-draw-ink break-words leading-tight mt-0.5">${title}</span>
                     </div>
-                    <div class="flex gap-1.5 shrink-0 items-center flex-wrap justify-end max-w-[65%]">
+                    <div class="flex gap-1 shrink-0 items-center justify-end max-w-[65%]">
                         ${reviewHtml}
                         ${introBtnHtml}
                         ${mapHtml}
@@ -693,7 +692,7 @@
 
           sortedKeys.forEach(key => {
               finalHtml += `
-              <details class="mb-5 group outline-none" ${key === 'Day 1' ? 'open' : ''}>
+              <details class="mb-4 group outline-none" ${key === 'Day 1' ? 'open' : ''}>
                   <summary class="font-black pb-2 mb-3 border-b-2 border-dashed border-gray-300 cursor-pointer flex justify-between items-center text-draw-ink text-sm select-none">
                       <div class="flex items-center">
                           <i class="fa-solid fa-calendar-day text-draw-yellow mr-2"></i>
@@ -701,7 +700,7 @@
                       </div>
                       <i class="fa-solid fa-chevron-down transition-transform group-open:rotate-180 text-draw-muted"></i>
                   </summary>
-                  <div class="space-y-3 px-1">
+                  <div class="space-y-2 px-1">
                       ${days[key].join('')}
                   </div>
               </details>
